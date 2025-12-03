@@ -1,7 +1,17 @@
 ---
 deployment:
   tasks:
-  - export DEPLOYPATH=/home/yourhelpa/public_html 
-  - npm install           # Simplified path
-  - npm run build         # Simplified path
+  - export DEPLOYPATH=/home/yourhelp/public_html  # CORRECTED USERNAME
+
+  # Clean up any residual npm install files before running the new install
+  - /usr/bin/rm -rf node_modules
+
+  # Use simple commands; CPanel often sets the path up correctly
+  - npm install
+  - npm run build
+
+  # Clear the target directory before copying, ensuring a clean deployment
+  - /usr/bin/rm -rf $DEPLOYPATH/*
+
+  # Copy the compiled website files
   - /bin/cp -r build/* $DEPLOYPATH
