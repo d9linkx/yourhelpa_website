@@ -1,7 +1,7 @@
 # cpanel.yml content
 deployment:
   tasks:
-  - export DEPLOYPATH=/home/yourhelpa/public_html
+  - export DEPLOYPATH=/home/yourhelp/public_html
   - /opt/cpanel/ea-nodejs18/bin/npm install
   - /opt/cpanel/ea-nodejs18/bin/npm run build
   - /bin/cp -r build/* $DEPLOYPATH
