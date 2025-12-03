@@ -1,7 +1,7 @@
-# FIX: Changed 'yourhelp' to 'yourhelpa' in the path
+---
 deployment:
   tasks:
   - export DEPLOYPATH=/home/yourhelpa/public_html 
-  - /opt/cpanel/ea-nodejs18/bin/npm install
-  - /opt/cpanel/ea-nodejs18/bin/npm run build
+  - npm install           # Simplified path
+  - npm run build         # Simplified path
   - /bin/cp -r build/* $DEPLOYPATH
