@@ -1,6 +1,7 @@
 
   {
       "name": "YourHelpa (WORKFLOWS ADDED)",
+      "homepage": "./",
       "version": "0.1.0",
       "private": true,
       "dependencies": {
