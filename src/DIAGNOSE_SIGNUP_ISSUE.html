@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🔍 YourHelpa - Signup Diagnostic Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1BBF72 0%, #FFD54F 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #1BBF72;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 5px solid #1BBF72;
+        }
+        
+        .test-section h2 {
+            color: #202124;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        button {
+            background: #1BBF72;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #159f5f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27, 191, 114, 0.3);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+        
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+        
+        .result.loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+        
+        .result.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #17a2b8;
+        }
+        
+        .url-box {
+            background: #202124;
+            color: #1BBF72;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+        }
+        
+        .checklist li.checked:before {
+            content: "✅";
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: #1BBF72;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-top: 12px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Signup Diagnostic Tool</h1>
+        <p class="subtitle">Let's find out exactly why your signup isn't working</p>
+
+        <!-- Current Configuration -->
+        <div class="test-section">
+            <h2><span class="step-number">1</span> Current Configuration</h2>
+            <p><strong>Google Sheets Database:</strong></p>
+            <div class="url-box">https://docs.google.com/spreadsheets/d/1wUMm6eQeGZr4cs4fx3rf0aLnJbWoM1NJ92psRK-AJKQ/edit</div>
+            
+            <p><strong>Google Apps Script API URL:</strong></p>
+            <div class="url-box" id="apiUrl">https://script.google.com/macros/s/AKfycbz8PasKHgjeBS5DjJ8KS5g0eqW82Yb6P9t5X0ttXD2w9Y878lsV7jRegrRiDHq8LkeI/exec</div>
+            
+            <div class="quick-actions">
+                <button onclick="openSheet()">📊 Open Google Sheet</button>
+                <button onclick="openAppsScript()">⚙️ Open Apps Script</button>
+            </div>
+        </div>
+
+        <!-- Test 1: API Health Check -->
+        <div class="test-section">
+            <h2><span class="step-number">2</span> Test API Connection (GET)</h2>
+            <p>This tests if your Google Apps Script is deployed and accessible</p>
+            <button onclick="testApiHealth()">🔍 Run Health Check</button>
+            <div id="healthResult"></div>
+        </div>
+
+        <!-- Test 2: POST Request Test -->
+        <div class="test-section">
+            <h2><span class="step-number">3</span> Test POST Request</h2>
+            <p>This tests if the API can receive data (required for signup)</p>
+            <button onclick="testPostRequest()">📤 Test POST</button>
+            <div id="postResult"></div>
+        </div>
+
+        <!-- Test 3: Actual Signup -->
+        <div class="test-section">
+            <h2><span class="step-number">4</span> Test Real Signup</h2>
+            <p>Create a real test account in your Google Sheet</p>
+            
+            <form onsubmit="testRealSignup(event)">
+                <label>First Name:</label>
+                <input type="text" id="firstName" value="Test User" required>
+                
+                <label>Email:</label>
+                <input type="email" id="email" required placeholder="test123@example.com">
+                
+                <label>Phone:</label>
+                <input type="tel" id="phone" value="+2348012345678" required>
+                
+                <label>Password:</label>
+                <input type="password" id="password" value="Test123!" required>
+                
+                <button type="submit">✅ Create Test Account</button>
+            </form>
+            <div id="signupResult"></div>
+        </div>
+
+        <!-- Diagnosis Results -->
+        <div class="test-section" id="diagnosis" style="display: none;">
+            <h2>📋 Diagnosis Results</h2>
+            <div id="diagnosisContent"></div>
+        </div>
+
+        <!-- Common Issues -->
+        <div class="warning-box">
+            <h3>🔧 Common Issues & Solutions:</h3>
+            <ul class="checklist" id="commonIssues">
+                <li id="issue1">Apps Script not deployed as Web App</li>
+                <li id="issue2">Apps Script not authorized (permissions not granted)</li>
+                <li id="issue3">Wrong API URL in frontend code</li>
+                <li id="issue4">CORS issues (wrong deployment settings)</li>
+                <li id="issue5">Old code in Apps Script (needs update)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbz8PasKHgjeBS5DjJ8KS5g0eqW82Yb6P9t5X0ttXD2w9Y878lsV7jRegrRiDHq8LkeI/exec';
+        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/1wUMm6eQeGZr4cs4fx3rf0aLnJbWoM1NJ92psRK-AJKQ/edit';
+        
+        let testResults = {
+            healthCheck: false,
+            postRequest: false,
+            signup: false
+        };
+
+        function showResult(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.className = 'result ' + type;
+            element.innerHTML = message;
+            element.style.display = 'block';
+        }
+
+        function checkIssue(issueId, isResolved) {
+            const element = document.getElementById(issueId);
+            if (isResolved) {
+                element.classList.add('checked');
+            } else {
+                element.classList.remove('checked');
+            }
+        }
+
+        async function testApiHealth() {
+            showResult('healthResult', '⏳ Testing connection to Google Apps Script...', 'loading');
+            
+            try {
+                console.log('Testing GET request to:', API_URL);
+                
+                const response = await fetch(API_URL, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                const text = await response.text();
+                console.log('Response text:', text);
+                
+                const data = JSON.parse(text);
+                
+                if (data.success) {
+                    testResults.healthCheck = true;
+                    checkIssue('issue1', true);
+                    checkIssue('issue2', true);
+                    checkIssue('issue3', true);
+                    
+                    showResult('healthResult', 
+                        '✅ SUCCESS!\n\n' +
+                        'API is responding correctly.\n\n' +
+                        'Response:\n' + 
+                        JSON.stringify(data, null, 2) + '\n\n' +
+                        '✅ Apps Script is deployed\n' +
+                        '✅ Apps Script is authorized\n' +
+                        '✅ URL is correct',
+                        'success'
+                    );
+                } else {
+                    showResult('healthResult', 
+                        '⚠️ API responded but with unexpected data:\n\n' + 
+                        JSON.stringify(data, null, 2),
+                        'error'
+                    );
+                }
+            } catch (error) {
+                console.error('Health check error:', error);
+                testResults.healthCheck = false;
+                
+                showResult('healthResult', 
+                    '❌ CONNECTION FAILED!\n\n' +
+                    'Error: ' + error.message + '\n\n' +
+                    '🔴 PROBLEM IDENTIFIED:\n' +
+                    'Your Google Apps Script is either:\n' +
+                    '  1. Not deployed as a Web App\n' +
+                    '  2. Not authorized\n' +
+                    '  3. Has wrong deployment settings\n\n' +
+                    '📝 SOLUTION:\n' +
+                    'Open /DEPLOY_NOW.md and follow ALL steps',
+                    'error'
+                );
+                
+                checkIssue('issue1', false);
+            }
+        }
+
+        async function testPostRequest() {
+            showResult('postResult', '⏳ Testing POST request capability...', 'loading');
+            
+            try {
+                console.log('Testing POST request to:', API_URL);
+                
+                const testData = {
+                    action: 'test',
+                    timestamp: new Date().toISOString()
+                };
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                console.log('POST Response status:', response.status);
+                
+                const text = await response.text();
+                console.log('POST Response text:', text);
+                
+                const data = JSON.parse(text);
+                
+                testResults.postRequest = true;
+                checkIssue('issue4', true);
+                checkIssue('issue5', true);
+                
+                showResult('postResult', 
+                    '✅ POST REQUEST WORKS!\n\n' +
+                    'The API can receive data.\n\n' +
+                    'Response:\n' + 
+                    JSON.stringify(data, null, 2) + '\n\n' +
+                    '✅ CORS is configured correctly\n' +
+                    '✅ POST endpoint is working',
+                    'success'
+                );
+            } catch (error) {
+                console.error('POST test error:', error);
+                testResults.postRequest = false;
+                
+                showResult('postResult', 
+                    '❌ POST REQUEST FAILED!\n\n' +
+                    'Error: ' + error.message + '\n\n' +
+                    '🔴 PROBLEM:\n' +
+                    'The API is not accepting POST requests.\n\n' +
+                    '📝 SOLUTION:\n' +
+                    '1. Redeploy your Apps Script\n' +
+                    '2. Make sure "Who has access" is set to "Anyone"\n' +
+                    '3. Check /DEPLOY_NOW.md Step 6',
+                    'error'
+                );
+            }
+        }
+
+        async function testRealSignup(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            
+            showResult('signupResult', '⏳ Creating account in Google Sheets...', 'loading');
+            
+            try {
+                console.log('Attempting signup with:', { firstName, email, phone });
+                
+                const requestData = {
+                    action: 'register',
+                    email: email,
+                    password: password,
+                    firstName: firstName,
+                    phone: phone
+                };
+                
+                console.log('Request data:', requestData);
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                console.log('Signup response status:', response.status);
+                
+                const text = await response.text();
+                console.log('Signup response text:', text);
+                
+                const data = JSON.parse(text);
+                console.log('Signup response data:', data);
+                
+                if (data.success) {
+                    testResults.signup = true;
+                    
+                    showResult('signupResult', 
+                        '🎉 ACCOUNT CREATED SUCCESSFULLY!\n\n' +
+                        'User ID: ' + data.user.id + '\n' +
+                        'Name: ' + data.user.firstName + '\n' +
+                        'Email: ' + data.user.email + '\n' +
+                        'Phone: ' + data.user.phone + '\n\n' +
+                        'Session Token:\n' + data.sessionToken + '\n\n' +
+                        '✅ Check your Google Sheet NOW!\n' +
+                        '   Go to "Users" tab and see the new entry.\n\n' +
+                        '✅ YOUR SIGNUP IS WORKING PERFECTLY!',
+                        'success'
+                    );
+                    
+                    showDiagnosis('✅ ALL TESTS PASSED! Your signup system is working correctly!');
+                } else {
+                    showResult('signupResult', 
+                        '❌ SIGNUP FAILED!\n\n' +
+                        'Error: ' + (data.error || 'Unknown error') + '\n\n' +
+                        'Response:\n' + 
+                        JSON.stringify(data, null, 2) + '\n\n' +
+                        'Common reasons:\n' +
+                        '• Email already exists (try different email)\n' +
+                        '• Apps Script code is outdated\n' +
+                        '• Missing required fields\n\n' +
+                        'Try using a different email address.',
+                        'error'
+                    );
+                    
+                    if (data.error && data.error.includes('already exists')) {
+                        showDiagnosis('✅ Good news! The API is working. The error is expected (email already exists). Try a different email.');
+                    }
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                testResults.signup = false;
+                
+                showResult('signupResult', 
+                    '❌ REQUEST FAILED!\n\n' +
+                    'Error: ' + error.message + '\n\n' +
+                    '🔴 CRITICAL ISSUE:\n' +
+                    'Cannot connect to Google Apps Script.\n\n' +
+                    '📝 IMMEDIATE ACTION REQUIRED:\n' +
+                    '1. Open /DEPLOY_NOW.md\n' +
+                    '2. Follow ALL deployment steps\n' +
+                    '3. Make sure to authorize the script\n' +
+                    '4. Verify "Who has access" is set to "Anyone"',
+                    'error'
+                );
+            }
+        }
+
+        function showDiagnosis(message) {
+            const diagnosisDiv = document.getElementById('diagnosis');
+            const diagnosisContent = document.getElementById('diagnosisContent');
+            
+            diagnosisDiv.style.display = 'block';
+            diagnosisContent.className = 'result ' + (testResults.signup ? 'success' : 'error');
+            diagnosisContent.innerHTML = message;
+            
+            diagnosisDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openSheet() {
+            window.open(SHEET_URL, '_blank');
+        }
+
+        function openAppsScript() {
+            alert('Steps to open Apps Script:\n\n1. Open your Google Sheet\n2. Click Extensions → Apps Script\n3. Check if the code matches /GOOGLE_APPS_SCRIPT_COMPLETE.js');
+            window.open(SHEET_URL, '_blank');
+        }
+
+        // Auto-run health check on page load
+        window.onload = function() {
+            setTimeout(() => {
+                testApiHealth();
+            }, 500);
+            
+            // Generate random email to avoid duplicates
+            const randomEmail = 'test' + Date.now() + '@example.com';
+            document.getElementById('email').value = randomEmail;
+        };
+    </script>
+</body>
+</html>

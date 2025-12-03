@@ -1,0 +1,49 @@
+=== YOURHELPA GOOGLE SHEET HEADERS ===
+Copy these headers to Row 1 of each respective tab
+(Use TAB to separate columns, or paste directly into cells A1, B1, C1, etc.)
+
+=== Tab 1: KeyValue ===
+key	value	createdAt	updatedAt
+
+=== Tab 2: Users ===
+id	email	firstName	phone	emailVerified	createdAt	updatedAt
+
+=== Tab 3: Providers ===
+userId	businessName	whatsappNumber	verificationStatus	accountType	bio	services	totalEarnings	pendingEarnings	completedJobs	rating	totalReviews	joinedAt	lastActive	bankDetails	fullName	email	createdAt	updatedAt
+
+=== Tab 4: Services ===
+id	providerId	category	title	description	price	priceType	availability	rating	completedJobs	responseTime	workingHours	location	tags	images	createdAt	updatedAt
+
+=== Tab 5: Orders ===
+id	userId	userName	items	totalAmount	status	deliveryAddress	deliveryPhone	createdAt	updatedAt
+
+=== Tab 6: Consultations ===
+id	userId	userName	phone	consultationType	goals	status	scheduledDate	createdAt	updatedAt
+
+=== Tab 7: Events ===
+id	userId	userName	phone	eventType	guestCount	eventDate	status	createdAt	updatedAt
+
+=== Tab 8: Transactions ===
+id	providerId	serviceId	customerId	amount	status	type	description	createdAt	completedAt	escrowReleaseDate
+
+=== Tab 9: Notifications ===
+id	providerId	type	title	message	read	actionUrl	createdAt	metadata
+
+=== Tab 10: Cart ===
+userId	items	createdAt	updatedAt
+
+=== Tab 11: UserState ===
+userId	flow	step	data	updatedAt
+
+=== INSTRUCTIONS ===
+1. Create each tab in your Google Sheet
+2. Copy the header row for that tab
+3. Paste into Row 1 (starting at cell A1)
+4. The tabs separate automatically into columns
+5. Freeze Row 1: View → Freeze → 1 row
+
+=== IMPORTANT ===
+- Tab names are case-sensitive: Users, Providers, Services, etc.
+- Headers must be in Row 1
+- Don't add or remove any header columns
+- Data will start from Row 2 onwards

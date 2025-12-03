@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YourHelpa - Test Signup Connection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background: linear-gradient(135deg, #1BBF72 0%, #FFD54F 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #1BBF72;
+            margin-bottom: 10px;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+        }
+        .loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffc107;
+        }
+        button {
+            background: #1BBF72;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #159f5f;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .code {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #1BBF72;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-top: 15px;
+        }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196F3;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #1BBF72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 YourHelpa Signup Test</h1>
+        <p style="color: #666;">Test your Google Sheets connection and create a test account</p>
+
+        <div class="info">
+            <strong>📍 Current API URL:</strong>
+            <div class="code" style="word-break: break-all;">
+                https://script.google.com/macros/s/AKfycbz8PasKHgjeBS5DjJ8KS5g0eqW82Yb6P9t5X0ttXD2w9Y878lsV7jRegrRiDHq8LkeI/exec
+            </div>
+        </div>
+
+        <div id="status"></div>
+
+        <div class="step">
+            <strong>Step 1:</strong> Test API Connection
+            <button onclick="testConnection()">🔍 Test Connection</button>
+        </div>
+
+        <div class="step">
+            <strong>Step 2:</strong> Create Test Account
+            <form onsubmit="testSignup(event)">
+                <label>First Name:</label>
+                <input type="text" id="firstName" value="Test User" required>
+                
+                <label>Email:</label>
+                <input type="email" id="email" value="test@example.com" required>
+                
+                <label>Phone:</label>
+                <input type="tel" id="phone" value="+2348012345678" required>
+                
+                <label>Password:</label>
+                <input type="password" id="password" value="Test123!" required>
+                
+                <button type="submit">✅ Create Test Account</button>
+            </form>
+        </div>
+
+        <div class="step">
+            <strong>Step 3:</strong> Check Your Google Sheet
+            <button onclick="openSheet()">📊 Open Google Sheet</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbz8PasKHgjeBS5DjJ8KS5g0eqW82Yb6P9t5X0ttXD2w9Y878lsV7jRegrRiDHq8LkeI/exec';
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status ' + type;
+            statusDiv.innerHTML = message;
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'status ' + type;
+            resultDiv.innerHTML = message;
+        }
+
+        async function testConnection() {
+            showStatus('⏳ Testing connection to Google Apps Script...', 'loading');
+            
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus(
+                        '✅ <strong>CONNECTION SUCCESSFUL!</strong><br><br>' +
+                        'API is running and responding correctly.<br>' +
+                        'Timestamp: ' + data.timestamp,
+                        'success'
+                    );
+                } else {
+                    showStatus(
+                        '❌ <strong>API responded but with an error:</strong><br>' + 
+                        data.error,
+                        'error'
+                    );
+                }
+            } catch (error) {
+                showStatus(
+                    '❌ <strong>CONNECTION FAILED!</strong><br><br>' +
+                    'Error: ' + error.message + '<br><br>' +
+                    '<strong>Possible causes:</strong><br>' +
+                    '1. Google Apps Script not deployed correctly<br>' +
+                    '2. Script not authorized<br>' +
+                    '3. Wrong URL<br><br>' +
+                    '<strong>Solution:</strong> Follow the steps in /DEPLOY_NOW.md',
+                    'error'
+                );
+            }
+        }
+
+        async function testSignup(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            
+            showResult('⏳ Creating account in Google Sheets...', 'loading');
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'register',
+                        email: email,
+                        password: password,
+                        firstName: firstName,
+                        phone: phone
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult(
+                        '✅ <strong>ACCOUNT CREATED SUCCESSFULLY!</strong><br><br>' +
+                        '<strong>User Details:</strong><br>' +
+                        'ID: ' + data.user.id + '<br>' +
+                        'Name: ' + data.user.firstName + '<br>' +
+                        'Email: ' + data.user.email + '<br>' +
+                        'Phone: ' + data.user.phone + '<br><br>' +
+                        '<strong>Session Token:</strong><br>' +
+                        '<div class="code" style="word-break: break-all;">' + data.sessionToken + '</div>' +
+                        '<br><strong>✅ Check your Google Sheet now!</strong><br>' +
+                        'Go to the "Users" tab and you should see this account.',
+                        'success'
+                    );
+                } else {
+                    showResult(
+                        '❌ <strong>SIGNUP FAILED!</strong><br><br>' +
+                        'Error: ' + (data.error || 'Unknown error') + '<br><br>' +
+                        '<strong>Common reasons:</strong><br>' +
+                        '• Email already exists<br>' +
+                        '• Missing required fields<br>' +
+                        '• Google Apps Script not properly deployed<br><br>' +
+                        '<strong>Try:</strong><br>' +
+                        '1. Use a different email<br>' +
+                        '2. Check /DEPLOY_NOW.md for deployment steps',
+                        'error'
+                    );
+                }
+            } catch (error) {
+                showResult(
+                    '❌ <strong>REQUEST FAILED!</strong><br><br>' +
+                    'Error: ' + error.message + '<br><br>' +
+                    '<strong>This means:</strong><br>' +
+                    'The frontend can\'t reach your Google Apps Script.<br><br>' +
+                    '<strong>Solution:</strong><br>' +
+                    'Follow the deployment steps in /DEPLOY_NOW.md',
+                    'error'
+                );
+            }
+        }
+
+        function openSheet() {
+            window.open('https://docs.google.com/spreadsheets/d/1wUMm6eQeGZr4cs4fx3rf0aLnJbWoM1NJ92psRK-AJKQ/edit', '_blank');
+        }
+
+        // Auto-test connection on load
+        window.onload = function() {
+            setTimeout(testConnection, 500);
+        };
+    </script>
+</body>
+</html>
