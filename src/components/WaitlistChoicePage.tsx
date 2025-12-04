@@ -151,105 +151,18 @@ export function WaitlistChoicePage({ onNavigate, onBack }: WaitlistChoicePagePro
               )}
             </motion.div>
 
-            {/* Helpa Dropdown */}
+            {/* Become a Helpa CTA - direct to onboarding */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <button
-                onClick={() => setExpandedHelpa(!expandedHelpa)}
-                className={`w-full rounded-2xl p-6 sm:p-8 border-2 transition-all duration-300 flex items-center justify-between ${
-                  expandedHelpa
-                    ? isWhiteBackground
-                      ? 'bg-[#FFD54F]/10 border-[#FFD54F]'
-                      : 'bg-[#FFD54F]/10 border-[#FFD54F]'
-                    : isWhiteBackground
-                    ? 'bg-white border-gray-200 hover:border-[#FFD54F]'
-                    : 'bg-[#2a2d31] border-gray-700 hover:border-[#FFD54F]'
-                }`}
+                onClick={() => onNavigate?.('helpa-onboarding')}
+                className="w-full sm:w-auto bg-[#FFD54F] hover:bg-[#FFD54F]/90 text-gray-900 font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg"
               >
-                <div className="flex items-center gap-4 text-left">
-                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-                    expandedHelpa
-                      ? isWhiteBackground
-                        ? 'bg-[#FFD54F]/20'
-                        : 'bg-[#FFD54F]/20'
-                      : isWhiteBackground
-                      ? 'bg-[#FFD54F]/10'
-                      : 'bg-[#FFD54F]/10'
-                  }`}>
-                    <Store className="w-6 h-6 sm:w-7 sm:h-7 text-[#FFD54F]" />
-                  </div>
-                  <div>
-                    <h3 className={`text-xl sm:text-2xl font-semibold ${
-                      isWhiteBackground ? 'text-gray-900' : 'text-white'
-                    }`}>
-                      I'm a business owner or skilled service provider
-                    </h3>
-                    {!expandedHelpa && (
-                      <p className={`text-sm mt-1 ${
-                        isWhiteBackground ? 'text-gray-600' : 'text-gray-400'
-                      }`}>
-                        Click to see details
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <ChevronDown className={`w-6 h-6 text-[#FFD54F] flex-shrink-0 transition-transform ${
-                  expandedHelpa ? 'rotate-180' : ''
-                }`} />
+                Become a Helpa
               </button>
-
-              {/* Expanded Content */}
-              {expandedHelpa && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className={`mt-4 rounded-2xl p-6 sm:p-8 border-2 ${
-                    isWhiteBackground
-                      ? 'bg-gray-50 border-[#FFD54F]/20'
-                      : 'bg-[#1a1d21] border-[#FFD54F]/20'
-                  }`}
-                >
-                  <p className={`text-base sm:text-lg mb-6 ${
-                    isWhiteBackground ? 'text-gray-600' : 'text-gray-300'
-                  }`}>
-                    Ready to earn money? Become a verified Helpa provider and start offering your services or selling your products to customers across Nigeria.
-                  </p>
-
-                  {/* Benefits */}
-                  <div className="space-y-3 mb-8">
-                    {[
-                      'Earn money as a Helpa provider',
-                      'Set your own prices & schedule',
-                      'Get paid securely & on time',
-                      'Reach thousands of customers'
-                    ].map((benefit, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
-                        <div className="w-5 h-5 rounded-full bg-[#FFD54F]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <div className="w-2 h-2 rounded-full bg-[#FFD54F]" />
-                        </div>
-                        <span className={`text-sm sm:text-base ${
-                          isWhiteBackground ? 'text-gray-600' : 'text-gray-400'
-                        }`}>
-                          {benefit}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* CTA Button */}
-                  <button
-                    onClick={() => onNavigate?.('waitlist-helpa')}
-                    className="w-full sm:w-auto bg-[#FFD54F] hover:bg-[#FFD54F]/90 text-gray-900 font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg"
-                  >
-                    Register as Helpa Provider
-                  </button>
-                </motion.div>
-              )}
             </motion.div>
           </div>
 
