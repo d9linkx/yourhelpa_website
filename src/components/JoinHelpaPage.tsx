@@ -259,11 +259,12 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
   ];
 
   const requirements = [
-    "Nigerian resident with valid ID",
-    "Proven skills or certifications in your field",
-    "Smartphone with WhatsApp",
-    "Commitment to quality service",
-    "Professional attitude and reliability"
+    "Nigerian resident",
+    "Proof of skill/experience in your service/product area",
+    "Valid ID (NIN, International passport, driver's license, etc.)",
+    "Smartphone with WhatsApp Business",
+    "Commitment to quality services & products",
+    "Professional attitude and reliability".
   ];
 
   return (
