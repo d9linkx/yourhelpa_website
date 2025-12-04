@@ -1,7 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPhoneNumber, RecaptchaVerifier } from 'firebase/auth';
-import { auth, googleProvider } from '../firebase';
+import { supabase } from '../supabaseClient';
 
 export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void }) {
   const [mode, setMode] = useState<'login' | 'signup'>('signup');
@@ -15,66 +14,59 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const recaptchaRef = useRef<any>(null);
   const [loading, setLoading] = useState(false);
 
-  // Google sign-in handler
+  // Google sign-in handler (Supabase OAuth)
   const handleGoogleSignIn = async () => {
     setError('');
     setLoading(true);
-    try {
-      await signInWithPopup(auth, googleProvider);
-      onAuthSuccess();
-    } catch (err) {
-      setError('Google sign-in failed.');
-    }
+    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+    if (error) setError(error.message || 'Google sign-in failed.');
     setLoading(false);
+    // Supabase will redirect, so no need to call onAuthSuccess here
   };
 
-  // Email sign up/in handler
+  // Email sign up/in handler (Supabase)
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    try {
-      if (mode === 'signup') {
-        await createUserWithEmailAndPassword(auth, email, password);
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-      }
+    let result;
+    if (mode === 'signup') {
+      result = await supabase.auth.signUp({ email, password });
+    } else {
+      result = await supabase.auth.signInWithPassword({ email, password });
+    }
+    if (result.error) {
+      setError(result.error.message || 'Email authentication failed.');
+    } else {
       onAuthSuccess();
-    } catch (err: any) {
-      setError(err.message || 'Email authentication failed.');
     }
     setLoading(false);
   };
 
-  // Phone auth handler
+  // Phone auth handler (Supabase SMS OTP)
   const handlePhoneAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    try {
-      if (!recaptchaRef.current) {
-  recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-      }
-      const confirmation = await signInWithPhoneNumber(auth, phone, recaptchaRef.current);
-      (window as any).confirmationResult = confirmation;
+    const result = await supabase.auth.signInWithOtp({ phone });
+    if (result.error) {
+      setError(result.error.message || 'Phone authentication failed.');
+    } else {
       setPhoneStep('verify');
-    } catch (err: any) {
-      setError(err.message || 'Phone authentication failed.');
     }
     setLoading(false);
   };
 
-  // OTP verify handler
+  // OTP verify handler (Supabase)
   const handleOtpVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    try {
-      const confirmation = (window as any).confirmationResult;
-      await confirmation.confirm(otp);
+    const result = await supabase.auth.verifyOtp({ phone, token: otp, type: 'sms' });
+    if (result.error) {
+      setError(result.error.message || 'OTP verification failed.');
+    } else {
       onAuthSuccess();
-    } catch (err: any) {
-      setError(err.message || 'OTP verification failed.');
     }
     setLoading(false);
   };
@@ -154,7 +146,6 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
                   required
                   disabled={loading}
                 />
-                <div id="recaptcha-container" />
                 <button
                   type="submit"
                   className="bg-emerald-600 text-white py-2.5 rounded-lg font-medium hover:bg-emerald-700 transition"
