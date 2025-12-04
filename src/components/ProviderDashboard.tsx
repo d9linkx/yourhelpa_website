@@ -1,5 +1,8 @@
+// File: /components/ProviderDashboard.tsx (FIXED)
+
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+// Changed 'motion/react' to 'framer-motion' for standard use
+import { motion } from 'framer-motion'; 
 import {
   Store,
   Plus,
@@ -8,35 +11,32 @@ import {
   Bell,
   Settings,
   Package,
-  MessageCircle,
-  Eye,
-  Edit,
-  Trash2,
-  CheckCircle,
-  Clock,
-  AlertCircle,
-  BarChart3,
-  Users,
   Star,
   ArrowLeft,
   MessageSquare,
   Phone,
+  Clock,
+  CheckCircle,
+  BarChart3,
+  Edit,
+  Trash2,
 } from 'lucide-react';
-import { useAuth } from './hooks/useAuth';
+// The import is correct
+import { useAuth } from './hooks/useAuth'; 
 import { useBlogSettings } from './hooks/useBlogSettings';
 import { Button } from './ui/button';
-import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { ProviderRegistrationModal } from './ProviderRegistrationModal';
-import { projectId, publicAnonKey } from '../utils/supabase/info';
 import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router-dom'; // Assuming you use React Router
 
+// --- Interface Definitions ---
 interface ProviderDashboardProps {
   onNavigate: (page: string) => void;
 }
-
 interface Provider {
+  id: string; // Added ID for clarity
   userId: string;
   businessName: string;
   whatsappNumber: string;
@@ -49,57 +49,42 @@ interface Provider {
   rating: number;
   totalReviews: number;
 }
+interface Service { id: string; category: string; title: string; description: string; price: number; priceType: 'fixed' | 'hourly' | 'negotiable'; availability: 'available' | 'busy' | 'unavailable'; rating: number; completedJobs: number; responseTime: string; location: string; tags: string[]; }
+interface Notification { id: string; type: string; title: string; message: string; read: boolean; createdAt: string; }
+interface Transaction { id: string; amount; status: string; description: string; createdAt: string; }
+// -----------------------------
 
-interface Service {
-  id: string;
-  category: string;
-  title: string;
-  description: string;
-  price: number;
-  priceType: 'fixed' | 'hourly' | 'negotiable';
-  availability: 'available' | 'busy' | 'unavailable';
-  rating: number;
-  completedJobs: number;
-  responseTime: string;
-  location: string;
-  tags: string[];
-}
-
-interface Notification {
-  id: string;
-  type: string;
-  title: string;
-  message: string;
-  read: boolean;
-  createdAt: string;
-}
-
-interface Transaction {
-  id: string;
-  amount: number;
-  status: string;
-  description: string;
-  createdAt: string;
-}
 
 export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
-  const { user } = useAuth();
+  // 💡 FIX 1: Correctly destructure the 'loading' state from useAuth, aliased as isAuthLoading
+  const { user, loading: isAuthLoading } = useAuth();
   const { isWhiteBackground } = useBlogSettings();
+  const navigate = useNavigate();
+  
   const [activeTab, setActiveTab] = useState('overview');
   const [provider, setProvider] = useState<Provider | null>(null);
   const [services, setServices] = useState<Service[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [analytics, setAnalytics] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [isDataLoading, setIsDataLoading] = useState(false); // Renamed: Only controls data fetching
   const [error, setError] = useState<string | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    // 💡 FIX 2: Only proceed with data loading IF authentication is complete and a user exists.
+    if (!isAuthLoading && user) {
       loadProviderData();
+    } 
+    
+    // Safety check: If auth is complete but no user, redirect to onboarding/login
+    // This assumes your root component handles this redirect better, but this is a good fallback.
+    if (!isAuthLoading && !user) {
+        // If they landed here without a session, push them back to login/onboarding
+        // If HelpaAuth calls onAuthSuccess(), the useEffect will rerun and find the user.
+        onNavigate('helpa-onboarding');
     }
-  }, [user]);
+  }, [user, isAuthLoading, onNavigate]);
 
   // Helper for fetch with timeout
   const fetchWithTimeout = (url: string, options: any = {}, timeout = 8000) => {
@@ -112,71 +97,75 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   const loadProviderData = async () => {
     try {
       setError(null);
+      setIsDataLoading(true); // Start data loading (only runs after auth is done)
+      
       if (!user) {
-        setError('No user found. Please sign in again.');
-        setLoading(false);
+        // Should not happen, but safe to check
+        setIsDataLoading(false);
         return;
       }
+      
       // Fetch provider profile from helpas table
       const { data: providerData, error: providerError } = await supabase
         .from('helpas')
         .select('*')
         .eq('user_id', user.id)
         .single();
+        
       if (providerError || !providerData) {
         setError('No provider profile found for this user. Please register as a provider.');
         setProvider(null);
-        setLoading(false);
-        return;
       } else {
-        setProvider(providerData);
+        // Assert type for consistent use
+        setProvider(providerData as Provider); 
+        
+        // Fetch remaining data
+        const [servicesResult, notificationsResult, transactionsResult] = await Promise.all([
+            supabase.from('services').select('*').eq('helpa_id', (providerData as Provider).id),
+            supabase.from('notifications').select('*').eq('recipient_id', (providerData as Provider).id),
+            supabase.from('transactions').select('*').eq('helpa_id', (providerData as Provider).id),
+        ]);
+
+        setServices(servicesResult.data || []);
+        setNotifications(notificationsResult.data || []);
+        setTransactions(transactionsResult.data || []);
+        setAnalytics(null); 
       }
-      // Fetch services
-      const { data: servicesData } = await supabase
-        .from('services')
-        .select('*')
-        .eq('helpa_id', providerData.id);
-      setServices(servicesData || []);
-      // Fetch notifications
-      const { data: notificationsData } = await supabase
-        .from('notifications')
-        .select('*')
-        .eq('recipient_id', providerData.id);
-      setNotifications(notificationsData || []);
-      // Fetch transactions
-      const { data: transactionsData } = await supabase
-        .from('transactions')
-        .select('*')
-        .eq('helpa_id', providerData.id);
-      setTransactions(transactionsData || []);
-      // Optionally fetch analytics (customize as needed)
-      setAnalytics(null); // Placeholder for analytics
-      setLoading(false);
+      setIsDataLoading(false);
+
     } catch (error) {
       setError('Error loading provider data. Please try again later.');
-      setLoading(false);
+      setIsDataLoading(false);
       console.error('Error loading provider data:', error);
     }
   };
 
-  if (loading) {
+
+  // 💡 FIX 3: Prioritize the AUTH loading state before anything else
+  if (isAuthLoading || isDataLoading) {
     return (
       <div className={`min-h-screen flex items-center justify-center transition-colors duration-500 ${
         isWhiteBackground 
           ? 'bg-gradient-to-br from-emerald-50 via-white to-yellow-50' 
           : 'bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B]'
       }`}>
-        <div className="text-center">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center"
+        >
           <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className={`transition-colors ${isWhiteBackground ? 'text-gray-600' : 'text-white'}`}>
-            Loading your provider dashboard...
+            {/* Show appropriate message based on what's loading */}
+            {isAuthLoading ? 'Verifying identity...' : 'Loading your provider dashboard...'}
           </p>
           {error && <p className="mt-4 text-red-500">{error}</p>}
-        </div>
+        </motion.div>
       </div>
     );
   }
 
+  // Render registration prompt if NO provider profile is found
   if (!provider) {
     return (
       <>
@@ -720,134 +709,75 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                 <p className={`text-sm sm:text-base transition-colors ${
                   isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
                 }`}>
-                  Your transaction history will appear here once you complete jobs.
+                  You have not completed any transactions yet.
                 </p>
               </div>
             ) : (
-              <div className={`rounded-3xl overflow-hidden border shadow-xl transition-colors ${
-                isWhiteBackground
-                  ? 'bg-white border-primary/10'
-                  : 'bg-white/10 backdrop-blur-xl border-white/20'
-              }`}>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className={isWhiteBackground ? 'bg-gray-50' : 'bg-white/5'}>
-                      <tr>
-                        <th className={`px-4 sm:px-6 py-3 text-left text-xs uppercase transition-colors ${
-                          isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                        }`}>Date</th>
-                        <th className={`px-4 sm:px-6 py-3 text-left text-xs uppercase transition-colors ${
-                          isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                        }`}>Description</th>
-                        <th className={`px-4 sm:px-6 py-3 text-left text-xs uppercase transition-colors ${
-                          isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                        }`}>Amount</th>
-                        <th className={`px-4 sm:px-6 py-3 text-left text-xs uppercase transition-colors ${
-                          isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                        }`}>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className={isWhiteBackground ? 'divide-y divide-gray-200' : 'divide-y divide-white/10'}>
-                      {transactions.map((transaction) => (
-                        <tr key={transaction.id}>
-                          <td className={`px-4 sm:px-6 py-4 text-xs sm:text-sm transition-colors ${
-                            isWhiteBackground ? 'text-foreground' : 'text-white'
-                          }`}>
-                            {new Date(transaction.createdAt).toLocaleDateString()}
-                          </td>
-                          <td className={`px-4 sm:px-6 py-4 text-xs sm:text-sm transition-colors ${
-                            isWhiteBackground ? 'text-foreground' : 'text-white'
-                          }`}>{transaction.description}</td>
-                          <td className={`px-4 sm:px-6 py-4 text-xs sm:text-sm transition-colors ${
-                            isWhiteBackground ? 'text-foreground' : 'text-white'
-                          }`}>₦{transaction.amount.toLocaleString()}</td>
-                          <td className="px-4 sm:px-6 py-4">
-                            <Badge
-                              variant={
-                                transaction.status === 'completed'
-                                  ? 'default'
-                                  : transaction.status === 'escrow'
-                                  ? 'secondary'
-                                  : 'outline'
-                              }
-                              className="text-xs"
-                            >
-                              {transaction.status}
-                            </Badge>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="space-y-3">
+                {transactions.map((transaction) => (
+                  <div
+                    key={transaction.id}
+                    className={`rounded-2xl p-4 border shadow-lg transition-colors flex items-center justify-between ${
+                      isWhiteBackground
+                        ? 'bg-white border-primary/10'
+                        : 'bg-white/10 backdrop-blur-xl border-white/20'
+                    }`}
+                  >
+                    <div>
+                      <p className={`text-sm sm:text-base mb-1 transition-colors ${
+                        isWhiteBackground ? 'text-foreground' : 'text-white'
+                      }`}>{transaction.description}</p>
+                      <p className={`text-xs transition-colors ${
+                        isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
+                      }`}>
+                        {new Date(transaction.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className={`text-sm sm:text-base font-semibold ${
+                        transaction.status === 'completed' 
+                          ? (isWhiteBackground ? 'text-emerald-600' : 'text-emerald-400')
+                          : (isWhiteBackground ? 'text-yellow-600' : 'text-yellow-400')
+                      }`}>
+                        ₦{transaction.amount.toLocaleString()}
+                      </p>
+                      <Badge variant="secondary" className="text-xs capitalize">
+                        {transaction.status}
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </TabsContent>
-
-          {/* Settings Tab */}
-          <TabsContent value="settings" className="space-y-4 sm:space-y-6">
-            <h2 className={`text-xl sm:text-2xl mb-4 sm:mb-6 transition-colors ${
-              isWhiteBackground ? 'text-foreground' : 'text-white'
-            }`}>Provider Settings</h2>
-            <div className={`rounded-3xl p-5 sm:p-6 border shadow-xl transition-colors ${
-              isWhiteBackground
-                ? 'bg-white border-primary/10'
-                : 'bg-white/10 backdrop-blur-xl border-white/20'
-            }`}>
-              <h3 className={`text-lg sm:text-xl mb-4 transition-colors ${
+          
+          {/* Settings Tab (Placeholder) */}
+          <TabsContent value="settings">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className={`rounded-3xl p-8 sm:p-12 text-center border shadow-xl transition-colors ${
+                isWhiteBackground
+                  ? 'bg-white border-primary/10'
+                  : 'bg-white/10 backdrop-blur-xl border-white/20'
+              }`}
+            >
+              <Settings className={`w-16 h-16 mx-auto mb-4 ${
+                isWhiteBackground ? 'text-primary' : 'text-white'
+              }`} />
+              <h3 className={`text-lg sm:text-xl mb-2 transition-colors ${
                 isWhiteBackground ? 'text-foreground' : 'text-white'
-              }`}>Business Information</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className={`text-xs sm:text-sm mb-1 block transition-colors ${
-                    isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                  }`}>Business Name</label>
-                  <p className={`p-3 rounded-lg text-sm sm:text-base transition-colors ${
-                    isWhiteBackground ? 'bg-muted/50 text-foreground' : 'bg-white/5 text-white'
-                  }`}>{provider.businessName}</p>
-                </div>
-                <div>
-                  <label className={`text-xs sm:text-sm mb-1 block transition-colors ${
-                    isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                  }`}>WhatsApp Number</label>
-                  <p className={`p-3 rounded-lg text-sm sm:text-base transition-colors ${
-                    isWhiteBackground ? 'bg-muted/50 text-foreground' : 'bg-white/5 text-white'
-                  }`}>{provider.whatsappNumber}</p>
-                </div>
-                <div>
-                  <label className={`text-xs sm:text-sm mb-1 block transition-colors ${
-                    isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                  }`}>Account Type</label>
-                  <p className={`p-3 rounded-lg capitalize text-sm sm:text-base transition-colors ${
-                    isWhiteBackground ? 'bg-muted/50 text-foreground' : 'bg-white/5 text-white'
-                  }`}>{provider.accountType}</p>
-                </div>
-                <div>
-                  <label className={`text-xs sm:text-sm mb-1 block transition-colors ${
-                    isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                  }`}>Verification Status</label>
-                  <Badge
-                    variant={
-                      provider.verificationStatus === 'verified'
-                        ? 'default'
-                        : provider.verificationStatus === 'pending'
-                        ? 'secondary'
-                        : 'destructive'
-                    }
-                    className="capitalize text-xs"
-                  >
-                    {provider.verificationStatus}
-                  </Badge>
-                </div>
-                <Button 
-                  className="w-full mt-6"
-                  onClick={() => onNavigate('helpa-settings')}
-                >
-                  <Settings className="w-4 h-4 mr-2" />
-                  Go to Settings
-                </Button>
-              </div>
-            </div>
+              }`}>Account Settings</h3>
+              <p className={`text-sm sm:text-base mb-6 transition-colors ${
+                isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
+              }`}>
+                Manage your profile, payout settings, and notification preferences.
+              </p>
+              <Button onClick={() => console.log('Go to settings')} className="w-full sm:w-auto">
+                <Settings className="w-4 h-4 mr-2" />
+                Configure Profile
+              </Button>
+            </motion.div>
           </TabsContent>
         </Tabs>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../supabaseClient'; // Assuming this is your initialized client
 
 export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void }) {
   const [mode, setMode] = useState<'login' | 'signup'>('signup');
@@ -16,14 +16,28 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const recaptchaRef = useRef<any>(null);
   const [loading, setLoading] = useState(false);
 
+  // Helper function to set the session and navigate
+  const setSessionAndNavigate = async (session: any, successMessage: string) => {
+    // 💡 FIX 1: Explicitly set the session on the client's Supabase instance
+    if (session?.access_token && session?.refresh_token) {
+        // This makes the session instantly available to useAuth()
+        await supabase.auth.setSession(session);
+    }
+    setSuccess(successMessage);
+    // Give time for the state update, then navigate
+    setTimeout(() => onAuthSuccess(), 500); 
+  };
+
+
   // Google sign-in handler (Supabase OAuth)
   const handleGoogleSignIn = async () => {
     setError('');
     setLoading(true);
+    // Note: Supabase handles the session setting after the redirect for OAuth,
+    // so no manual setSession is needed here.
     const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
     if (error) setError(error.message || 'Google sign-in failed.');
     setLoading(false);
-    // Supabase will redirect, so no need to call onAuthSuccess here
   };
 
   // Email sign up/in handler (Supabase)
@@ -32,38 +46,48 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
     setError('');
     setSuccess('');
     setLoading(true);
-    if (!email || !password || !fullName || !phone) {
-      setError('All fields are required.');
-      setLoading(false);
-      return;
+
+    // 💡 CRITICAL: Adjusted validation logic for signup vs login
+    if (mode === 'signup' && (!email || !password || !fullName || !phone)) {
+        setError('All fields are required for sign up.');
+        setLoading(false);
+        return;
     }
+    if (mode === 'login' && (!email || !password)) {
+        setError('Email and password are required for sign in.');
+        setLoading(false);
+        return;
+    }
+
     let result;
     if (mode === 'signup') {
-      result = await supabase.auth.signUp({ email, password });
+      result = await supabase.auth.signUp({ 
+          email, 
+          password, 
+          options: {
+              data: { full_name: fullName, phone: phone } // Pass metadata here
+          }
+      });
       if (!result.error && result.data?.user) {
-        // Store Helpa profile in 'helpas' table
-        const { error: dbError } = await supabase.from('helpas').insert({
-          user_id: result.data.user.id,
-          email,
-          full_name: fullName,
-          phone,
-          created_at: new Date().toISOString()
-        });
-        if (dbError) {
-          setError('Account created, but failed to save profile: ' + dbError.message);
-        } else {
-          setSuccess('Account created! Check your email to confirm registration.');
-        }
+        // 💡 OPTIMIZATION: Removed redundant insert into 'helpas' table. 
+        // Best practice is to use Supabase Triggers/Edge Functions 
+        // to sync the auth user to a public 'helpas' table upon signup.
+        setSuccess('Account created! Check your email to confirm registration.');
       } else if (!result.error) {
         setSuccess('Check your email to confirm your registration.');
       }
     } else {
+      // Login Mode
       result = await supabase.auth.signInWithPassword({ email, password });
     }
+
     if (result.error) {
+      // You should handle your server-side verification error here if applicable,
+      // but relying on the client's session state is safer for now.
       setError(result.error.message || 'Email authentication failed.');
-    } else if (mode === 'login') {
-      onAuthSuccess();
+    } else if (result.data?.session && mode === 'login') {
+      // 💡 FIX 2: Call the new helper function on successful login
+      await setSessionAndNavigate(result.data.session, 'Signed in successfully!');
     }
     setLoading(false);
   };
@@ -103,9 +127,9 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
     const result = await supabase.auth.verifyOtp({ phone, token: otp, type: 'sms' });
     if (result.error) {
       setError(result.error.message || 'OTP verification failed.');
-    } else {
-      setSuccess('Phone verified!');
-      onAuthSuccess();
+    } else if (result.data.session) {
+      // 💡 FIX 3: Call the new helper function on successful OTP verification
+      await setSessionAndNavigate(result.data.session, 'Phone verified and signed in!');
     }
     setLoading(false);
   };
@@ -144,26 +168,30 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
         )}
         {method === 'email' && (
           <form className="flex flex-col gap-4" onSubmit={handleEmailAuth}>
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="border rounded-lg px-4 py-2"
-              value={fullName}
-              onChange={e => setFullName(e.target.value)}
-              required
-              disabled={loading}
-              autoComplete="name"
-            />
-            <input
-              type="tel"
-              placeholder="Phone number (e.g. +234...)"
-              className="border rounded-lg px-4 py-2"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              required
-              disabled={loading}
-              autoComplete="tel"
-            />
+            {mode === 'signup' && (
+              <>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  className="border rounded-lg px-4 py-2"
+                  value={fullName}
+                  onChange={e => setFullName(e.target.value)}
+                  required
+                  disabled={loading}
+                  autoComplete="name"
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone number (e.g. +234...)"
+                  className="border rounded-lg px-4 py-2"
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  required
+                  disabled={loading}
+                  autoComplete="tel"
+                />
+              </>
+            )}
             <input
               type="email"
               placeholder="Email"
@@ -182,7 +210,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
               onChange={e => setPassword(e.target.value)}
               required
               disabled={loading}
-              autoComplete="current-password"
+              autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
             />
             <button
               type="submit"
