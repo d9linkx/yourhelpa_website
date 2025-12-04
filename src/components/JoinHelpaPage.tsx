@@ -131,6 +131,7 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
   ];
 
   const categories = [
+    // ----- Service categories (existing) -----
     { icon: Wrench, name: "Technicians", examples: "Plumbers, electricians, carpenters" },
     { icon: UtensilsCrossed, name: "Food Services", examples: "Chefs, caterers, bakers" },
     { icon: GraduationCap, name: "Educators", examples: "Tutors, trainers, coaches" },
@@ -156,14 +157,39 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
     { icon: Heart, name: "Home Care", examples: "Nurses, elderly care, physiotherapy" },
     { icon: ShieldCheck, name: "Insurance Services", examples: "Brokers for vehicle, health, property" },
     { icon: BadgeCheck, name: "Event Planning", examples: "Venue setup, logistics, decoration" },
-    { icon: BadgeDollarSign, name: "Legal Services", examples: "Solicitors, notaries, corporate law" },
     { icon: TrendingUp, name: "Accounting & Tax", examples: "Filing returns, auditing, advisory" },
     { icon: CircleCheckBig, name: "IT Support & Web Dev", examples: "Software repair, network setup" },
     { icon: GraduationCap, name: "Tutors & Education", examples: "Home lessons, exam prep, languages" },
     { icon: Users, name: "Real Estate Agents", examples: "Rentals, sales, land verification" },
     { icon: ShieldCheck, name: "Security Personnel", examples: "Guards, bouncers, security detail" },
-    { icon: Wrench, name: "Appliance Repair", examples: "Fridges, ACs, microwaves" },
-    
+    { icon: Award, name: "Travel & Visa Agents", examples: "Flight booking, visas, tours" },
+
+    // ----- Product categories (25 goods) -----
+    { icon: BadgeCheck, name: 'Fashion & Apparel', examples: 'Clothing, shoes, accessories' },
+    { icon: StarHalf, name: 'Groceries & Foodstuffs', examples: 'Staples, packaged foods, bulk items' },
+    { icon: UtensilsCrossed, name: 'Fresh Produce', examples: 'Fruits, vegetables, herbs' },
+    { icon: Lightbulb, name: 'Electronics & Gadgets', examples: 'Phones, laptops, accessories' },
+    { icon: Briefcase, name: 'Home Appliances', examples: 'Fridges, washers, small kitchen appliances' },
+    { icon: Handshake, name: 'Furniture & Decor', examples: 'Sofas, tables, cushions, artwork' },
+    { icon: Wrench, name: 'Building Materials', examples: 'Cement, tiles, plumbing fittings' },
+    { icon: CircleCheckBig, name: 'Automobile Parts', examples: 'Batteries, tires, spare parts' },
+    { icon: Heart, name: 'Health & Wellness Products', examples: 'Supplements, fitness gear' },
+    { icon: BadgeDollarSign, name: 'Beauty & Cosmetics', examples: 'Skincare, makeup, salon supplies' },
+    { icon: GraduationCap, name: 'Baby & Kids Items', examples: 'Diapers, toys, children clothes' },
+    { icon: MessageCircle, name: 'Books & Stationery', examples: 'Textbooks, notebooks, office supplies' },
+    { icon: Award, name: 'Jewelry & Watches', examples: 'Gold, silver, costume jewelry' },
+    { icon: StarHalf, name: 'Art & Crafts', examples: 'Handmade goods, paintings, souvenirs' },
+    { icon: Users, name: 'Agricultural Products', examples: 'Seeds, fertilizers, farming tools' },
+    { icon: Clock, name: 'Wines & Spirits', examples: 'Alcoholic beverages and mixers' },
+    { icon: ShieldCheck, name: 'Pets & Supplies', examples: 'Pet food, grooming, accessories' },
+    { icon: Wrench, name: 'Industrial Equipment', examples: 'Generators, machinery, heavy tools' },
+    { icon: Briefcase, name: 'Water & Beverages (Bulk)', examples: 'Bottled water, juices, soft drinks' },
+    { icon: Handshake, name: 'Used Goods / Thrift', examples: 'Second-hand clothes, electronics' },
+    { icon: BadgeCheck, name: 'Chemicals & Cleaning Supplies', examples: 'Detergents, disinfectants' },
+    { icon: Lightbulb, name: 'Solar & Inverters', examples: 'Panels, batteries, installers' },
+    { icon: ShieldCheck, name: 'Security Equipment', examples: 'CCTV, alarms, safes' },
+    { icon: ArrowRight, name: 'Gifts & Souvenirs', examples: 'Personalized gifts, event favors' },
+    { icon: CircleCheckBig, name: 'IT Hardware & Networking', examples: 'Servers, routers, cables' }
   ];
 
   const howItWorks = [
