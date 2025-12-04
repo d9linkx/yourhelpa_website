@@ -100,75 +100,101 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
     }
   }, [user]);
 
+  // Helper for fetch with timeout
+  const fetchWithTimeout = (url: string, options: any = {}, timeout = 8000) => {
+    return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), timeout))
+    ]);
+  };
+
   const loadProviderData = async () => {
     try {
       setError(null);
       const token = localStorage.getItem('access_token');
       if (!token) {
         setError('No access token found. Please sign in again.');
+        setLoading(false);
         return;
       }
 
-      // Load provider profile
-      const profileRes = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/profile`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      // Load provider profile with timeout
+      let profileRes;
+      try {
+        profileRes = await fetchWithTimeout(
+          `https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/profile`,
+          { headers: { Authorization: `Bearer ${token}` } },
+          8000
+        );
+      } catch (err) {
+        setError('Provider profile request timed out. Please check your connection or try again later.');
+        setLoading(false);
+        return;
+      }
 
-      if (profileRes.ok) {
-        const profileData = await profileRes.json();
-        if (!profileData.provider) {
-          setError('No provider profile found for this user. Please register as a provider.');
-          setProvider(null);
+      if (profileRes && typeof profileRes === 'object' && 'ok' in profileRes && typeof profileRes.ok === 'boolean') {
+        const res = profileRes as Response;
+        if (res.ok) {
+          const profileData = await res.json();
+          if (!profileData.provider) {
+            setError('No provider profile found for this user. Please register as a provider.');
+            setProvider(null);
+            setLoading(false);
+            return;
+          } else {
+            setProvider(profileData.provider);
+          }
         } else {
-          setProvider(profileData.provider);
-        }
-
-        // Load other data in parallel
-        const [servicesRes, notificationsRes, analyticsRes, transactionsRes] = await Promise.all([
-          fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/services`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/notifications`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/analytics`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/transactions`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
-
-        if (servicesRes.ok) {
-          const servicesData = await servicesRes.json();
-          setServices(servicesData.services || []);
-        }
-
-        if (notificationsRes.ok) {
-          const notifData = await notificationsRes.json();
-          setNotifications(notifData.notifications || []);
-        }
-
-        if (analyticsRes.ok) {
-          const analyticsData = await analyticsRes.json();
-          setAnalytics(analyticsData.analytics);
-        }
-
-        if (transactionsRes.ok) {
-          const txnData = await transactionsRes.json();
-          setTransactions(txnData.transactions || []);
+          setError('Failed to load provider profile. Please try again later.');
+          setLoading(false);
+          return;
         }
       } else {
-        setError('Failed to load provider profile. Please try again later.');
+        setError('Provider profile request failed. Please try again later.');
+        setLoading(false);
+        return;
       }
+
+      // Load other data in parallel, but don't block dashboard
+      Promise.all([
+        fetchWithTimeout(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/services`, { headers: { Authorization: `Bearer ${token}` } }, 8000)
+          .then(res => {
+            if (res && typeof res === 'object' && 'ok' in res && typeof res.ok === 'boolean' && res.ok) {
+              return (res as Response).json();
+            }
+            return null;
+          })
+          .then(data => setServices(data?.services || [])),
+        fetchWithTimeout(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/notifications`, { headers: { Authorization: `Bearer ${token}` } }, 8000)
+          .then(res => {
+            if (res && typeof res === 'object' && 'ok' in res && typeof res.ok === 'boolean' && res.ok) {
+              return (res as Response).json();
+            }
+            return null;
+          })
+          .then(data => setNotifications(data?.notifications || [])),
+        fetchWithTimeout(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/analytics`, { headers: { Authorization: `Bearer ${token}` } }, 8000)
+          .then(res => {
+            if (res && typeof res === 'object' && 'ok' in res && typeof res.ok === 'boolean' && res.ok) {
+              return (res as Response).json();
+            }
+            return null;
+          })
+          .then(data => setAnalytics(data?.analytics)),
+        fetchWithTimeout(`https://${projectId}.supabase.co/functions/v1/make-server-bb3bbc22/provider/transactions`, { headers: { Authorization: `Bearer ${token}` } }, 8000)
+          .then(res => {
+            if (res && typeof res === 'object' && 'ok' in res && typeof res.ok === 'boolean' && res.ok) {
+              return (res as Response).json();
+            }
+            return null;
+          })
+          .then(data => setTransactions(data?.transactions || [])),
+      ]);
+      setLoading(false);
     } catch (error) {
       setError('Error loading provider data. Please try again later.');
-      console.error('Error loading provider data:', error);
-    } finally {
       setLoading(false);
+      console.error('Error loading provider data:', error);
     }
   };
 
