@@ -41,7 +41,8 @@ export default function App() {
     '/': 'home',
     '/services': 'services',
     '/pricing': 'pricing',
-  '/become-a-helpa': 'helpa-onboarding',
+    '/become-a-helpa': 'join',
+    '/helpa-onboarding': 'helpa-onboarding',
     '/about': 'about',
     '/api': 'api',
     '/frequently-asked-questions': 'faqs',
@@ -65,7 +66,8 @@ export default function App() {
     'home': '/',
     'services': '/services',
     'pricing': '/pricing',
-  'helpa-onboarding': '/become-a-helpa',
+    'join': '/become-a-helpa',
+    'helpa-onboarding': '/helpa-onboarding',
     'about': '/about',
     'api': '/api',
     'faqs': '/frequently-asked-questions',
@@ -135,9 +137,15 @@ export default function App() {
   }, []);
 
   const handleNavigate = (page: string, data?: string) => {
-    // Route Helpa login/signup navigation to onboarding page
-    if (page === "join" || page === "helpa-onboarding") {
+    // Route Helpa onboarding navigation to onboarding page
+    if (page === "helpa-onboarding") {
       setCurrentPage('helpa-onboarding');
+      window.history.pushState(null, '', '/helpa-onboarding');
+      return;
+    }
+    // Route Become a Helpa navigation to join page
+    if (page === "join") {
+      setCurrentPage('join');
       window.history.pushState(null, '', '/become-a-helpa');
       return;
     }

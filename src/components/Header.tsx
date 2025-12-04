@@ -291,7 +291,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                   <span className="tracking-wide">Join Waitlist</span>
                 </motion.button>
 
-                {/* Secondary CTA - Become a Helpa (Helpa Dashboard Login) */}
+                {/* Secondary CTA - Helpa Onboarding/Login */}
                 <motion.button
                   onClick={() => onNavigate('helpa-onboarding')}
                   className="flex items-center gap-2.5 bg-white/10 border border-white/20 text-foreground px-5 py-2.5 rounded-full hover:bg-white/15 hover:border-white/40 transition-all duration-300 shadow-md hover:shadow-lg group"

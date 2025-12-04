@@ -123,7 +123,7 @@ export function Footer({ onNavigate }: FooterProps) {
               {/* Login/Become a Helpa CTA - Show for non-logged-in users */}
               {!user && (
                 <motion.button
-                  onClick={() => onNavigate('helpa-onboarding')}
+                  onClick={() => onNavigate('join')}
                   className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-white/15 hover:border-primary/40 transition-all group"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}

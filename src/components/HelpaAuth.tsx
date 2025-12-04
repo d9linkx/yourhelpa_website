@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
@@ -11,6 +11,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const [otp, setOtp] = useState('');
   const [phoneStep, setPhoneStep] = useState<'input' | 'verify'>('input');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const recaptchaRef = useRef<any>(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,16 +29,25 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
+    if (!email || !password) {
+      setError('Email and password are required.');
+      setLoading(false);
+      return;
+    }
     let result;
     if (mode === 'signup') {
       result = await supabase.auth.signUp({ email, password });
+      if (!result.error) {
+        setSuccess('Check your email to confirm your registration.');
+      }
     } else {
       result = await supabase.auth.signInWithPassword({ email, password });
     }
     if (result.error) {
       setError(result.error.message || 'Email authentication failed.');
-    } else {
+    } else if (mode === 'login') {
       onAuthSuccess();
     }
     setLoading(false);
@@ -47,11 +57,18 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const handlePhoneAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
+    if (!phone.match(/^\+\d{10,15}$/)) {
+      setError('Enter a valid phone number with country code (e.g. +234...)');
+      setLoading(false);
+      return;
+    }
     const result = await supabase.auth.signInWithOtp({ phone });
     if (result.error) {
       setError(result.error.message || 'Phone authentication failed.');
     } else {
+      setSuccess('OTP sent! Check your phone.');
       setPhoneStep('verify');
     }
     setLoading(false);
@@ -61,11 +78,18 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const handleOtpVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
     setLoading(true);
+    if (!otp) {
+      setError('Enter the OTP sent to your phone.');
+      setLoading(false);
+      return;
+    }
     const result = await supabase.auth.verifyOtp({ phone, token: otp, type: 'sms' });
     if (result.error) {
       setError(result.error.message || 'OTP verification failed.');
     } else {
+      setSuccess('Phone verified!');
       onAuthSuccess();
     }
     setLoading(false);
@@ -113,6 +137,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
               onChange={e => setEmail(e.target.value)}
               required
               disabled={loading}
+              autoComplete="email"
             />
             <input
               type="password"
@@ -122,6 +147,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
               onChange={e => setPassword(e.target.value)}
               required
               disabled={loading}
+              autoComplete="current-password"
             />
             <button
               type="submit"
@@ -145,6 +171,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
                   onChange={e => setPhone(e.target.value)}
                   required
                   disabled={loading}
+                  autoComplete="tel"
                 />
                 <button
                   type="submit"
@@ -166,6 +193,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
                   onChange={e => setOtp(e.target.value)}
                   required
                   disabled={loading}
+                  autoComplete="one-time-code"
                 />
                 <button
                   type="submit"
@@ -182,6 +210,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
       </div>
       <div className="mt-6 text-center">
         {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
+        {success && <div className="text-green-600 text-sm mb-2">{success}</div>}
         <span className="text-sm text-gray-500">
           {mode === 'signup' ? 'Already have an account?' : "Don't have an account?"}
         </span>
