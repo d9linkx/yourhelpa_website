@@ -8,6 +8,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+  const [fullName, setFullName] = useState('');
   const [otp, setOtp] = useState('');
   const [phoneStep, setPhoneStep] = useState<'input' | 'verify'>('input');
   const [error, setError] = useState('');
@@ -31,15 +32,29 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
     setError('');
     setSuccess('');
     setLoading(true);
-    if (!email || !password) {
-      setError('Email and password are required.');
+    if (!email || !password || !fullName || !phone) {
+      setError('All fields are required.');
       setLoading(false);
       return;
     }
     let result;
     if (mode === 'signup') {
       result = await supabase.auth.signUp({ email, password });
-      if (!result.error) {
+      if (!result.error && result.data?.user) {
+        // Store Helpa profile in 'helpas' table
+        const { error: dbError } = await supabase.from('helpas').insert({
+          user_id: result.data.user.id,
+          email,
+          full_name: fullName,
+          phone,
+          created_at: new Date().toISOString()
+        });
+        if (dbError) {
+          setError('Account created, but failed to save profile: ' + dbError.message);
+        } else {
+          setSuccess('Account created! Check your email to confirm registration.');
+        }
+      } else if (!result.error) {
         setSuccess('Check your email to confirm your registration.');
       }
     } else {
@@ -130,6 +145,26 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
         {method === 'email' && (
           <form className="flex flex-col gap-4" onSubmit={handleEmailAuth}>
             <input
+              type="text"
+              placeholder="Full Name"
+              className="border rounded-lg px-4 py-2"
+              value={fullName}
+              onChange={e => setFullName(e.target.value)}
+              required
+              disabled={loading}
+              autoComplete="name"
+            />
+            <input
+              type="tel"
+              placeholder="Phone number (e.g. +234...)"
+              className="border rounded-lg px-4 py-2"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              required
+              disabled={loading}
+              autoComplete="tel"
+            />
+            <input
               type="email"
               placeholder="Email"
               className="border rounded-lg px-4 py-2"
@@ -154,7 +189,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
               className="bg-emerald-600 text-white py-2.5 rounded-lg font-medium hover:bg-emerald-700 transition"
               disabled={loading}
             >
-              {mode === 'signup' ? 'Sign up with Email' : 'Sign in with Email'}
+              {mode === 'signup' ? 'Sign up as Helpa' : 'Sign in with Email'}
             </button>
             <button type="button" className="text-sm text-gray-500 hover:underline" onClick={() => setMethod(null)} disabled={loading}>Back</button>
           </form>
