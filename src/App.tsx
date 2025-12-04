@@ -29,7 +29,7 @@ import { WaitlistPage } from "./components/WaitlistPage";
 import { WaitlistChoicePage } from "./components/WaitlistChoicePage";
 import { PageSEO } from "./components/PageSEO";
 
-import HelpaAuth from "./components/HelpaAuth";
+import HelpaOnboardingPage from "./components/HelpaOnboardingPage";
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [verificationEmail, setVerificationEmail] = useState("");
@@ -41,7 +41,7 @@ export default function App() {
     '/': 'home',
     '/services': 'services',
     '/pricing': 'pricing',
-    '/become-a-helpa': 'join',
+  '/become-a-helpa': 'helpa-onboarding',
     '/about': 'about',
     '/api': 'api',
     '/frequently-asked-questions': 'faqs',
@@ -65,7 +65,7 @@ export default function App() {
     'home': '/',
     'services': '/services',
     'pricing': '/pricing',
-    'join': '/become-a-helpa',
+  'helpa-onboarding': '/become-a-helpa',
     'about': '/about',
     'api': '/api',
     'faqs': '/frequently-asked-questions',
@@ -135,9 +135,10 @@ export default function App() {
   }, []);
 
   const handleNavigate = (page: string, data?: string) => {
-    // Intercept Helpa login/signup navigation
-    if (page === "join" && !window.localStorage.getItem("access_token")) {
-      setShowHelpaAuthModal(true);
+    // Route Helpa login/signup navigation to onboarding page
+    if (page === "join" || page === "helpa-onboarding") {
+      setCurrentPage('helpa-onboarding');
+      window.history.pushState(null, '', '/become-a-helpa');
       return;
     }
     // Prevent navigating to the same page
@@ -171,28 +172,29 @@ export default function App() {
 
   const renderPage = () => {
     const pages = {
-      home: <HomePage onNavigate={handleNavigate} />,
-      services: <ServicesPage onNavigate={handleNavigate} />,
-      pricing: <PricingPage onNavigate={handleNavigate} />,
-      join: <JoinHelpaPage onNavigate={handleNavigate} />,
-      about: <AboutPage onBack={handleBack} onNavigate={handleNavigate} />,
-      api: <APIPage onNavigate={handleNavigate} onBack={handleBack} />,
-      faqs: <FAQPage onBack={handleBack} />,
-      signup: <ImprovedSignupPage onNavigate={handleNavigate} onBack={handleBack} />,
-      signin: <ImprovedSigninPage onNavigate={handleNavigate} onBack={handleBack} />,
-      dashboard: <UserDashboard onNavigate={handleNavigate} />,
-      "provider-dashboard": <ProviderDashboard onNavigate={handleNavigate} />,
-      settings: <SettingsPage onNavigate={handleNavigate} onBack={handleBack} />,
-      "helpa-settings": <HelpaSettings onNavigate={handleNavigate} onBack={handleBack} />,
-      "verify-email": <EmailVerificationPage onNavigate={handleNavigate} email={verificationEmail} onBack={handleBack} />,
-      "email-verified": <EmailVerifiedPage onNavigate={handleNavigate} />,
-      "diagnostic": <DiagnosticPage onNavigate={handleNavigate} onBack={handleBack} />,
-      "signup-debugger": <SignupDebugger onNavigate={handleNavigate} onBack={handleBack} />,
-      "waitlist-choice": <WaitlistChoicePage onNavigate={handleNavigate} onBack={handleBack} />,
-      "waitlist-customer": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="customer" />,
-      "waitlist-helpa": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="helpa" />,
+      "home": <HomePage onNavigate={handleNavigate} />, 
+      "services": <ServicesPage onNavigate={handleNavigate} />, 
+      "pricing": <PricingPage onNavigate={handleNavigate} />, 
+      "helpa-onboarding": <HelpaOnboardingPage onNavigate={handleNavigate} />, 
+      "join": <JoinHelpaPage onNavigate={handleNavigate} />, 
+      "about": <AboutPage onBack={handleBack} onNavigate={handleNavigate} />, 
+      "api": <APIPage onNavigate={handleNavigate} onBack={handleBack} />, 
+      "faqs": <FAQPage onBack={handleBack} />, 
+      "signup": <ImprovedSignupPage onNavigate={handleNavigate} onBack={handleBack} />, 
+      "signin": <ImprovedSigninPage onNavigate={handleNavigate} onBack={handleBack} />, 
+      "dashboard": <UserDashboard onNavigate={handleNavigate} />, 
+      "provider-dashboard": <ProviderDashboard onNavigate={handleNavigate} />, 
+      "settings": <SettingsPage onNavigate={handleNavigate} onBack={handleBack} />, 
+      "helpa-settings": <HelpaSettings onNavigate={handleNavigate} onBack={handleBack} />, 
+      "verify-email": <EmailVerificationPage onNavigate={handleNavigate} email={verificationEmail} onBack={handleBack} />, 
+      "email-verified": <EmailVerifiedPage onNavigate={handleNavigate} />, 
+      "diagnostic": <DiagnosticPage onNavigate={handleNavigate} onBack={handleBack} />, 
+      "signup-debugger": <SignupDebugger onNavigate={handleNavigate} onBack={handleBack} />, 
+      "waitlist-choice": <WaitlistChoicePage onNavigate={handleNavigate} onBack={handleBack} />, 
+      "waitlist-customer": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="customer" />, 
+      "waitlist-helpa": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="helpa" />, 
     };
-    return pages[currentPage as keyof typeof pages] || pages.home;
+    return pages[currentPage as keyof typeof pages] || pages["home"];
   };
 
   return (
@@ -210,17 +212,6 @@ export default function App() {
             <Footer onNavigate={handleNavigate} />
             <FloatingWhatsAppButton onNavigate={handleNavigate} />
             <Toaster position="top-right" />
-            {/* HelpaAuth Modal - global for header/footer CTA */}
-            {showHelpaAuthModal && (
-              <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/40">
-                <div className="bg-white rounded-2xl shadow-2xl p-0 relative">
-                  <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-700" onClick={() => setShowHelpaAuthModal(false)}>
-                    ✕
-                  </button>
-                  <HelpaAuth onAuthSuccess={() => { setShowHelpaAuthModal(false); setCurrentPage('provider-dashboard'); }} />
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </BlogSettingsProvider>
