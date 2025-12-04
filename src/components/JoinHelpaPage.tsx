@@ -264,7 +264,7 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
     "Valid ID (NIN, International passport, driver's license, etc.)",
     "Smartphone with WhatsApp Business",
     "Commitment to quality services & products",
-    "Professional attitude and reliability".
+    "Professional attitude and reliability"
   ];
 
   return (
