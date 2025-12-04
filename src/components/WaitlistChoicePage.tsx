@@ -185,7 +185,7 @@ export function WaitlistChoicePage({ onNavigate, onBack }: WaitlistChoicePagePro
                     <h3 className={`text-xl sm:text-2xl font-semibold ${
                       isWhiteBackground ? 'text-gray-900' : 'text-white'
                     }`}>
-                      I want to become a Helpa
+                      I'm a business owner or skilled service provider
                     </h3>
                     {!expandedHelpa && (
                       <p className={`text-sm mt-1 ${
