@@ -135,261 +135,35 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
     { icon: UtensilsCrossed, name: "Food Services", examples: "Chefs, caterers, bakers" },
     { icon: GraduationCap, name: "Educators", examples: "Tutors, trainers, coaches" },
     { icon: Heart, name: "Care Providers", examples: "Nurses, therapists, counselors" },
-    { icon: Lightbulb, name: "Consultants", examples: "Advisors, planners, coaches" }
-    {
-    icon: 'IconPlaceholder1', // Replace with your actual icon component (e.g., Shirt, ShoppingCart)
-    name: 'Fashion & Apparel',
-    examples: 'Clothing, traditional wear (Aso-Ebi, Ankara), shoes, and accessories.'
-  },
-  {
-    icon: 'IconPlaceholder2',
-    name: 'Groceries & Foodstuffs',
-    examples: 'Staples (rice, beans, yams), bulk food, and market items.'
-  },
-  {
-    icon: 'IconPlaceholder3',
-    name: 'Fresh Produce',
-    examples: 'Fruits, vegetables, herbs, and spices.'
-  },
-  {
-    icon: 'IconPlaceholder4',
-    name: 'Electronics & Gadgets',
-    examples: 'Phones, laptops, accessories, and repairs.'
-  },
-  {
-    icon: 'IconPlaceholder5',
-    name: 'Home Appliances',
-    examples: 'Refrigerators, washing machines, air conditioners, and spare parts.'
-  },
-  {
-    icon: 'IconPlaceholder6',
-    name: 'Furniture & Decor',
-    examples: 'Sofas, dining sets, cabinets, and interior design items.'
-  },
-  {
-    icon: 'IconPlaceholder7',
-    name: 'Building Materials',
-    examples: 'Cement, blocks, roofing sheets, tiles, and plumbing fittings.'
-  },
-  {
-    icon: 'IconPlaceholder8',
-    name: 'Automobile Parts',
-    examples: 'Spare parts, batteries, tires, and vehicle accessories.'
-  },
-  {
-    icon: 'IconPlaceholder9',
-    name: 'Health & Wellness',
-    examples: 'Supplements, traditional medicine, and fitness equipment.'
-  },
-  {
-    icon: 'IconPlaceholder10',
-    name: 'Beauty & Cosmetics',
-    examples: 'Skincare, makeup, hair products, and salon supplies.'
-  },
-  {
-    icon: 'IconPlaceholder11',
-    name: 'Baby & Kids Items',
-    examples: 'Diapers, baby food, toys, and children\'s apparel.'
-  },
-  {
-    icon: 'IconPlaceholder12',
-    name: 'Books & Stationery',
-    examples: 'School supplies, textbooks, and office equipment.'
-  },
-  {
-    icon: 'IconPlaceholder13',
-    name: 'Jewelry & Watches',
-    examples: 'Gold, silver, costume jewelry, and custom pieces.'
-  },
-  {
-    icon: 'IconPlaceholder14',
-    name: 'Art & Crafts',
-    examples: 'Handmade goods, paintings, sculptures, and souvenirs.'
-  },
-  {
-    icon: 'IconPlaceholder15',
-    name: 'Agricultural Products',
-    examples: 'Seeds, fertilizers, farming tools, and livestock feed.'
-  },
-  {
-    icon: 'IconPlaceholder16',
-    name: 'Wines & Spirits',
-    examples: 'Alcoholic beverages and non-alcoholic drinks.'
-  },
-  {
-    icon: 'IconPlaceholder17',
-    name: 'Pets & Supplies',
-    examples: 'Pet food, grooming tools, and animal accessories.'
-  },
-  {
-    icon: 'IconPlaceholder18',
-    name: 'Industrial Equipment',
-    examples: 'Generators, machinery, and heavy-duty tools.'
-  },
-  {
-    icon: 'IconPlaceholder19',
-    name: 'Water & Beverages (Bulk)',
-    examples: 'Bottled water, packaged juices, and soft drinks.'
-  },
-  {
-    icon: 'IconPlaceholder20',
-    name: 'Used Goods/Thrift (Okrika)',
-    examples: 'Second-hand clothes, shoes, and bags.'
-  },
-  {
-    icon: 'IconPlaceholder21',
-    name: 'Chemicals & Cleaning Supplies',
-    examples: 'Detergents, disinfectants, and industrial cleaners.'
-  },
-  {
-    icon: 'IconPlaceholder22',
-    name: 'Solar & Inverters',
-    examples: 'Renewable energy equipment, batteries, and installations.'
-  },
-  {
-    icon: 'IconPlaceholder23',
-    name: 'Security Equipment',
-    examples: 'CCTV cameras, alarm systems, and protective gear.'
-  },
-  {
-    icon: 'IconPlaceholder24',
-    name: 'Gifts & Souvenirs',
-    examples: 'Personalized gifts and event favors.'
-  },
-  {
-    icon: 'IconPlaceholder25',
-    name: 'IT Hardware & Networking',
-    examples: 'Servers, cables, and enterprise equipment.'
-  },
-  
-  // ===========================================
-  // 🧑‍🔧 SERVICES (Professional, Technical, & Manual Labor) - 25 Categories
-  // ===========================================
-  {
-    icon: 'IconPlaceholder26',
-    name: 'Professional Cleaning',
-    examples: 'Homes, offices, post-construction cleanup, and fumigation.'
-  },
-  {
-    icon: 'IconPlaceholder27',
-    name: 'Plumbing Services',
-    examples: 'Pipe installation, leak repair, and general maintenance.'
-  },
-  {
-    icon: 'IconPlaceholder28',
-    name: 'Electrical Services',
-    examples: 'Wiring, fixture installation, and generator repair.'
-  },
-  {
-    icon: 'IconPlaceholder29',
-    name: 'Carpentry & Furniture Repair',
-    examples: 'Custom woodwork, cabinet making, and structural repairs.'
-  },
-  {
-    icon: 'IconPlaceholder30',
-    name: 'Auto Mechanic Services',
-    examples: 'Car repair, diagnostics, wheel balancing, and bodywork.'
-  },
-  {
-    icon: 'IconPlaceholder31',
-    name: 'Tailoring & Fashion Design',
-    examples: 'Custom clothing, alteration, and garment production.'
-  },
-  {
-    icon: 'IconPlaceholder32',
-    name: 'Hair Stylists & Barbers',
-    examples: 'Haircutting, braiding, weaving, and dreadlocks.'
-  },
-  {
-    icon: 'IconPlaceholder33',
-    name: 'Makeup Artists (MUA)',
-    examples: 'Bridal makeup, photoshoot makeup, and personal lessons.'
-  },
-  {
-    icon: 'IconPlaceholder34',
-    name: 'Photography & Videography',
-    examples: 'Event coverage, corporate shoots, and studio sessions.'
-  },
-  {
-    icon: 'IconPlaceholder35',
-    name: 'Catering & Events',
-    examples: 'Food service, cake making, and drinks management.'
-  },
-  {
-    icon: 'IconPlaceholder36',
-    name: 'Event Planning & Decoration',
-    examples: 'Venue setup, logistics, and theme decoration.'
-  },
-  {
-    icon: 'IconPlaceholder37',
-    name: 'Legal Services',
-    examples: 'Solicitors, notaries, corporate law, and land dispute resolution.'
-  },
-  {
-    icon: 'IconPlaceholder38',
-    name: 'Accounting & Tax Consulting',
-    examples: 'Filing returns, auditing, and financial advisory.'
-  },
-  {
-    icon: 'IconPlaceholder39',
-    name: 'IT Support & Web Development',
-    examples: 'Software repair, network setup, and website design/maintenance.'
-  },
-  {
-    icon: 'IconPlaceholder40',
-    name: 'Tutors & Education',
-    examples: 'Home lessons, exam prep (WAEC, JAMB), and language classes.'
-  },
-  {
-    icon: 'IconPlaceholder41',
-    name: 'Real Estate Agents',
-    examples: 'Property rentals, sales, and land verification (due diligence).'
-  },
-  {
-    icon: 'IconPlaceholder42',
-    name: 'Security Personnel',
-    examples: 'Guards, bouncers, and residential/corporate security detail.'
-  },
-  {
-    icon: 'IconPlaceholder43',
-    name: 'Appliance Repair',
-    examples: 'Fridges, ACs, microwaves, and small kitchen gadgets.'
-  },
-  {
-    icon: 'IconPlaceholder44',
-    name: 'Welding & Fabrication',
-    examples: 'Metalwork, gates, railings, and custom fabrication.'
-  },
-  {
-    icon: 'IconPlaceholder45',
-    name: 'Logistics & Delivery',
-    examples: 'Courier services, local delivery, and interstate transport.'
-  },
-  {
-    icon: 'IconPlaceholder46',
-    name: 'Health Workers (Home Care)',
-    examples: 'Nurses, elderly care, and in-home physiotherapy.'
-  },
-  {
-    icon: 'IconPlaceholder47',
-    name: 'Insurance Brokers',
-    examples: 'Vehicle, health, and property insurance services.'
-  },
-  {
-    icon: 'IconPlaceholder48',
-    name: 'Handyman Services',
-    examples: 'General repairs, mounting TVs, and minor home fixes.'
-  },
-  {
-    icon: 'IconPlaceholder49',
-    name: 'Digital Marketing & SEO',
-    examples: 'Social media management, content creation, and online ads.'
-  },
-  {
-    icon: 'IconPlaceholder50',
-    name: 'Travel & Visa Agents',
-    examples: 'Flight booking, visa processing, and tour packages.'
-  }
+    { icon: Lightbulb, name: "Consultants", examples: "Advisors, planners, coaches" },
+    { icon: MessageCircle, name: "Customer Support", examples: "Virtual assistants, call agents" },
+    { icon: BadgeCheck, name: "Event Services", examples: "Planners, decorators, DJs" },
+    { icon: ShieldCheck, name: "Security Services", examples: "Guards, bouncers, patrols" },
+    { icon: Clock, name: "Logistics", examples: "Couriers, drivers, movers" },
+    { icon: Users, name: "Real Estate", examples: "Agents, brokers, property managers" },
+    { icon: TrendingUp, name: "Marketing", examples: "Promoters, advertisers, social media" },
+    { icon: BadgeDollarSign, name: "Financial Services", examples: "Accountants, auditors, advisors" },
+    { icon: Handshake, name: "General Services", examples: "Handymen, cleaners, landscapers" },
+    { icon: CircleCheckBig, name: "IT Services", examples: "Developers, IT support, designers" },
+    { icon: StarHalf, name: "Creative Services", examples: "Photographers, artists, writers" },
+    { icon: Award, name: "Legal Services", examples: "Lawyers, paralegals, notaries" },
+    { icon: Heart, name: "Health & Wellness", examples: "Fitness trainers, nutritionists" },
+    { icon: Lightbulb, name: "Business Services", examples: "Consultants, strategists" },
+    { icon: MessageCircle, name: "Administrative Support", examples: "Data entry, scheduling" },
+    { icon: Wrench, name: "Appliance Repair", examples: "Fridges, ACs, microwaves" },
+    { icon: Users, name: "Welding & Fabrication", examples: "Metalwork, gates, railings" },
+    { icon: Clock, name: "Delivery & Logistics", examples: "Courier services, transport" },
+    { icon: Heart, name: "Home Care", examples: "Nurses, elderly care, physiotherapy" },
+    { icon: ShieldCheck, name: "Insurance Services", examples: "Brokers for vehicle, health, property" },
+    { icon: BadgeCheck, name: "Event Planning", examples: "Venue setup, logistics, decoration" },
+    { icon: BadgeDollarSign, name: "Legal Services", examples: "Solicitors, notaries, corporate law" },
+    { icon: TrendingUp, name: "Accounting & Tax", examples: "Filing returns, auditing, advisory" },
+    { icon: CircleCheckBig, name: "IT Support & Web Dev", examples: "Software repair, network setup" },
+    { icon: GraduationCap, name: "Tutors & Education", examples: "Home lessons, exam prep, languages" },
+    { icon: Users, name: "Real Estate Agents", examples: "Rentals, sales, land verification" },
+    { icon: ShieldCheck, name: "Security Personnel", examples: "Guards, bouncers, security detail" },
+    { icon: Wrench, name: "Appliance Repair", examples: "Fridges, ACs, microwaves" },
+    
   ];
 
   const howItWorks = [
