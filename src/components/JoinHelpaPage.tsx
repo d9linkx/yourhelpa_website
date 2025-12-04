@@ -1,3 +1,4 @@
+export default JoinHelpaPage;
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import {
