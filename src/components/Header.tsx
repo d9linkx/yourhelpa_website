@@ -48,7 +48,6 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
     { id: "home", label: "Home" },
     { id: "services", label: "Products/Services" },
     { id: "pricing", label: "Pricing" },
-    { id: "faqs", label: "FAQs" },
     { id: "join", label: "Become a Helpa" },
     { id: "about", label: "About" },
   ];
