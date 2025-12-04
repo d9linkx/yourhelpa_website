@@ -91,6 +91,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [analytics, setAnalytics] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
 
   useEffect(() => {
@@ -101,8 +102,12 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
   const loadProviderData = async () => {
     try {
+      setError(null);
       const token = localStorage.getItem('access_token');
-      if (!token) return;
+      if (!token) {
+        setError('No access token found. Please sign in again.');
+        return;
+      }
 
       // Load provider profile
       const profileRes = await fetch(
@@ -114,7 +119,12 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
       if (profileRes.ok) {
         const profileData = await profileRes.json();
-        setProvider(profileData.provider);
+        if (!profileData.provider) {
+          setError('No provider profile found for this user. Please register as a provider.');
+          setProvider(null);
+        } else {
+          setProvider(profileData.provider);
+        }
 
         // Load other data in parallel
         const [servicesRes, notificationsRes, analyticsRes, transactionsRes] = await Promise.all([
@@ -151,8 +161,11 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           const txnData = await transactionsRes.json();
           setTransactions(txnData.transactions || []);
         }
+      } else {
+        setError('Failed to load provider profile. Please try again later.');
       }
     } catch (error) {
+      setError('Error loading provider data. Please try again later.');
       console.error('Error loading provider data:', error);
     } finally {
       setLoading(false);
@@ -171,6 +184,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           <p className={`transition-colors ${isWhiteBackground ? 'text-gray-600' : 'text-white'}`}>
             Loading your provider dashboard...
           </p>
+          {error && <p className="mt-4 text-red-500">{error}</p>}
         </div>
       </div>
     );
@@ -205,6 +219,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               }`}>
                 Join YourHelpa as a service provider and start earning by offering your services to thousands of customers.
               </p>
+              {error && <p className="mb-4 text-red-500">{error}</p>}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
                   variant="outline"
