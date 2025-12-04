@@ -281,14 +281,27 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                 </AnimatePresence>
               </div>
             ) : (
-              <motion.button
-                onClick={() => onNavigate('waitlist-choice')}
-                className="flex items-center gap-2.5 bg-primary text-white px-6 py-2.5 rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 group border border-primary/20"
-                whileHover={{ scale: 1.05, y: -1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="tracking-wide">Join Waitlist</span>
-              </motion.button>
+              <div className="flex items-center gap-3">
+                {/* Primary CTA - Join Waitlist */}
+                <motion.button
+                  onClick={() => onNavigate('waitlist-choice')}
+                  className="flex items-center gap-2.5 bg-primary text-white px-6 py-2.5 rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 group border border-primary/20"
+                  whileHover={{ scale: 1.05, y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="tracking-wide">Join Waitlist</span>
+                </motion.button>
+
+                {/* Secondary CTA - Become a Helpa (Helpa Dashboard Login) */}
+                <motion.button
+                  onClick={() => onNavigate('join')}
+                  className="flex items-center gap-2.5 bg-white/10 border border-white/20 text-foreground px-5 py-2.5 rounded-full hover:bg-white/15 hover:border-white/40 transition-all duration-300 shadow-md hover:shadow-lg group"
+                  whileHover={{ scale: 1.05, y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <span className="text-sm font-medium">Helpa Login</span>
+                </motion.button>
+              </div>
             )}
           </div>
 

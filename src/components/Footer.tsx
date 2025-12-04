@@ -107,16 +107,33 @@ export function Footer({ onNavigate }: FooterProps) {
             </p>
             
             {/* WhatsApp CTA */}
-            <motion.button
-              onClick={handleChatClick}
-              className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl hover:bg-emerald-600 transition-all group shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span className="font-medium">Start Chat</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </motion.button>
+            <div className="flex flex-col gap-3">
+              {/* Start Chat CTA */}
+              <motion.button
+                onClick={handleChatClick}
+                className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl hover:bg-emerald-600 transition-all group shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span className="font-medium">Start Chat</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+
+              {/* Login/Become a Helpa CTA - Show for non-logged-in users */}
+              {!user && (
+                <motion.button
+                  onClick={() => onNavigate('join')}
+                  className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-white/15 hover:border-primary/40 transition-all group"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <LayoutDashboard className="w-4 h-4" />
+                  <span className="font-medium">Become a Helpa</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+              )}
+            </div>
 
             {/* Social Links */}
             <div className="flex gap-3 pt-2">
