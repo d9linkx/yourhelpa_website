@@ -293,7 +293,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
 
                 {/* Secondary CTA - Become a Helpa (Helpa Dashboard Login) */}
                 <motion.button
-                  onClick={() => onNavigate('join')}
+                  onClick={() => onNavigate('helpa-onboarding')}
                   className="flex items-center gap-2.5 bg-white/10 border border-white/20 text-foreground px-5 py-2.5 rounded-full hover:bg-white/15 hover:border-white/40 transition-all duration-300 shadow-md hover:shadow-lg group"
                   whileHover={{ scale: 1.05, y: -1 }}
                   whileTap={{ scale: 0.95 }}
