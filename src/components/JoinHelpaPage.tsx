@@ -50,6 +50,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useBlogSettings } from "./hooks/useBlogSettings";
 import { useAuth } from "./hooks/useAuth";
 import { ProviderRegistrationModal } from "./ProviderRegistrationModal";
+import HelpaAuth from "./HelpaAuth";
 import { projectId } from "../utils/supabase/info";
 
 interface JoinHelpaPageProps {
@@ -64,6 +65,7 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
   const [isProvider, setIsProvider] = useState(false);
   const [loadingProviderStatus, setLoadingProviderStatus] = useState(true);
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Check if user is a provider
   useEffect(() => {
@@ -106,8 +108,8 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
 
   const handlePrimaryButtonClick = () => {
     if (!user) {
-      // Not logged in - go to WhatsApp
-      window.open(whatsappLink, '_blank');
+      // Not logged in - show auth modal
+      setShowAuthModal(true);
     } else if (isProvider) {
       // Logged in and is a provider - go to dashboard
       onNavigate('helpa-dashboard');
