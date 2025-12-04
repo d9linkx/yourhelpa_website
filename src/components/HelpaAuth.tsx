@@ -53,7 +53,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
     setLoading(true);
     try {
       if (!recaptchaRef.current) {
-        recaptchaRef.current = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
+  recaptchaRef.current = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
       }
       const confirmation = await signInWithPhoneNumber(auth, phone, recaptchaRef.current);
       (window as any).confirmationResult = confirmation;

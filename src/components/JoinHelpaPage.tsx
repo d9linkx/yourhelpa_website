@@ -710,6 +710,18 @@ export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
         </div>
       </section>
 
+      {/* HelpaAuth Modal */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-2xl p-0 relative">
+            <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-700" onClick={() => setShowAuthModal(false)}>
+              ✕
+            </button>
+            <HelpaAuth onAuthSuccess={() => { setShowAuthModal(false); onNavigate('helpa-dashboard'); }} />
+          </div>
+        </div>
+      )}
+
       {/* Provider Registration Modal */}
       <ProviderRegistrationModal
         open={showRegistrationModal}

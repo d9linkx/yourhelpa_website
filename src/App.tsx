@@ -29,10 +29,12 @@ import { WaitlistPage } from "./components/WaitlistPage";
 import { WaitlistChoicePage } from "./components/WaitlistChoicePage";
 import { PageSEO } from "./components/PageSEO";
 
+import HelpaAuth from "./components/HelpaAuth";
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [verificationEmail, setVerificationEmail] = useState("");
   const [navigationHistory, setNavigationHistory] = useState<string[]>(["home"]);
+  const [showHelpaAuthModal, setShowHelpaAuthModal] = useState(false);
 
   // URL path to page identifier mapping
   const pathToPage: Record<string, string> = {
@@ -133,6 +135,11 @@ export default function App() {
   }, []);
 
   const handleNavigate = (page: string, data?: string) => {
+    // Intercept Helpa login/signup navigation
+    if (page === "join" && !window.localStorage.getItem("access_token")) {
+      setShowHelpaAuthModal(true);
+      return;
+    }
     // Prevent navigating to the same page
     if (page === currentPage && !data) return;
 
@@ -203,6 +210,17 @@ export default function App() {
             <Footer onNavigate={handleNavigate} />
             <FloatingWhatsAppButton onNavigate={handleNavigate} />
             <Toaster position="top-right" />
+            {/* HelpaAuth Modal - global for header/footer CTA */}
+            {showHelpaAuthModal && (
+              <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/40">
+                <div className="bg-white rounded-2xl shadow-2xl p-0 relative">
+                  <button className="absolute top-3 right-3 text-gray-400 hover:text-gray-700" onClick={() => setShowHelpaAuthModal(false)}>
+                    ✕
+                  </button>
+                  <HelpaAuth onAuthSuccess={() => { setShowHelpaAuthModal(false); setCurrentPage('provider-dashboard'); }} />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </BlogSettingsProvider>
