@@ -77,6 +77,20 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   });
 
   const [activeTab, setActiveTab] = useState('overview');
+  const [showServiceModal, setShowServiceModal] = useState(false);
+  const [editingService, setEditingService] = useState<Service | null>(null);
+  const [serviceForm, setServiceForm] = useState({
+    title: '',
+    description: '',
+    category: '',
+    price: 0,
+    priceType: 'fixed' as 'fixed' | 'hourly' | 'negotiable',
+    availability: 'available' as 'available' | 'busy' | 'unavailable',
+    location: '',
+    tags: [] as string[]
+  });
+  const [showPayoutModal, setShowPayoutModal] = useState(false);
+  const [payoutAmount, setPayoutAmount] = useState(0);
 
 
   useEffect(() => {
@@ -237,8 +251,8 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
         // Update existing profile
         const { data: updatedProvider, error: updateError } = await supabase
           .from('helpas')
-          .update(profileData)
-        .eq('id', provider!.id)
+        .update(profileData)
+          .eq('id', provider!.id)
           .select()
           .single();
 
@@ -253,6 +267,159 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
       setError('Failed to save profile. Please try again.');
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleCreateService = () => {
+    setEditingService(null);
+    setServiceForm({
+      title: '',
+      description: '',
+      category: '',
+      price: 0,
+      priceType: 'fixed',
+      availability: 'available',
+      location: '',
+      tags: []
+    });
+    setShowServiceModal(true);
+  };
+
+  const handleEditService = (service: Service) => {
+    setEditingService(service);
+    setServiceForm({
+      title: service.title,
+      description: service.description,
+      category: service.category,
+      price: service.price,
+      priceType: service.priceType,
+      availability: service.availability,
+      location: service.location,
+      tags: service.tags
+    });
+    setShowServiceModal(true);
+  };
+
+  const handleDeleteService = async (serviceId: string) => {
+    if (!confirm('Are you sure you want to delete this service?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('services')
+        .delete()
+        .eq('id', serviceId);
+
+      if (error) throw error;
+
+      setServices(services.filter(s => s.id !== serviceId));
+    } catch (error) {
+      console.error('Error deleting service:', error);
+      setError('Failed to delete service. Please try again.');
+    }
+  };
+
+  const handleSaveService = async () => {
+    if (!provider) return;
+
+    try {
+      const serviceData = {
+        helpa_id: provider.id,
+        title: serviceForm.title,
+        description: serviceForm.description,
+        category: serviceForm.category,
+        price: serviceForm.price,
+        price_type: serviceForm.priceType,
+        availability: serviceForm.availability,
+        location: serviceForm.location,
+        tags: serviceForm.tags,
+        rating: editingService?.rating || 0,
+        completed_jobs: editingService?.completedJobs || 0,
+        response_time: editingService?.responseTime || '1 hour'
+      };
+
+      if (editingService) {
+        // Update existing service
+        const { data, error } = await supabase
+          .from('services')
+          .update(serviceData)
+          .eq('id', editingService.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        setServices(services.map(s => s.id === editingService.id ? data as Service : s));
+      } else {
+        // Create new service
+        const { data, error } = await supabase
+          .from('services')
+          .insert(serviceData)
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        setServices([...services, data as Service]);
+      }
+
+      setShowServiceModal(false);
+      setEditingService(null);
+    } catch (error) {
+      console.error('Error saving service:', error);
+      setError('Failed to save service. Please try again.');
+    }
+  };
+
+  const handleRequestPayout = async () => {
+    if (!provider || payoutAmount <= 0) return;
+
+    try {
+      // Create payout request transaction
+      const { error } = await supabase
+        .from('transactions')
+        .insert({
+          helpa_id: provider.id,
+          amount: -payoutAmount, // Negative for payout
+          status: 'pending',
+          description: `Payout request - ₦${payoutAmount.toLocaleString()}`
+        });
+
+      if (error) throw error;
+
+      // Update provider's pending earnings
+      const { error: updateError } = await supabase
+        .from('helpas')
+        .update({
+          pending_earnings: Math.max(0, provider.pendingEarnings - payoutAmount)
+        })
+        .eq('id', provider.id);
+
+      if (updateError) throw updateError;
+
+      // Refresh data
+      loadProviderData();
+      setShowPayoutModal(false);
+      setPayoutAmount(0);
+    } catch (error) {
+      console.error('Error requesting payout:', error);
+      setError('Failed to request payout. Please try again.');
+    }
+  };
+
+  const markNotificationAsRead = async (notificationId: string) => {
+    try {
+      const { error } = await supabase
+        .from('notifications')
+        .update({ read: true })
+        .eq('id', notificationId);
+
+      if (error) throw error;
+
+      setNotifications(notifications.map(n =>
+        n.id === notificationId ? { ...n, read: true } : n
+      ));
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
     }
   };
 
@@ -521,7 +688,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               <TabsTrigger value="transactions">Transactions</TabsTrigger>
               <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
-            <Button onClick={() => setActiveTab('services')}>
+            <Button onClick={handleCreateService}>
               <Plus className="w-4 h-4 mr-2" />
               Create New Service
             </Button>
@@ -785,7 +952,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           <TabsContent value="services" className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <h2 className="text-xl font-semibold text-gray-900">Your Services</h2>
-              <Button>
+              <Button onClick={handleCreateService}>
                 <Plus className="w-4 h-4 mr-2" />
                 Add New Service
               </Button>
@@ -798,7 +965,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                 <p className="text-gray-600 mb-6">
                   Create your first service to start receiving requests from customers.
                 </p>
-                <Button>
+                <Button onClick={handleCreateService}>
                   <Plus className="w-4 h-4 mr-2" />
                   Create Your First Service
                 </Button>
