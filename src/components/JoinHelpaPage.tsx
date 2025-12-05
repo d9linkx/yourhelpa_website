@@ -50,7 +50,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useBlogSettings } from "./hooks/useBlogSettings";
 import { useAuth } from "./hooks/useAuth";
 import { ProviderRegistrationModal } from "./ProviderRegistrationModal";
-import HelpaAuth from "./HelpaAuth";
+
 import { projectId } from "../utils/supabase/info";
 
 interface JoinHelpaPageProps {
@@ -59,7 +59,7 @@ interface JoinHelpaPageProps {
 
 export function JoinHelpaPage({ onNavigate }: JoinHelpaPageProps) {
   const whatsappNumber = "2349027231243";
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hi! I want to become a Helpa")}`;
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hi, I want to become a Helpa")}`;
   const { isWhiteBackground } = useBlogSettings();
   const { user } = useAuth();
   const [isProvider, setIsProvider] = useState(false);
