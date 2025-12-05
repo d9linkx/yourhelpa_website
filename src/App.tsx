@@ -13,7 +13,7 @@ import { FAQPage } from "./components/FAQPage";
 import { ImprovedSignupPage } from "./components/ImprovedSignupPage";
 import { ImprovedSigninPage } from "./components/ImprovedSigninPage";
 
-import { ProviderDashboard } from "./components/ProviderDashboard";
+
 import { SettingsPage } from "./components/SettingsPage";
 import { HelpaSettings } from "./components/HelpaSettings";
 import { EmailVerificationPage } from "./components/EmailVerificationPage";
@@ -73,7 +73,7 @@ export default function App() {
     'signup': '/signup',
     'signin': '/signin',
     'dashboard': '/dashboard',
-    'provider-dashboard': '/helpa-dashboard',
+
     'settings': '/account-settings',
     'helpa-settings': '/helpa-settings',
     'verify-email': '/verify-email',
@@ -189,7 +189,7 @@ export default function App() {
       "faqs": <FAQPage onBack={handleBack} />,
       "signup": <ImprovedSignupPage onNavigate={handleNavigate} onBack={handleBack} />,
       "signin": <ImprovedSigninPage onNavigate={handleNavigate} onBack={handleBack} />,
-      "provider-dashboard": <ProviderDashboard onNavigate={handleNavigate} />,
+
       "settings": <SettingsPage onNavigate={handleNavigate} onBack={handleBack} />,
       "helpa-settings": <HelpaSettings onNavigate={handleNavigate} onBack={handleBack} />,
       "verify-email": <EmailVerificationPage onNavigate={handleNavigate} email={verificationEmail} onBack={handleBack} />,

@@ -240,17 +240,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                                 <User className="w-3.5 h-3.5 text-primary" />
                                 <span className="text-sm text-foreground">My requests</span>
                               </button>
-                              <button
-                                onClick={() => {
-                                  setUserMenuOpen(false);
-                                  setDashboardsOpen(false);
-                                  onNavigate('provider-dashboard');
-                                }}
-                                className="w-full flex items-center gap-3 px-4 pl-12 py-2.5 hover:bg-muted transition-colors text-left"
-                              >
-                                <MessageCircle className="w-3.5 h-3.5 text-primary" />
-                                <span className="text-sm text-foreground">Helpa Dashboard</span>
-                              </button>
+
                             </motion.div>
                           )}
                         </AnimatePresence>
