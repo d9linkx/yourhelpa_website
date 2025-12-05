@@ -1,9 +1,8 @@
-// File: /components/ProviderDashboard.tsx (CYBERPUNK REDESIGN)
+// File: /components/ProviderDashboard.tsx (Clean Modern Professional Design)
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Store,
   Plus,
   DollarSign,
   TrendingUp,
@@ -19,16 +18,8 @@ import {
   BarChart3,
   Edit,
   Trash2,
-  Zap,
-  Shield,
   Users,
   Activity,
-  Menu,
-  X,
-  ChevronRight,
-  Wifi,
-  Target,
-  Award,
   Calendar,
   MapPin,
 } from 'lucide-react';
@@ -36,6 +27,7 @@ import { useAuth } from './hooks/useAuth';
 import { useBlogSettings } from './hooks/useBlogSettings';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom';
@@ -255,384 +247,237 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   };
 
 
-  // Cyberpunk Loading States
+  // Clean Loading States
   if (isAuthLoading || isDataLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="relative mb-8">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto"
+            />
+          </div>
 
-        <div className="relative z-10 flex items-center justify-center min-h-screen">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center"
+          <motion.h2
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="text-xl font-semibold text-gray-900 mb-2"
           >
-            {/* Cyberpunk Loading Animation */}
-            <div className="relative mb-8">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="w-20 h-20 border-2 border-cyan-400 border-t-transparent rounded-full mx-auto"
-              />
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-2 border border-purple-400 border-t-transparent rounded-full"
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-cyan-400 animate-pulse" />
-              </div>
-            </div>
+            Loading Dashboard
+          </motion.h2>
 
-            <motion.h2
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="text-2xl font-mono text-cyan-400 mb-2 tracking-wider"
+          <p className="text-gray-600">
+            {isAuthLoading ? 'Authenticating...' : 'Loading your data...'}
+          </p>
+
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg"
             >
-              INITIALIZING NEURAL LINK
-            </motion.h2>
-
-            <p className="text-purple-300 font-mono text-sm">
-              {isAuthLoading ? 'AUTHENTICATING USER...' : 'LOADING CYBERSPACE DATA...'}
-            </p>
-
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6 p-4 bg-red-900/50 border border-red-500 rounded-lg backdrop-blur-sm"
-              >
-                <p className="text-red-300 text-sm font-mono">{error}</p>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
+              <p className="text-red-800 text-sm">{error}</p>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
     );
   }
 
   if (!provider) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="relative mb-8">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-16 h-16 bg-blue-600 rounded-full mx-auto flex items-center justify-center"
+            >
+              <Users className="w-8 h-8 text-white" />
+            </motion.div>
+          </div>
 
-        <div className="relative z-10 flex items-center justify-center min-h-screen">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center"
-          >
-            <div className="relative mb-8">
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-20 h-20 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full mx-auto flex items-center justify-center shadow-2xl shadow-purple-500/50"
-              >
-                <Shield className="w-8 h-8 text-white" />
-              </motion.div>
-            </div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            Setting up your profile
+          </h2>
+          <p className="text-gray-600">
+            Creating your professional dashboard...
+          </p>
 
-            <h2 className="text-2xl font-mono text-purple-400 mb-2 tracking-wider">
-              DEPLOYING CYBER PROFILE
-            </h2>
-            <p className="text-cyan-300 font-mono text-sm">
-              Setting up your digital identity...
-            </p>
-
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-6 p-4 bg-red-900/50 border border-red-500 rounded-lg backdrop-blur-sm"
-              >
-                <p className="text-red-300 text-sm font-mono">{error}</p>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+            >
+              <p className="text-red-800 text-sm">{error}</p>
+            </motion.div>
+          )}
+        </motion.div>
       </div>
     );
   }
 
   const unreadNotifications = notifications.filter(n => !n.read).length;
+  const [activeTab, setActiveTab] = useState('overview');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-60"
-            animate={{
-              x: [0, Math.random() * 100 - 50],
-              y: [0, Math.random() * 100 - 50],
-              opacity: [0.6, 0.2, 0.6],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 5,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="relative z-10 min-h-screen">
-        {/* Mobile Menu Toggle */}
-        <div className="lg:hidden fixed top-4 left-4 z-50">
-          <Button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="bg-slate-800/80 backdrop-blur-sm border border-cyan-500/30 hover:bg-slate-700/80"
-          >
-            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <Button
+                onClick={() => onNavigate('dashboard')}
+                variant="outline"
+                size="sm"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Home
+              </Button>
+            </div>
+          </div>
         </div>
+      </header>
 
-        <div className="flex">
-          {/* Sidebar Navigation */}
-          <AnimatePresence>
-            {sidebarOpen && (
-              <motion.div
-                initial={{ x: -300, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: -300, opacity: 0 }}
-                className="fixed lg:relative lg:translate-x-0 z-40 w-80 h-screen bg-slate-900/95 backdrop-blur-xl border-r border-cyan-500/30"
-              >
-                <div className="p-6">
-                  {/* Profile Header */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-center mb-8"
-                  >
-                    <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center shadow-2xl shadow-cyan-500/50">
-                      <Users className="w-8 h-8 text-white" />
-                    </div>
-                    <h2 className="text-xl font-mono text-cyan-400 tracking-wider">
-                      {provider.businessName}
-                    </h2>
-                    <div className="flex items-center justify-center gap-2 mt-2">
-                      <div className={`w-2 h-2 rounded-full ${
-                        provider.verificationStatus === 'verified' ? 'bg-green-400' :
-                        provider.verificationStatus === 'pending' ? 'bg-yellow-400' : 'bg-red-400'
-                      }`} />
-                      <span className="text-xs text-purple-300 font-mono capitalize">
-                        {provider.verificationStatus}
-                      </span>
-                    </div>
-                  </motion.div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Welcome Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Welcome back, {provider.businessName}
+                </h2>
+                <p className="text-gray-600 mt-1">
+                  Here's what's happening with your services today.
+                </p>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className={`w-3 h-3 rounded-full ${
+                  provider.verificationStatus === 'verified' ? 'bg-green-500' :
+                  provider.verificationStatus === 'pending' ? 'bg-yellow-500' : 'bg-red-500'
+                }`} />
+                <span className="text-sm text-gray-600 capitalize">
+                  {provider.verificationStatus}
+                </span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-                  {/* Navigation Menu */}
-                  <nav className="space-y-2">
-                    {[
-                      { id: 'dashboard', label: 'Dashboard', icon: Activity, count: null },
-                      { id: 'services', label: 'Services', icon: Package, count: services.length },
-                      { id: 'notifications', label: 'Notifications', icon: Bell, count: unreadNotifications },
-                      { id: 'transactions', label: 'Transactions', icon: DollarSign, count: null },
-                      { id: 'settings', label: 'Settings', icon: Settings, count: null },
-                    ].map((item) => (
-                      <motion.button
-                        key={item.id}
-                        whileHover={{ scale: 1.02, x: 5 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => {
-                          setActiveView(item.id);
-                          setSidebarOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                          activeView === item.id
-                            ? 'bg-cyan-500/20 border border-cyan-500/50 text-cyan-400'
-                            : 'text-purple-300 hover:bg-slate-800/50 hover:text-cyan-400'
-                        }`}
-                      >
-                        <item.icon className="w-5 h-5" />
-                        <span className="font-mono text-sm">{item.label}</span>
-                        {item.count !== null && item.count > 0 && (
-                          <span className="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-                            {item.count}
-                          </span>
-                        )}
-                      </motion.button>
-                    ))}
-                  </nav>
+        {/* Stats Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+        >
+          {/* Total Earnings */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Total Earnings</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  ₦{provider.totalEarnings.toLocaleString()}
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-green-600" />
+              </div>
+            </div>
+            <div className="flex items-center mt-4">
+              <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
+              <span className="text-sm text-green-600">+12% from last month</span>
+            </div>
+          </div>
 
-                  {/* Back Button */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-8 pt-6 border-t border-slate-700"
-                  >
-                    <Button
-                      onClick={() => onNavigate('dashboard')}
-                      variant="outline"
-                      className="w-full bg-slate-800/50 border-purple-500/30 hover:bg-slate-700/50 text-purple-300"
-                    >
-                      <ArrowLeft className="w-4 h-4 mr-2" />
-                      Back to Requests
-                    </Button>
-                  </motion.div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Pending Earnings */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Pending Earnings</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  ₦{provider.pendingEarnings.toLocaleString()}
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                <Clock className="w-6 h-6 text-yellow-600" />
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">In escrow</p>
+          </div>
 
-          {/* Main Content */}
-          <div className="flex-1 lg:ml-0">
-            <div className="p-6 lg:p-8">
-              {/* Header */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-8"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h1 className="text-4xl lg:text-6xl font-mono text-cyan-400 tracking-wider mb-2">
-                      CYBER DASHBOARD
-                    </h1>
-                    <p className="text-purple-300 font-mono text-sm">
-                      Neural Interface Active • System Online
-                    </p>
-                  </div>
-                  <div className="hidden lg:flex items-center gap-4">
-                    <div className="text-right">
-                      <div className="text-cyan-400 font-mono text-sm">STATUS</div>
-                      <div className="text-green-400 font-mono text-xs">OPERATIONAL</div>
-                    </div>
-                    <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full flex items-center justify-center">
-                      <Activity className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+          {/* Completed Jobs */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Completed Jobs</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {provider.completedJobs}
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <Package className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">This month</p>
+          </div>
 
-              {/* Cyberpunk Stats Grid */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
-              >
-                {/* Total Earnings */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-slate-800/50 backdrop-blur-xl border border-cyan-500/30 rounded-xl p-6 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-green-500/50">
-                        <DollarSign className="w-6 h-6 text-white" />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <TrendingUp className="w-4 h-4 text-green-400" />
-                        <span className="text-xs text-green-400 font-mono">ACTIVE</span>
-                      </div>
-                    </div>
-                    <p className="text-purple-300 font-mono text-sm mb-2">TOTAL EARNINGS</p>
-                    <p className="text-3xl font-mono text-cyan-400 font-bold">
-                      ₦{provider.totalEarnings.toLocaleString()}
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Pending Earnings */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-slate-800/50 backdrop-blur-xl border border-purple-500/30 rounded-xl p-6 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-yellow-500/50">
-                        <Clock className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-purple-300 font-mono text-sm mb-2">PENDING (ESCROW)</p>
-                    <p className="text-3xl font-mono text-yellow-400 font-bold">
-                      ₦{provider.pendingEarnings.toLocaleString()}
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Completed Jobs */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-slate-800/50 backdrop-blur-xl border border-blue-500/30 rounded-xl p-6 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/50">
-                        <Package className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-purple-300 font-mono text-sm mb-2">COMPLETED JOBS</p>
-                    <p className="text-3xl font-mono text-blue-400 font-bold">
-                      {provider.completedJobs}
-                    </p>
-                  </div>
-                </motion.div>
-
-                {/* Rating */}
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-slate-800/50 backdrop-blur-xl border border-pink-500/30 rounded-xl p-6 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-purple-500 rounded-lg flex items-center justify-center shadow-lg shadow-pink-500/50">
-                        <Star className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    <p className="text-purple-300 font-mono text-sm mb-2">RATING</p>
-                    <p className="text-3xl font-mono text-pink-400 font-bold">
-                      {provider.rating.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-purple-300 font-mono mt-1">
-                      {provider.totalReviews} REVIEWS
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
+          {/* Rating */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Average Rating</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {provider.rating.toFixed(1)}
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <Star className="w-6 h-6 text-purple-600" />
+              </div>
+            </div>
+            <p className="text-sm text-gray-500 mt-4">{provider.totalReviews} reviews</p>
+          </div>
+        </motion.div>
 
         {/* Main Content Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-            <TabsList className="grid w-full sm:w-auto grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-1 h-auto p-1.5 sm:p-1">
-              <TabsTrigger value="overview" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
-                Overview
-              </TabsTrigger>
-              <TabsTrigger value="services" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
-                Services ({services.length})
-              </TabsTrigger>
-              <TabsTrigger value="notifications" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md relative">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <TabsList className="grid w-full sm:w-auto grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="services">Services ({services.length})</TabsTrigger>
+              <TabsTrigger value="notifications" className="relative">
                 Notifications
                 {unreadNotifications > 0 && (
-                  <Badge variant="destructive" className="ml-1 sm:ml-2 px-1.5 py-0.5 text-[10px] absolute -top-1 -right-1 sm:relative sm:top-0 sm:right-0">
+                  <Badge variant="destructive" className="ml-2 px-1.5 py-0.5 text-xs">
                     {unreadNotifications}
                   </Badge>
                 )}
               </TabsTrigger>
-              <TabsTrigger value="transactions" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
-                Transactions
-              </TabsTrigger>
-              <TabsTrigger value="settings" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md col-span-2 lg:col-span-1">
-                Settings
-              </TabsTrigger>
+              <TabsTrigger value="transactions">Transactions</TabsTrigger>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
-            <Button className="w-full sm:w-auto" onClick={() => setActiveTab('services')}>
+            <Button onClick={() => setActiveTab('services')}>
               <Plus className="w-4 h-4 mr-2" />
               Create New Service
             </Button>
@@ -893,90 +738,64 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           </TabsContent>
 
           {/* Services Tab */}
-          <TabsContent value="services" className="space-y-4 sm:space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
-              <h2 className={`text-xl sm:text-2xl transition-colors ${
-                isWhiteBackground ? 'text-foreground' : 'text-white'
-              }`}>Your Services</h2>
-              <Button className="w-full sm:w-auto">
+          <TabsContent value="services" className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h2 className="text-xl font-semibold text-gray-900">Your Services</h2>
+              <Button>
                 <Plus className="w-4 h-4 mr-2" />
                 Add New Service
               </Button>
             </div>
 
             {services.length === 0 ? (
-              <div className={`rounded-3xl p-8 sm:p-12 text-center border shadow-xl transition-colors ${
-                isWhiteBackground
-                  ? 'bg-white border-primary/10'
-                  : 'bg-white/10 backdrop-blur-xl border-white/20'
-              }`}>
-                <Package className={`w-16 h-16 mx-auto mb-4 ${
-                  isWhiteBackground ? 'text-muted-foreground' : 'text-white/50'
-                }`} />
-                <h3 className={`text-lg sm:text-xl mb-2 transition-colors ${
-                  isWhiteBackground ? 'text-foreground' : 'text-white'
-                }`}>No services yet</h3>
-                <p className={`text-sm sm:text-base mb-6 transition-colors ${
-                  isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                }`}>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+                <Package className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No services yet</h3>
+                <p className="text-gray-600 mb-6">
                   Create your first service to start receiving requests from customers.
                 </p>
-                <Button className="w-full sm:w-auto">
+                <Button>
                   <Plus className="w-4 h-4 mr-2" />
                   Create Your First Service
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {services.map((service) => (
-                  <div 
-                    key={service.id} 
-                    className={`rounded-3xl p-5 sm:p-6 border shadow-xl transition-colors ${
-                      isWhiteBackground
-                        ? 'bg-white border-primary/10'
-                        : 'bg-white/10 backdrop-blur-xl border-white/20'
-                    }`}
+                  <div
+                    key={service.id}
+                    className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className={`text-lg sm:text-xl mb-1 transition-colors ${
-                          isWhiteBackground ? 'text-foreground' : 'text-white'
-                        }`}>{service.title}</h3>
+                        <h3 className="text-lg font-medium text-gray-900 mb-1">{service.title}</h3>
                         <Badge className="capitalize text-xs">{service.category}</Badge>
                       </div>
-                      <div className="flex gap-1 sm:gap-2">
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                      <div className="flex gap-2">
+                        <Button variant="ghost" size="sm">
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Button variant="ghost" size="sm">
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>
-                    <p className={`mb-4 text-xs sm:text-sm line-clamp-2 transition-colors ${
-                      isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                    }`}>
+                    <p className="mb-4 text-sm text-gray-600 line-clamp-2">
                       {service.description}
                     </p>
-                    <div className={`flex items-center justify-between text-xs sm:text-sm mb-4 transition-colors ${
-                      isWhiteBackground ? 'text-foreground' : 'text-white'
-                    }`}>
-                      <span>₦{service.price.toLocaleString()}/{service.priceType}</span>
+                    <div className="flex items-center justify-between text-sm mb-4">
+                      <span className="font-medium text-gray-900">₦{service.price.toLocaleString()}/{service.priceType}</span>
                       <Badge
                         variant={service.availability === 'available' ? 'default' : 'secondary'}
-                        className="text-xs"
                       >
                         {service.availability}
                       </Badge>
                     </div>
-                    <div className={`flex items-center gap-2 sm:gap-4 text-xs sm:text-sm transition-colors ${
-                      isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                    }`}>
+                    <div className="flex items-center gap-4 text-sm text-gray-600">
                       <span className="flex items-center gap-1">
                         <Star className="w-3 h-3 text-amber-500" />
                         {service.rating.toFixed(1)}
                       </span>
-                      <span className="hidden sm:inline">•</span>
                       <span>{service.completedJobs} jobs</span>
                     </div>
                   </div>
@@ -1052,64 +871,42 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           </TabsContent>
 
           {/* Transactions Tab */}
-          <TabsContent value="transactions" className="space-y-4 sm:space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
-              <h2 className={`text-xl sm:text-2xl transition-colors ${
-                isWhiteBackground ? 'text-foreground' : 'text-white'
-              }`}>Transaction History</h2>
-              <Button className="w-full sm:w-auto">
+          <TabsContent value="transactions" className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <h2 className="text-xl font-semibold text-gray-900">Transaction History</h2>
+              <Button>
                 <DollarSign className="w-4 h-4 mr-2" />
                 Request Payout
               </Button>
             </div>
             {transactions.length === 0 ? (
-              <div className={`rounded-3xl p-8 sm:p-12 text-center border shadow-xl transition-colors ${
-                isWhiteBackground
-                  ? 'bg-white border-primary/10'
-                  : 'bg-white/10 backdrop-blur-xl border-white/20'
-              }`}>
-                <DollarSign className={`w-16 h-16 mx-auto mb-4 ${
-                  isWhiteBackground ? 'text-muted-foreground' : 'text-white/50'
-                }`} />
-                <h3 className={`text-lg sm:text-xl mb-2 transition-colors ${
-                  isWhiteBackground ? 'text-foreground' : 'text-white'
-                }`}>No transactions yet</h3>
-                <p className={`text-sm sm:text-base transition-colors ${
-                  isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                }`}>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+                <DollarSign className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No transactions yet</h3>
+                <p className="text-gray-600">
                   You have not completed any transactions yet.
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {transactions.map((transaction) => (
                   <div
                     key={transaction.id}
-                    className={`rounded-2xl p-4 border shadow-lg transition-colors flex items-center justify-between ${
-                      isWhiteBackground
-                        ? 'bg-white border-primary/10'
-                        : 'bg-white/10 backdrop-blur-xl border-white/20'
-                    }`}
+                    className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 flex items-center justify-between"
                   >
                     <div>
-                      <p className={`text-sm sm:text-base mb-1 transition-colors ${
-                        isWhiteBackground ? 'text-foreground' : 'text-white'
-                      }`}>{transaction.description}</p>
-                      <p className={`text-xs transition-colors ${
-                        isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-                      }`}>
+                      <p className="text-base font-medium text-gray-900 mb-1">{transaction.description}</p>
+                      <p className="text-sm text-gray-600">
                         {new Date(transaction.createdAt).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className={`text-sm sm:text-base font-semibold ${
-                        transaction.status === 'completed' 
-                          ? (isWhiteBackground ? 'text-emerald-600' : 'text-emerald-400')
-                          : (isWhiteBackground ? 'text-yellow-600' : 'text-yellow-400')
+                      <p className={`text-lg font-semibold mb-1 ${
+                        transaction.status === 'completed' ? 'text-green-600' : 'text-yellow-600'
                       }`}>
                         ₦{transaction.amount.toLocaleString()}
                       </p>
-                      <Badge variant="secondary" className="text-xs capitalize">
+                      <Badge variant="secondary" className="capitalize">
                         {transaction.status}
                       </Badge>
                     </div>
