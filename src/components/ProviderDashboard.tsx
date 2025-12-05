@@ -426,31 +426,82 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
         {/* Main Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-1 h-auto p-1.5 sm:p-1">
-            <TabsTrigger value="overview" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
-              Overview
-            </TabsTrigger>
-            <TabsTrigger value="services" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
-              Services ({services.length})
-            </TabsTrigger>
-            <TabsTrigger value="notifications" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md relative">
-              Notifications
-              {unreadNotifications > 0 && (
-                <Badge variant="destructive" className="ml-1 sm:ml-2 px-1.5 py-0.5 text-[10px] absolute -top-1 -right-1 sm:relative sm:top-0 sm:right-0">
-                  {unreadNotifications}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger value="transactions" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
-              Transactions
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md col-span-2 lg:col-span-1">
-              Settings
-            </TabsTrigger>
-          </TabsList>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <TabsList className="grid w-full sm:w-auto grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-1 h-auto p-1.5 sm:p-1">
+              <TabsTrigger value="overview" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
+                Overview
+              </TabsTrigger>
+              <TabsTrigger value="services" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
+                Services ({services.length})
+              </TabsTrigger>
+              <TabsTrigger value="notifications" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md relative">
+                Notifications
+                {unreadNotifications > 0 && (
+                  <Badge variant="destructive" className="ml-1 sm:ml-2 px-1.5 py-0.5 text-[10px] absolute -top-1 -right-1 sm:relative sm:top-0 sm:right-0">
+                    {unreadNotifications}
+                  </Badge>
+                )}
+              </TabsTrigger>
+              <TabsTrigger value="transactions" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md">
+                Transactions
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="text-sm sm:text-sm py-2.5 sm:py-2 px-3 sm:px-4 rounded-lg sm:rounded-md col-span-2 lg:col-span-1">
+                Settings
+              </TabsTrigger>
+            </TabsList>
+            <Button className="w-full sm:w-auto" onClick={() => setActiveTab('services')}>
+              <Plus className="w-4 h-4 mr-2" />
+              Create New Service
+            </Button>
+          </div>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+            {/* Verification Status Banner */}
+            {provider.verificationStatus === 'pending' && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`p-4 rounded-2xl border shadow-lg transition-colors ${
+                  isWhiteBackground
+                    ? 'bg-yellow-50 border-yellow-200'
+                    : 'bg-yellow-900/20 border-yellow-500/20'
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      isWhiteBackground ? 'bg-yellow-100' : 'bg-yellow-800/30'
+                    }`}>
+                      <Clock className={`w-4 h-4 ${
+                        isWhiteBackground ? 'text-yellow-600' : 'text-yellow-400'
+                      }`} />
+                    </div>
+                    <div>
+                      <p className={`font-medium transition-colors ${
+                        isWhiteBackground ? 'text-yellow-900' : 'text-yellow-200'
+                      }`}>
+                        Verification Status: Pending Review
+                      </p>
+                      <p className={`text-sm transition-colors ${
+                        isWhiteBackground ? 'text-yellow-700' : 'text-yellow-300'
+                      }`}>
+                        Complete your profile details to speed up the verification process.
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setActiveTab('settings')}
+                    className="w-full sm:w-auto"
+                  >
+                    Edit Profile
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+
             <div className="grid lg:grid-cols-2 gap-4 sm:gap-6">
               {/* WhatsApp Connection Status */}
               <motion.div
@@ -548,6 +599,65 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                 </div>
               </motion.div>
             </div>
+
+            {/* Service Performance */}
+            {services.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className={`rounded-3xl p-5 sm:p-6 border shadow-xl transition-colors ${
+                  isWhiteBackground
+                    ? 'bg-white border-primary/10'
+                    : 'bg-white/10 backdrop-blur-xl border-white/20'
+                }`}
+              >
+                <h3 className={`text-lg sm:text-xl mb-4 flex items-center gap-2 transition-colors ${
+                  isWhiteBackground ? 'text-foreground' : 'text-white'
+                }`}>
+                  <BarChart3 className="w-5 h-5 text-primary" />
+                  Top Performing Services
+                </h3>
+                <div className="space-y-4">
+                  {services
+                    .sort((a, b) => b.completedJobs - a.completedJobs)
+                    .slice(0, 3)
+                    .map((service) => (
+                    <div
+                      key={service.id}
+                      className={`flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 rounded-xl transition-colors ${
+                        isWhiteBackground ? 'bg-muted/50' : 'bg-white/5'
+                      }`}
+                    >
+                      <div className="flex-1">
+                        <p className={`mb-2 sm:mb-1 transition-colors ${
+                          isWhiteBackground ? 'text-foreground' : 'text-white'
+                        }`}>{service.title}</p>
+                        <div className={`flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm transition-colors ${
+                          isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
+                        }`}>
+                          <span>₦{service.price.toLocaleString()}/{service.priceType}</span>
+                          <span className="hidden sm:inline">•</span>
+                          <span>{service.completedJobs} jobs</span>
+                          <span className="hidden sm:inline">•</span>
+                          <span className="flex items-center gap-1">
+                            <Star className="w-3 h-3 text-amber-500" />
+                            {service.rating.toFixed(1)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {services.length === 0 && (
+                    <p className={`text-sm text-center py-8 transition-colors ${
+                      isWhiteBackground ? 'text-muted-foreground' : 'text-white/60'
+                    }`}>
+                      No services yet. Create your first service to see performance metrics.
+                    </p>
+                  )}
+                </div>
+              </motion.div>
+            )}
 
             {/* Service Performance */}
             {analytics?.servicePerformance && analytics.servicePerformance.length > 0 && (
@@ -760,9 +870,13 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
           {/* Transactions Tab */}
           <TabsContent value="transactions" className="space-y-4 sm:space-y-6">
-            <h2 className={`text-xl sm:text-2xl mb-4 sm:mb-6 transition-colors ${
-              isWhiteBackground ? 'text-foreground' : 'text-white'
-            }`}>Transaction History</h2>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 sm:mb-6">
+              <h2 className={`text-xl sm:text-2xl transition-colors ${
+                isWhiteBackground ? 'text-foreground' : 'text-white'
+              }`}>Transaction History</h2>
+              <Button className="w-full sm:w-auto">
+                <DollarSign className="w-4 h-4 mr-2" />
+                Request Payout
             {transactions.length === 0 ? (
               <div className={`rounded-3xl p-8 sm:p-12 text-center border shadow-xl transition-colors ${
                 isWhiteBackground
