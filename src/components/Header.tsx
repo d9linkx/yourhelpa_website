@@ -73,7 +73,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
               <SmileWinkIcon className="w-7 h-7 text-white" />
             </div>
             <div>
-              <span className="text-xl text-[rgb(41,43,44)] leading-none tracking-tight">
+              <span className="text-xl text-foreground leading-none tracking-tight">
                 YourHelpa
               </span>
             </div>
@@ -192,7 +192,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                       {user.firstName.charAt(0).toUpperCase()}
                     </span>
                   </div>
-                  <span className="text-[rgb(41,43,44)]">{user.firstName}</span>
+                  <span className="text-foreground">{user.firstName}</span>
                 </motion.button>
 
                 <AnimatePresence>
@@ -365,7 +365,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <X className="w-6 h-6" style={{ color: '#292B2C' }} />
+                    <X className="w-6 h-6 text-foreground" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -375,7 +375,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Menu className="w-6 h-6" style={{ color: '#292B2C' }} />
+                    <Menu className="w-6 h-6 text-foreground" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -408,7 +408,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                   className={`block w-full text-left px-4 py-3 rounded-xl transition-all duration-200 ${
                     currentPage === item.id
                       ? "bg-white text-primary border-2 border-primary"
-                      : "text-[#202124] hover:bg-muted"
+                      : "text-foreground hover:bg-muted"
                   }`}
                 >
                   <span className="relative z-10">{item.label}</span>
@@ -427,7 +427,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                   >
                     <button
                       onClick={() => setMobileDashboardsOpen(!mobileDashboardsOpen)}
-                      className="flex items-center justify-between w-full bg-muted text-[#202124] px-4 py-3 rounded-xl hover:bg-muted/80 transition-colors"
+                      className="flex items-center justify-between w-full bg-muted text-foreground px-4 py-3 rounded-xl hover:bg-muted/80 transition-colors"
                     >
                       <div className="flex items-center gap-2.5">
                         <LayoutDashboard className="w-4 h-4 text-primary" />
@@ -451,7 +451,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                               setMobileMenuOpen(false);
                               setMobileDashboardsOpen(false);
                             }}
-                            className="flex items-center gap-2.5 text-[#202124] px-4 pl-10 py-2.5 rounded-xl w-full hover:bg-muted transition-colors"
+                            className="flex items-center gap-2.5 text-foreground px-4 pl-10 py-2.5 rounded-xl w-full hover:bg-muted transition-colors"
                           >
                             <User className="w-4 h-4 text-primary" />
                             <span>My requests</span>
@@ -462,7 +462,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                               setMobileMenuOpen(false);
                               setMobileDashboardsOpen(false);
                             }}
-                            className="flex items-center gap-2.5 text-[#202124] px-4 pl-10 py-2.5 rounded-xl w-full hover:bg-muted transition-colors"
+                            className="flex items-center gap-2.5 text-foreground px-4 pl-10 py-2.5 rounded-xl w-full hover:bg-muted transition-colors"
                           >
                             <MessageCircle className="w-4 h-4 text-primary" />
                             <span>Helpa Dashboard</span>
@@ -481,7 +481,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: (navItems.length + 1) * 0.03 }}
-                    className="flex items-center gap-2.5 text-[#202124] px-4 py-3 rounded-xl w-full hover:bg-muted transition-colors"
+                    className="flex items-center gap-2.5 text-foreground px-4 py-3 rounded-xl w-full hover:bg-muted transition-colors"
                   >
                     <User className="w-4 h-4 text-primary" />
                     <span>Settings</span>
