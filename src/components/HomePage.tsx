@@ -178,7 +178,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           : 'bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B]'
       }`}>
       {/* Hero Section */}
-      <section className={`relative pt-32 lg:pt-48 pb-20 px-4 overflow-hidden transition-colors duration-500 ${
+      <section className={`relative pt-32 lg:pt-48 pb-20 px-4 overflow-hidden transition-colors duration-500 holographic-overlay ${
         isWhiteBackground
           ? 'bg-gradient-to-br from-emerald-50 via-white to-yellow-50'
           : 'bg-transparent'
@@ -249,26 +249,26 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
               {/* Trust Badges */}
               <div className="mt-10 grid grid-cols-3 gap-4">
-                <div className={`text-center p-4 rounded-2xl border transition-all duration-300 ${
-                  isWhiteBackground 
-                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105' 
-                    : 'bg-white/10 border-white/20'
+                <div className={`text-center p-4 rounded-2xl border transition-all duration-300 holographic ${
+                  isWhiteBackground
+                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 neon-glow'
+                    : 'bg-white/10 border-white/20 neon-glow-blue'
                 }`}>
                   <BadgeCheck className={`w-6 h-6 mx-auto mb-2 transition-colors ${isWhiteBackground ? 'text-primary' : 'text-accent'}`} />
                   <div className={`text-sm transition-colors ${isWhiteBackground ? 'text-foreground' : 'text-white/90'}`}>Verified Providers</div>
                 </div>
-                <div className={`text-center p-4 rounded-2xl border transition-all duration-300 ${
-                  isWhiteBackground 
-                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105' 
-                    : 'bg-white/10 border-white/20'
+                <div className={`text-center p-4 rounded-2xl border transition-all duration-300 holographic ${
+                  isWhiteBackground
+                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 neon-glow'
+                    : 'bg-white/10 border-white/20 neon-glow-purple'
                 }`}>
                   <ShieldCheck className={`w-6 h-6 mx-auto mb-2 transition-colors ${isWhiteBackground ? 'text-primary' : 'text-accent'}`} />
                   <div className={`text-sm transition-colors ${isWhiteBackground ? 'text-foreground' : 'text-white/90'}`}>Secure Payments</div>
                 </div>
-                <div className={`text-center p-4 rounded-2xl border transition-all duration-300 ${
-                  isWhiteBackground 
-                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105' 
-                    : 'bg-white/10 border-white/20'
+                <div className={`text-center p-4 rounded-2xl border transition-all duration-300 holographic ${
+                  isWhiteBackground
+                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 neon-glow'
+                    : 'bg-white/10 border-white/20 neon-glow-pink'
                 }`}>
                   <Users className={`w-6 h-6 mx-auto mb-2 transition-colors ${isWhiteBackground ? 'text-primary' : 'text-accent'}`} />
                   <div className={`text-sm transition-colors ${isWhiteBackground ? 'text-foreground' : 'text-white/90'}`}>10,000+ Happy Users</div>

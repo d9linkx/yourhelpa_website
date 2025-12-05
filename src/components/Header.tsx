@@ -54,10 +54,10 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 particles-bg circuit-bg ${
         isScrolled
-          ? "glass animate-shimmer"
-          : "glass-card border-glow"
+          ? "glass-futuristic animate-shimmer holographic-overlay"
+          : "glass-futuristic-dark border-glow holographic"
       }`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -83,7 +83,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-2 bg-muted/50 dark:bg-emerald-900 rounded-full px-2 py-2 backdrop-blur-sm dark:backdrop-blur-none border border-border/50 dark:border-emerald-700">
+          <nav className="hidden lg:flex items-center gap-2 bg-muted/50 dark:bg-emerald-900 rounded-full px-2 py-2 backdrop-blur-sm dark:backdrop-blur-none border border-border/50 dark:border-emerald-700 glass-futuristic holographic">
             {navItems.map((item) => (
               <motion.button
                 key={item.id}
@@ -296,7 +296,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                 {/* Secondary CTA - Helpa Onboarding/Login */}
                 <motion.button
                   onClick={() => onNavigate('helpa-onboarding')}
-                  className="flex items-center gap-2.5 glass-card border-glow text-foreground px-5 py-2.5 rounded-full hover-lift hover-glow group"
+                  className="flex items-center gap-2.5 glass-futuristic border-glow text-foreground px-5 py-2.5 rounded-full hover-lift hover-glow group holographic"
                   whileHover={{ scale: 1.05, y: -1 }}
                   whileTap={{ scale: 0.95 }}
                 >

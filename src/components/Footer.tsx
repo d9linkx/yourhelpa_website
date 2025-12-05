@@ -57,7 +57,7 @@ export function Footer({ onNavigate }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-card text-foreground">
+    <footer className="bg-card text-foreground particles-bg circuit-bg">
       {/* Trust Badges Bar */}
       <div className="border-b border-border/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
@@ -93,12 +93,12 @@ export function Footer({ onNavigate }: FooterProps) {
           {/* Brand Column - Larger on Desktop */}
           <div className="lg:col-span-4 space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl shadow-primary/20">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl shadow-primary/20 holographic pulse-glow">
                 <SmileWinkIcon className="w-7 h-7 text-primary-foreground" />
               </div>
               <div className="flex flex-col">
-                <span className="text-2xl text-foreground leading-none tracking-tight">YourHelpa</span>
-                <span className="text-xs text-primary/80 leading-none mt-1">Help Is Just a Chat Away</span>
+                <span className="text-2xl text-foreground leading-none tracking-tight holographic">YourHelpa</span>
+                <span className="text-xs text-primary/80 leading-none mt-1 data-stream">Help Is Just a Chat Away</span>
               </div>
             </div>
             

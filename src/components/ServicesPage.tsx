@@ -364,10 +364,10 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ delay: serviceIndex * 0.05 }}
                             whileHover={{ y: -4, scale: 1.02 }}
-                            className={`group rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border cursor-pointer ${
+                            className={`group rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border cursor-pointer holographic neon-glow ${
                               isWhiteBackground
-                                ? 'bg-white border-transparent hover:border-primary/20'
-                                : 'bg-white/10 backdrop-blur-xl border-white/10 hover:border-primary/50'
+                                ? 'bg-white border-transparent hover:border-primary/20 glass-futuristic'
+                                : 'bg-white/10 backdrop-blur-xl border-white/10 hover:border-primary/50 glass-futuristic-dark'
                             }`}
                           >
                             <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
