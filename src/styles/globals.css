@@ -70,27 +70,27 @@
   --card-foreground: #F3F4F6;
   --popover: #1A1F25;
   --popover-foreground: #F3F4F6;
-  --primary: #00FF7F;
+  --primary: #32CD32;
   --primary-foreground: #FFFFFF;
-  --secondary: #00FF7F;
+  --secondary: #32CD32;
   --secondary-foreground: #202124;
   --muted: #2D3748;
   --muted-foreground: #9CA3AF;
-  --accent: #00FF7F;
+  --accent: #32CD32;
   --accent-foreground: #202124;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
   --border: #374151;
   --input: #374151;
-  --ring: #00FF7F;
+  --ring: #32CD32;
   --sidebar: #1A1F25;
   --sidebar-foreground: #F3F4F6;
-  --sidebar-primary: #00FF7F;
+  --sidebar-primary: #32CD32;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #2D3748;
   --sidebar-accent-foreground: #F3F4F6;
   --sidebar-border: #374151;
-  --sidebar-ring: #00FF7F;
+  --sidebar-ring: #32CD32;
 }
 
 @theme inline {
@@ -141,7 +141,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'Inter', Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 }
 
@@ -276,7 +276,7 @@ body {
 
 /* Custom selection color */
 ::selection {
-  background-color: rgba(0, 255, 127, 0.2);
+  background-color: rgba(50, 205, 50, 0.2);
   color: inherit;
 }
 
@@ -293,7 +293,7 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 255, 127, 0.1);
+  box-shadow: 0 8px 32px rgba(50, 205, 50, 0.1);
 }
 
 .glass-dark {
@@ -301,7 +301,7 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 255, 127, 0.1);
+  box-shadow: 0 8px 32px rgba(50, 205, 50, 0.1);
 }
 
 .glass-card {
@@ -309,7 +309,7 @@ body {
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 255, 127, 0.1);
+  box-shadow: 0 4px 20px rgba(50, 205, 50, 0.1);
 }
 
 .glass-card-dark {
@@ -317,12 +317,12 @@ body {
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 255, 127, 0.1);
+  box-shadow: 0 4px 20px rgba(50, 205, 50, 0.1);
 }
 
 /* Futuristic Gradients */
 .gradient-primary {
-  background: linear-gradient(135deg, #00FF7F 0%, #00E676 50%, #00C853 100%);
+  background: linear-gradient(135deg, #32CD32 0%, #32CD32 50%, #32CD32 100%);
 }
 
 .gradient-secondary {
@@ -330,11 +330,11 @@ body {
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, #00FF7F 0%, #76FF03 100%);
+  background: linear-gradient(135deg, #32CD32 0%, #32CD32 100%);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #00FF7F 0%, #00E676 50%, #00C853 100%);
+  background: linear-gradient(135deg, #32CD32 0%, #32CD32 50%, #32CD32 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -347,8 +347,8 @@ body {
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 127, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(0, 255, 127, 0.6); }
+  0%, 100% { box-shadow: 0 0 20px rgba(50, 205, 50, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(50, 205, 50, 0.6); }
 }
 
 @keyframes shimmer {
@@ -365,7 +365,7 @@ body {
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(0, 255, 127, 0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(50, 205, 50, 0.1), transparent);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
@@ -377,16 +377,16 @@ body {
 
 .hover-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 255, 127, 0.2);
+  box-shadow: 0 10px 25px rgba(50, 205, 50, 0.2);
 }
 
 .hover-glow:hover {
-  box-shadow: 0 0 20px rgba(0, 255, 127, 0.4);
+  box-shadow: 0 0 20px rgba(50, 205, 50, 0.4);
 }
 
 /* Futuristic Borders */
 .border-glow {
-  border: 1px solid rgba(0, 255, 127, 0.3);
+  border: 1px solid rgba(50, 205, 50, 0.3);
   position: relative;
 }
 
@@ -397,7 +397,7 @@ body {
   left: -1px;
   right: -1px;
   bottom: -1px;
-  background: linear-gradient(45deg, #00FF7F, #00E676, #00C853, #00FF7F);
+  background: linear-gradient(45deg, #32CD32, #32CD32, #32CD32, #32CD32);
   border-radius: inherit;
   z-index: -1;
   opacity: 0;
@@ -419,12 +419,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00FF7F, #00E676);
+  background: linear-gradient(180deg, #32CD32, #32CD32);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00E676, #00C853);
+  background: linear-gradient(180deg, #32CD32, #32CD32);
 }
 
 /* WhatsApp-style shadows */
