@@ -1,4 +1,4 @@
-delete the import { Menu, X, MessageCircle, SunMedium, MoonStar, User, LogOut, ChevronDown, LayoutDashboard } from "lucide-react";
+import { Menu, X, MessageCircle, SunMedium, MoonStar, User, LogOut, ChevronDown } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SmileWinkIcon } from "./SmileWinkIcon";
@@ -14,8 +14,8 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [dashboardsOpen, setDashboardsOpen] = useState(false);
-  const [mobileDashboardsOpen, setMobileDashboardsOpen] = useState(false);
+
+
   const { isWhiteBackground, setIsWhiteBackground } = useBlogSettings();
   const { user, signOut } = useAuth();
 
@@ -207,44 +207,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                       transition={{ duration: 0.2 }}
                       className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-border overflow-hidden z-50"
                     >
-                      {/* Dashboards Dropdown */}
-                      <div>
-                        <button
-                          onClick={() => setDashboardsOpen(!dashboardsOpen)}
-                          className="w-full flex items-center justify-between gap-3 px-4 py-3 hover:bg-muted transition-colors text-left"
-                        >
-                          <div className="flex items-center gap-3">
-                            <LayoutDashboard className="w-4 h-4 text-primary" />
-                            <span className="text-foreground">Dashboards</span>
-                          </div>
-                          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${dashboardsOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        <AnimatePresence>
-                          {dashboardsOpen && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="overflow-hidden bg-muted/30"
-                            >
-                              <button
-                                onClick={() => {
-                                  setUserMenuOpen(false);
-                                  setDashboardsOpen(false);
-                                  onNavigate('dashboard');
-                                }}
-                                className="w-full flex items-center gap-3 px-4 pl-12 py-2.5 hover:bg-muted transition-colors text-left"
-                              >
-                                <User className="w-3.5 h-3.5 text-primary" />
-                                <span className="text-sm text-foreground">My requests</span>
-                              </button>
 
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
 
                       {/* Settings */}
                       <button
