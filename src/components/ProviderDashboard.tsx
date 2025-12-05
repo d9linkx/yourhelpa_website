@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
   DollarSign,
@@ -30,7 +31,6 @@ import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 import { supabase } from '../supabaseClient';
-import { useNavigate } from 'react-router-dom';
 
 // --- Interface Definitions ---
 interface ProviderDashboardProps {
@@ -80,16 +80,18 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
 
   useEffect(() => {
+    console.log('ProviderDashboard useEffect:', { isAuthLoading, user: user ? 'exists' : 'null' });
     // 💡 FIX 2: Only proceed with data loading IF authentication is complete and a user exists.
     if (!isAuthLoading && user) {
       loadProviderData();
-    } 
-    
+    }
+
     // Safety check: If auth is complete but no user, redirect to onboarding/login
     // This assumes your root component handles this redirect better, but this is a good fallback.
     if (!isAuthLoading && !user) {
         // If they landed here without a session, push them back to login/onboarding
         // If HelpaAuth calls onAuthSuccess(), the useEffect will rerun and find the user.
+        console.log('No user, navigating to onboarding');
         onNavigate('helpa-onboarding');
     }
   }, [user, isAuthLoading, onNavigate]);
@@ -104,22 +106,26 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
   const loadProviderData = async () => {
     try {
+      console.log('Loading provider data for user:', user?.id);
       setError(null);
       setIsDataLoading(true); // Start data loading (only runs after auth is done)
-      
+
       if (!user) {
         // Should not happen, but safe to check
+        console.log('No user in loadProviderData');
         setIsDataLoading(false);
         return;
       }
-      
+
       // Fetch provider profile from helpas table
       const { data: providerData, error: providerError } = await supabase
         .from('helpas')
         .select('*')
         .eq('user_id', user.id)
         .single();
-        
+
+      console.log('Provider data fetch result:', { providerData, providerError });
+
       if (providerError || !providerData) {
         // Auto-create a basic provider profile if none exists
         console.log('No provider profile found, creating one...');
@@ -158,15 +164,18 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
             rating: 0,
             totalReviews: 0,
           };
+          console.log('Setting temp provider:', tempProvider);
           setProvider(tempProvider);
           setError('Profile setup incomplete. Please complete your profile in Settings.');
         } else {
+          console.log('Setting new provider:', newProvider);
           setProvider(newProvider as Provider);
         }
       } else {
         // Assert type for consistent use
-        setProvider(providerData as Provider); 
-        
+        console.log('Setting existing provider:', providerData);
+        setProvider(providerData as Provider);
+
         // Fetch remaining data
         const [servicesResult, notificationsResult, transactionsResult] = await Promise.all([
             supabase.from('services').select('*').eq('helpa_id', (providerData as Provider).id),
@@ -177,14 +186,15 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
         setServices(servicesResult.data || []);
         setNotifications(notificationsResult.data || []);
         setTransactions(transactionsResult.data || []);
-        setAnalytics(null); 
+        setAnalytics(null);
       }
       setIsDataLoading(false);
+      console.log('Data loading complete');
 
     } catch (error) {
+      console.error('Error loading provider data:', error);
       setError('Error loading provider data. Please try again later.');
       setIsDataLoading(false);
-      console.error('Error loading provider data:', error);
     }
   };
 
