@@ -57,9 +57,9 @@ export function Footer({ onNavigate }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-card text-foreground">
       {/* Trust Badges Bar */}
-      <div className="border-b border-white/5">
+      <div className="border-b border-border/5">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 md:flex md:justify-center md:items-center gap-4 md:gap-6">
             {trustBadges.map((badge, index) => {
@@ -77,9 +77,9 @@ export function Footer({ onNavigate }: FooterProps) {
                   className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-4 md:p-5 flex flex-col items-center text-center group hover:bg-white/10 hover:border-primary/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-primary/10"
                 >
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-emerald-600 flex items-center justify-center mb-3 shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
-                    <BadgeIcon className="w-5 h-5 text-white" strokeWidth={2.5} />
+                    <BadgeIcon className="w-5 h-5 text-primary-foreground" strokeWidth={2.5} />
                   </div>
-                  <span className="text-sm md:text-base text-white/70 group-hover:text-white/90 transition-colors font-medium">{badge}</span>
+                  <span className="text-sm md:text-base text-muted-foreground group-hover:text-foreground/90 transition-colors font-medium">{badge}</span>
                 </motion.div>
               );
             })}
@@ -94,15 +94,15 @@ export function Footer({ onNavigate }: FooterProps) {
           <div className="lg:col-span-4 space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-gradient-to-br from-primary to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl shadow-primary/20">
-                <SmileWinkIcon className="w-7 h-7 text-white" />
+                <SmileWinkIcon className="w-7 h-7 text-primary-foreground" />
               </div>
               <div className="flex flex-col">
-                <span className="text-2xl text-white leading-none tracking-tight">YourHelpa</span>
+                <span className="text-2xl text-foreground leading-none tracking-tight">YourHelpa</span>
                 <span className="text-xs text-primary/80 leading-none mt-1">Help Is Just a Chat Away</span>
               </div>
             </div>
             
-            <p className="text-white/50 text-sm leading-relaxed max-w-sm">
+            <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
               Your everyday solution for trusted home services, food, learning, health, and guidance — all through WhatsApp.
             </p>
             
@@ -111,7 +111,7 @@ export function Footer({ onNavigate }: FooterProps) {
               {/* Start Chat CTA */}
               <motion.button
                 onClick={handleChatClick}
-                className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl hover:bg-emerald-600 transition-all group shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl hover:bg-emerald-600 transition-all group shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -124,7 +124,7 @@ export function Footer({ onNavigate }: FooterProps) {
               {!user && (
                 <motion.button
                   onClick={() => onNavigate('join')}
-                  className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-6 py-3 rounded-xl hover:bg-white/15 hover:border-primary/40 transition-all group"
+                  className="inline-flex items-center gap-2 bg-background/10 border border-border/20 text-foreground px-6 py-3 rounded-xl hover:bg-background/15 hover:border-primary/40 transition-all group"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -148,11 +148,11 @@ export function Footer({ onNavigate }: FooterProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all group border border-white/5 hover:border-primary/30"
+                  className="w-10 h-10 bg-background/5 hover:bg-background/10 rounded-xl flex items-center justify-center transition-all group border border-border/5 hover:border-primary/30"
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <social.icon className="w-4 h-4 text-white/60 group-hover:text-primary transition-colors" />
+                  <social.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -160,13 +160,13 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Quick Links */}
           <div className="lg:col-span-3">
-            <h4 className="text-white text-sm uppercase tracking-wider mb-6 font-medium">Quick Links</h4>
+            <h4 className="text-foreground text-sm uppercase tracking-wider mb-6 font-medium">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((item) => (
                 <li key={item.id}>
                   <button
                     onClick={() => onNavigate(item.id)}
-                    className="text-white/50 hover:text-white transition-colors text-sm inline-flex items-center gap-2 group"
+                    className="text-muted-foreground hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group"
                   >
                     <span className="group-hover:translate-x-1 transition-transform">{item.label}</span>
                     <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -180,7 +180,7 @@ export function Footer({ onNavigate }: FooterProps) {
                   <div className="space-y-2">
                     <button
                       onClick={() => setDashboardsOpen(!dashboardsOpen)}
-                      className="text-white/50 hover:text-white transition-colors text-sm inline-flex items-center gap-2 group w-full"
+                      className="text-muted-foreground hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group w-full"
                     >
                       <LayoutDashboard className="w-4 h-4" />
                       <span className="group-hover:translate-x-1 transition-transform">Dashboards</span>
@@ -201,7 +201,7 @@ export function Footer({ onNavigate }: FooterProps) {
                               setDashboardsOpen(false);
                               onNavigate('dashboard');
                             }}
-                            className="text-white/40 hover:text-white transition-colors text-sm inline-flex items-center gap-2 group"
+                            className="text-muted-foreground/40 hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group"
                           >
                             <User className="w-3.5 h-3.5" />
                             <span className="group-hover:translate-x-1 transition-transform">My requests</span>
@@ -211,7 +211,7 @@ export function Footer({ onNavigate }: FooterProps) {
                               setDashboardsOpen(false);
                               onNavigate('provider-dashboard');
                             }}
-                            className="text-white/40 hover:text-white transition-colors text-sm inline-flex items-center gap-2 group"
+                            className="text-muted-foreground/40 hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group"
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
                             <span className="group-hover:translate-x-1 transition-transform">Helpa Dashboard</span>
@@ -227,12 +227,12 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Services */}
           <div className="lg:col-span-2">
-            <h4 className="text-white text-sm uppercase tracking-wider mb-6 font-medium">What We Do</h4>
+            <h4 className="text-foreground text-sm uppercase tracking-wider mb-6 font-medium">What We Do</h4>
             <ul className="space-y-3">
               {services.map((service, index) => (
-                <li key={index} className="flex items-start gap-3 text-white/50 text-sm group">
+                <li key={index} className="flex items-start gap-3 text-muted-foreground text-sm group">
                   <service.icon className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" strokeWidth={2} />
-                  <span className="group-hover:text-white/70 transition-colors">{service.label}</span>
+                  <span className="group-hover:text-foreground/70 transition-colors">{service.label}</span>
                 </li>
               ))}
             </ul>
@@ -240,16 +240,16 @@ export function Footer({ onNavigate }: FooterProps) {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="text-white text-sm uppercase tracking-wider mb-6 font-medium">Reach Us</h4>
+            <h4 className="text-foreground text-sm uppercase tracking-wider mb-6 font-medium">Reach Us</h4>
             <ul className="space-y-4">
               {[
                 { icon: MapPin, text: "Lagos, Nigeria", type: "location" },
                 { icon: Phone, text: "+234 902 723 1243", type: "phone" },
                 { icon: Mail, text: "hello@yourhelpa.ng", type: "email" },
               ].map((contact, index) => (
-                <li key={index} className="flex items-start gap-3 text-white/50 text-sm group">
+                <li key={index} className="flex items-start gap-3 text-muted-foreground text-sm group">
                   <contact.icon className="w-4 h-4 mt-0.5 flex-shrink-0 text-primary" strokeWidth={2} />
-                  <span className="group-hover:text-white/70 transition-colors">{contact.text}</span>
+                  <span className="group-hover:text-foreground/70 transition-colors">{contact.text}</span>
                 </li>
               ))}
             </ul>
@@ -257,15 +257,15 @@ export function Footer({ onNavigate }: FooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-white/5">
+        <div className="mt-16 pt-8 border-t border-border/5">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Copyright */}
-            <p className="text-white/40 text-sm text-center md:text-left">
+            <p className="text-muted-foreground/40 text-sm text-center md:text-left">
               © 2025 YourHelpa. Built in Nigeria, for Nigerians. 🇳🇬
             </p>
             
             {/* Legal Links */}
-            <div className="flex flex-wrap justify-center gap-6 text-white/40 text-sm">
+            <div className="flex flex-wrap justify-center gap-6 text-muted-foreground/40 text-sm">
               {[
                 { label: "Privacy Policy", action: () => {} },
                 { label: "Terms of Service", action: () => {} },
@@ -274,7 +274,7 @@ export function Footer({ onNavigate }: FooterProps) {
                 <button
                   key={link.label}
                   onClick={link.action}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </button>
@@ -290,8 +290,8 @@ export function Footer({ onNavigate }: FooterProps) {
             transition={{ delay: 0.2 }}
             className="mt-8 text-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-              <span className="text-white/60 text-xs">Making Life Easier, One Trusted Connection at a Time</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-background/5 border border-border/10">
+              <span className="text-muted-foreground/60 text-xs">Making Life Easier, One Trusted Connection at a Time</span>
               <span className="text-primary">🤝</span>
             </div>
           </motion.div>
