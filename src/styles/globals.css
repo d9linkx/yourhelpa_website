@@ -27,19 +27,19 @@
   
   /* Colors - MyHelpa Brand */
   --background: #FFFFFF;
-  --foreground: #202124;
-  --card: #FFFFFF;
-  --card-foreground: #202124;
+  --foreground: #808080;
+  --card: #F5F5F5;
+  --card-foreground: #808080;
   --popover: #FFFFFF;
-  --popover-foreground: #202124;
-  --primary: #1BBF72;
-  --primary-foreground: #FFFFFF;
-  --secondary: #FFD54F;
-  --secondary-foreground: #202124;
+  --popover-foreground: #808080;
+  --primary: #FFFFFF;
+  --primary-foreground: #808080;
+  --secondary: #E0FFC2;
+  --secondary-foreground: #808080;
   --muted: #F5F7FA;
   --muted-foreground: #6B7280;
-  --accent: #FFD54F;
-  --accent-foreground: #202124;
+  --accent: #E0FFC2;
+  --accent-foreground: #808080;
   --destructive: #d4183d;
   --destructive-foreground: #FFFFFF;
   --border: #E5E7EB;
