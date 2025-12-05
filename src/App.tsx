@@ -10,7 +10,7 @@ import { JoinHelpaPage } from "./components/JoinHelpaPage";
 import { AboutPage } from "./components/AboutPage";
 import { APIPage } from "./components/APIPage";
 import { FAQPage } from "./components/FAQPage";
-import { ImprovedSignupPage } fr/components/ImprovedSignupPage";
+import { ImprovedSignupPage } from "./components/ImprovedSignupPage";
 import { ImprovedSigninPage } from "./components/ImprovedSigninPage";
 
 
