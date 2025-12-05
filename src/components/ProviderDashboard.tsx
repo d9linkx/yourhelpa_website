@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
   DollarSign,
@@ -77,6 +76,8 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
     bio: '',
     accountType: 'individual' as 'individual' | 'business'
   });
+
+  const [activeTab, setActiveTab] = useState('overview');
 
 
   useEffect(() => {
@@ -207,16 +208,16 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
     try {
       const profileData = {
         user_id: user.id,
-        business_name: profileForm.businessName || provider.businessName,
-        whatsapp_number: profileForm.whatsappNumber || provider.whatsappNumber,
-        verification_status: provider.verificationStatus,
-        account_type: profileForm.accountType || provider.accountType,
-        bio: profileForm.bio || provider.bio,
-        total_earnings: provider.totalEarnings,
-        pending_earnings: provider.pendingEarnings,
-        completed_jobs: provider.completedJobs,
-        rating: provider.rating,
-        total_reviews: provider.totalReviews,
+        business_name: profileForm.businessName || provider!.businessName,
+        whatsapp_number: profileForm.whatsappNumber || provider!.whatsappNumber,
+        verification_status: provider!.verificationStatus,
+        account_type: profileForm.accountType || provider!.accountType,
+        bio: profileForm.bio || provider!.bio,
+        total_earnings: provider!.totalEarnings,
+        pending_earnings: provider!.pendingEarnings,
+        completed_jobs: provider!.completedJobs,
+        rating: provider!.rating,
+        total_reviews: provider!.totalReviews,
       };
 
       if (provider.id.startsWith('temp-')) {
@@ -238,7 +239,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
         const { data: updatedProvider, error: updateError } = await supabase
           .from('helpas')
           .update(profileData)
-          .eq('id', provider.id)
+        .eq('id', provider!.id)
           .select()
           .single();
 
@@ -258,6 +259,8 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
 
   // Clean Loading States
+  console.log('Rendering check:', { isAuthLoading, isDataLoading, provider: provider ? 'exists' : 'null' });
+
   if (isAuthLoading || isDataLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -300,7 +303,24 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
     );
   }
 
-  if (!provider) {
+  // If no provider after loading is complete, create a temporary one to show the dashboard
+  if (!provider && !isAuthLoading && !isDataLoading) {
+    console.log('No provider found, creating temporary provider');
+    const tempProvider: Provider = {
+      id: `temp-${user?.id || 'unknown'}`,
+      userId: user?.id || '',
+      businessName: user?.firstName || 'New Helpa',
+      whatsappNumber: user?.phone || '',
+      verificationStatus: 'pending',
+      accountType: 'individual',
+      bio: '',
+      totalEarnings: 0,
+      pendingEarnings: 0,
+      completedJobs: 0,
+      rating: 0,
+      totalReviews: 0,
+    };
+    setProvider(tempProvider);
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <motion.div
@@ -339,8 +359,23 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
     );
   }
 
+  // If still no provider, show a fallback dashboard
+  if (!provider) {
+    console.log('Still no provider, showing fallback');
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Dashboard</h2>
+          <p className="text-gray-600">Loading your dashboard...</p>
+          <Button onClick={() => onNavigate('helpa-onboarding')} className="mt-4">
+            Go to Onboarding
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const unreadNotifications = notifications.filter(n => !n.read).length;
-  const [activeTab, setActiveTab] = useState('overview');
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -375,8 +410,8 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Welcome back, {provider.businessName}
+          <h2 className="text-2xl font-bold text-gray-900">
+                  Welcome back, {provider!.businessName}
                 </h2>
                 <p className="text-gray-600 mt-1">
                   Here's what's happening with your services today.
@@ -384,11 +419,11 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               </div>
               <div className="flex items-center space-x-2">
                 <div className={`w-3 h-3 rounded-full ${
-                  provider.verificationStatus === 'verified' ? 'bg-green-500' :
-                  provider.verificationStatus === 'pending' ? 'bg-yellow-500' : 'bg-red-500'
+                  provider!.verificationStatus === 'verified' ? 'bg-green-500' :
+                  provider!.verificationStatus === 'pending' ? 'bg-yellow-500' : 'bg-red-500'
                 }`} />
                 <span className="text-sm text-gray-600 capitalize">
-                  {provider.verificationStatus}
+                  {provider!.verificationStatus}
                 </span>
               </div>
             </div>
@@ -408,7 +443,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               <div>
                 <p className="text-sm font-medium text-gray-600">Total Earnings</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  ₦{provider.totalEarnings.toLocaleString()}
+                  ₦{provider!.totalEarnings.toLocaleString()}
                 </p>
               </div>
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
@@ -427,7 +462,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               <div>
                 <p className="text-sm font-medium text-gray-600">Pending Earnings</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  ₦{provider.pendingEarnings.toLocaleString()}
+                  ₦{provider!.pendingEarnings.toLocaleString()}
                 </p>
               </div>
               <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
@@ -443,7 +478,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               <div>
                 <p className="text-sm font-medium text-gray-600">Completed Jobs</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {provider.completedJobs}
+                  {provider!.completedJobs}
                 </p>
               </div>
               <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -459,14 +494,14 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               <div>
                 <p className="text-sm font-medium text-gray-600">Average Rating</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {provider.rating.toFixed(1)}
+                  {provider!.rating.toFixed(1)}
                 </p>
               </div>
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                 <Star className="w-6 h-6 text-purple-600" />
               </div>
             </div>
-            <p className="text-sm text-gray-500 mt-4">{provider.totalReviews} reviews</p>
+            <p className="text-sm text-gray-500 mt-4">{provider!.totalReviews} reviews</p>
           </div>
         </motion.div>
 
@@ -496,7 +531,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-4 sm:space-y-6">
             {/* Verification Status Banner */}
-            {provider.verificationStatus === 'pending' && (
+            {provider!.verificationStatus === 'pending' && (
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -574,7 +609,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                         }`}>Connected</p>
                         <p className={`text-xs transition-colors ${
                           isWhiteBackground ? 'text-emerald-600' : 'text-emerald-300'
-                        }`}>{provider.whatsappNumber}</p>
+                        }`}>{provider!.whatsappNumber}</p>
                       </div>
                     </div>
                     <CheckCircle className={`w-5 h-5 ${
@@ -966,12 +1001,12 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                   </h4>
                   <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${
-                      provider.id.startsWith('temp-') ? 'bg-yellow-500' : 'bg-green-500'
+                      provider!.id.startsWith('temp-') ? 'bg-yellow-500' : 'bg-green-500'
                     }`} />
                     <span className={`text-xs transition-colors ${
                       isWhiteBackground ? 'text-blue-700' : 'text-blue-300'
                     }`}>
-                      {provider.id.startsWith('temp-')
+                      {provider!.id.startsWith('temp-')
                         ? 'Incomplete - Please save your profile'
                         : 'Profile saved to database'
                       }
@@ -995,7 +1030,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                       </label>
                       <input
                         type="text"
-                        value={profileForm.businessName || provider.businessName}
+                        value={profileForm.businessName || provider!.businessName}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, businessName: e.target.value }))}
                         className={`w-full px-3 py-2 border rounded-lg transition-colors ${
                           isWhiteBackground
@@ -1013,7 +1048,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                       </label>
                       <input
                         type="tel"
-                        value={profileForm.whatsappNumber || provider.whatsappNumber}
+                        value={profileForm.whatsappNumber || provider!.whatsappNumber}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, whatsappNumber: e.target.value }))}
                         className={`w-full px-3 py-2 border rounded-lg transition-colors ${
                           isWhiteBackground
@@ -1030,8 +1065,8 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                     }`}>
                       Bio
                     </label>
-                    <textarea
-                      value={profileForm.bio || provider.bio}
+                      <textarea
+                      value={profileForm.bio || provider!.bio}
                       onChange={(e) => setProfileForm(prev => ({ ...prev, bio: e.target.value }))}
                       rows={3}
                       className={`w-full px-3 py-2 border rounded-lg transition-colors ${
@@ -1057,7 +1092,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
                         type="radio"
                         name="accountType"
                         value="individual"
-                        checked={(profileForm.accountType || provider.accountType) === 'individual'}
+                        checked={(profileForm.accountType || provider!.accountType) === 'individual'}
                         onChange={(e) => setProfileForm(prev => ({ ...prev, accountType: e.target.value as 'individual' | 'business' }))}
                         className="mr-2"
                       />
