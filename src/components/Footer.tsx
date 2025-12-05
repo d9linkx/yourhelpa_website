@@ -1,18 +1,16 @@
-import { 
-  Instagram, 
-  Twitter, 
-  Facebook, 
-  Mail, 
-  MapPin, 
-  Phone, 
+import {
+  Instagram,
+  Twitter,
+  Facebook,
+  Mail,
+  MapPin,
+  Phone,
   MessageCircle,
   Send,
   Sparkles,
   ShieldCheck,
   Clock,
   HeartHandshake,
-  LayoutDashboard,
-  ChevronDown,
   User,
   ArrowRight
 } from "lucide-react";
@@ -27,7 +25,7 @@ interface FooterProps {
 
 export function Footer({ onNavigate }: FooterProps) {
   const { user } = useAuth();
-  const [dashboardsOpen, setDashboardsOpen] = useState(false);
+
 
   const handleChatClick = () => {
     onNavigate('waitlist-choice');
@@ -174,54 +172,7 @@ export function Footer({ onNavigate }: FooterProps) {
                 </li>
               ))}
               
-              {/* Dashboards Dropdown - Only show if user is logged in */}
-              {user && (
-                <li>
-                  <div className="space-y-2">
-                    <button
-                      onClick={() => setDashboardsOpen(!dashboardsOpen)}
-                      className="text-muted-foreground hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group w-full"
-                    >
-                      <LayoutDashboard className="w-4 h-4" />
-                      <span className="group-hover:translate-x-1 transition-transform">Dashboards</span>
-                      <ChevronDown className={`w-4 h-4 transition-transform ml-auto ${dashboardsOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    <AnimatePresence>
-                      {dashboardsOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden pl-6 space-y-2 pt-1"
-                        >
-                          <button
-                            onClick={() => {
-                              setDashboardsOpen(false);
-                              onNavigate('dashboard');
-                            }}
-                            className="text-muted-foreground/40 hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group"
-                          >
-                            <User className="w-3.5 h-3.5" />
-                            <span className="group-hover:translate-x-1 transition-transform">My requests</span>
-                          </button>
-                          <button
-                            onClick={() => {
-                              setDashboardsOpen(false);
-                              onNavigate('provider-dashboard');
-                            }}
-                            className="text-muted-foreground/40 hover:text-foreground transition-colors text-sm inline-flex items-center gap-2 group"
-                          >
-                            <MessageCircle className="w-3.5 h-3.5" />
-                            <span className="group-hover:translate-x-1 transition-transform">Helpa Dashboard</span>
-                          </button>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </li>
-              )}
+
             </ul>
           </div>
 

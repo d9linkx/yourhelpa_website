@@ -374,49 +374,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
               {/* Mobile Auth Section */}
               {user ? (
                 <>
-                  {/* Dashboards Dropdown */}
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: navItems.length * 0.03 }}
-                    className="pt-2"
-                  >
-                    <button
-                      onClick={() => setMobileDashboardsOpen(!mobileDashboardsOpen)}
-                      className="flex items-center justify-between w-full bg-muted text-foreground px-4 py-3 rounded-xl hover:bg-muted/80 transition-colors"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <LayoutDashboard className="w-4 h-4 text-primary" />
-                        <span>Dashboards</span>
-                      </div>
-                      <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${mobileDashboardsOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    <AnimatePresence>
-                      {mobileDashboardsOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden mt-1 space-y-1"
-                        >
-                          <button
-                            onClick={() => {
-                              onNavigate('dashboard');
-                              setMobileMenuOpen(false);
-                              setMobileDashboardsOpen(false);
-                            }}
-                            className="flex items-center gap-2.5 text-foreground px-4 pl-10 py-2.5 rounded-xl w-full hover:bg-muted transition-colors"
-                          >
-                            <User className="w-4 h-4 text-primary" />
-                            <span>My requests</span>
-                          </button>
 
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
 
                   {/* Settings */}
                   <motion.button
