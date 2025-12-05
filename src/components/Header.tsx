@@ -1,4 +1,4 @@
-delete timport { Menu, X, MessageCircle, SunMedium, MoonStar, User, LogOut, ChevronDown, LayoutDashboard } from "lucide-react";
+delete the import { Menu, X, MessageCircle, SunMedium, MoonStar, User, LogOut, ChevronDown, LayoutDashboard } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SmileWinkIcon } from "./SmileWinkIcon";
