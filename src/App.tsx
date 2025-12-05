@@ -10,7 +10,7 @@ import { JoinHelpaPage } from "./components/JoinHelpaPage";
 import { AboutPage } from "./components/AboutPage";
 import { APIPage } from "./components/APIPage";
 import { FAQPage } from "./components/FAQPage";
-import { ImprovedSignupPage } from "./components/ImprovedSignupPage";
+import { ImprovedSignupPage } fr/components/ImprovedSignupPage";
 import { ImprovedSigninPage } from "./components/ImprovedSigninPage";
 
 
@@ -27,9 +27,10 @@ import { MockAuthBanner } from "./components/MockAuthBanner";
 import { FloatingWhatsAppButton } from "./components/FloatingWhatsAppButton";
 import { WaitlistPage } from "./components/WaitlistPage";
 import { WaitlistChoicePage } from "./components/WaitlistChoicePage";
+import { HelpaSignupPage } from "./components/HelpaSignupPage";
 import { PageSEO } from "./components/PageSEO";
 
-import HelpaOnboardingPage from "./components/HelpaOnboardingPage";
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [verificationEmail, setVerificationEmail] = useState("");

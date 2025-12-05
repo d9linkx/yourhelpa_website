@@ -1,4 +1,4 @@
-import { Menu, X, MessageCircle, SunMedium, MoonStar, User, LogOut, ChevronDown, LayoutDashboard } from "lucide-react";
+delete timport { Menu, X, MessageCircle, SunMedium, MoonStar, User, LogOut, ChevronDown, LayoutDashboard } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SmileWinkIcon } from "./SmileWinkIcon";
@@ -449,17 +449,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                             <User className="w-4 h-4 text-primary" />
                             <span>My requests</span>
                           </button>
-                          <button
-                            onClick={() => {
-                              onNavigate('provider-dashboard');
-                              setMobileMenuOpen(false);
-                              setMobileDashboardsOpen(false);
-                            }}
-                            className="flex items-center gap-2.5 text-foreground px-4 pl-10 py-2.5 rounded-xl w-full hover:bg-muted transition-colors"
-                          >
-                            <MessageCircle className="w-4 h-4 text-primary" />
-                            <span>Helpa Dashboard</span>
-                          </button>
+
                         </motion.div>
                       )}
                     </AnimatePresence>
