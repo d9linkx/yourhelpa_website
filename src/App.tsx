@@ -12,7 +12,7 @@ import { APIPage } from "./components/APIPage";
 import { FAQPage } from "./components/FAQPage";
 import { ImprovedSignupPage } from "./components/ImprovedSignupPage";
 import { ImprovedSigninPage } from "./components/ImprovedSigninPage";
-import { UserDashboard } from "./components/UserDashboard";
+
 import { ProviderDashboard } from "./components/ProviderDashboard";
 import { SettingsPage } from "./components/SettingsPage";
 import { HelpaSettings } from "./components/HelpaSettings";
@@ -48,7 +48,6 @@ export default function App() {
     '/frequently-asked-questions': 'faqs',
     '/signup': 'signup',
     '/signin': 'signin',
-    '/dashboard': 'dashboard',
     '/helpa-dashboard': 'provider-dashboard',
     '/account-settings': 'settings',
     '/helpa-settings': 'helpa-settings',
@@ -180,27 +179,26 @@ export default function App() {
 
   const renderPage = () => {
     const pages = {
-      "home": <HomePage onNavigate={handleNavigate} />, 
-      "services": <ServicesPage onNavigate={handleNavigate} />, 
-      "pricing": <PricingPage onNavigate={handleNavigate} />, 
-      "helpa-onboarding": <HelpaOnboardingPage onNavigate={handleNavigate} />, 
-      "join": <JoinHelpaPage onNavigate={handleNavigate} />, 
-      "about": <AboutPage onBack={handleBack} onNavigate={handleNavigate} />, 
-      "api": <APIPage onNavigate={handleNavigate} onBack={handleBack} />, 
-      "faqs": <FAQPage onBack={handleBack} />, 
-      "signup": <ImprovedSignupPage onNavigate={handleNavigate} onBack={handleBack} />, 
-      "signin": <ImprovedSigninPage onNavigate={handleNavigate} onBack={handleBack} />, 
-      "dashboard": <UserDashboard onNavigate={handleNavigate} />, 
-      "provider-dashboard": <ProviderDashboard onNavigate={handleNavigate} />, 
-      "settings": <SettingsPage onNavigate={handleNavigate} onBack={handleBack} />, 
-      "helpa-settings": <HelpaSettings onNavigate={handleNavigate} onBack={handleBack} />, 
-      "verify-email": <EmailVerificationPage onNavigate={handleNavigate} email={verificationEmail} onBack={handleBack} />, 
-      "email-verified": <EmailVerifiedPage onNavigate={handleNavigate} />, 
-      "diagnostic": <DiagnosticPage onNavigate={handleNavigate} onBack={handleBack} />, 
-      "signup-debugger": <SignupDebugger onNavigate={handleNavigate} onBack={handleBack} />, 
-      "waitlist-choice": <WaitlistChoicePage onNavigate={handleNavigate} onBack={handleBack} />, 
-      "waitlist-customer": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="customer" />, 
-      "waitlist-helpa": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="helpa" />, 
+      "home": <HomePage onNavigate={handleNavigate} />,
+      "services": <ServicesPage onNavigate={handleNavigate} />,
+      "pricing": <PricingPage onNavigate={handleNavigate} />,
+      "helpa-onboarding": <HelpaOnboardingPage onNavigate={handleNavigate} />,
+      "join": <JoinHelpaPage onNavigate={handleNavigate} />,
+      "about": <AboutPage onBack={handleBack} onNavigate={handleNavigate} />,
+      "api": <APIPage onNavigate={handleNavigate} onBack={handleBack} />,
+      "faqs": <FAQPage onBack={handleBack} />,
+      "signup": <ImprovedSignupPage onNavigate={handleNavigate} onBack={handleBack} />,
+      "signin": <ImprovedSigninPage onNavigate={handleNavigate} onBack={handleBack} />,
+      "provider-dashboard": <ProviderDashboard onNavigate={handleNavigate} />,
+      "settings": <SettingsPage onNavigate={handleNavigate} onBack={handleBack} />,
+      "helpa-settings": <HelpaSettings onNavigate={handleNavigate} onBack={handleBack} />,
+      "verify-email": <EmailVerificationPage onNavigate={handleNavigate} email={verificationEmail} onBack={handleBack} />,
+      "email-verified": <EmailVerifiedPage onNavigate={handleNavigate} />,
+      "diagnostic": <DiagnosticPage onNavigate={handleNavigate} onBack={handleBack} />,
+      "signup-debugger": <SignupDebugger onNavigate={handleNavigate} onBack={handleBack} />,
+      "waitlist-choice": <WaitlistChoicePage onNavigate={handleNavigate} onBack={handleBack} />,
+      "waitlist-customer": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="customer" />,
+      "waitlist-helpa": <WaitlistPage onNavigate={handleNavigate} onBack={handleBack} defaultUserType="helpa" />,
     };
     return pages[currentPage as keyof typeof pages] || pages["home"];
   };
