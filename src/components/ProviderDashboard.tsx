@@ -877,6 +877,8 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
               <Button className="w-full sm:w-auto">
                 <DollarSign className="w-4 h-4 mr-2" />
                 Request Payout
+              </Button>
+            </div>
             {transactions.length === 0 ? (
               <div className={`rounded-3xl p-8 sm:p-12 text-center border shadow-xl transition-colors ${
                 isWhiteBackground
