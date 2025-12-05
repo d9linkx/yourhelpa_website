@@ -205,7 +205,7 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
         : 'bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B]'
     }`}>
       {/* Hero Section */}
-      <section className={`pt-32 pb-16 px-4 transition-colors duration-500 ${
+      <section className={`pt-32 pb-16 px-4 transition-colors duration-500 holographic-overlay ${
         isWhiteBackground
           ? 'bg-gradient-to-br from-emerald-50 via-white to-yellow-50'
           : 'bg-transparent'
@@ -366,8 +366,8 @@ export function ServicesPage({ onNavigate }: ServicesPageProps) {
                             whileHover={{ y: -4, scale: 1.02 }}
                             className={`group rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border cursor-pointer holographic neon-glow ${
                               isWhiteBackground
-                                ? 'bg-white border-transparent hover:border-primary/20 glass-futuristic'
-                                : 'bg-white/10 backdrop-blur-xl border-white/10 hover:border-primary/50 glass-futuristic-dark'
+                                ? 'bg-white border-transparent hover:border-primary/20 glass-futuristic hover:bg-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:scale-105'
+                                : 'bg-white/10 backdrop-blur-xl border-white/10 hover:border-primary/50 glass-futuristic-dark hover:bg-white/20 hover:shadow-xl hover:shadow-white/10 hover:scale-105'
                             }`}
                           >
                             <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>

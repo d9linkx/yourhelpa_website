@@ -435,10 +435,10 @@ export function FAQPage({ onBack }: FAQPageProps) {
                       <AccordionItem 
                         key={faqIndex} 
                         value={`item-${categoryIndex}-${faqIndex}`}
-                        className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
+                        className={`rounded-2xl border overflow-hidden transition-all duration-300 holographic neon-glow ${
                           isWhiteBackground
-                            ? 'bg-gradient-to-br from-emerald-50/50 to-white border-primary/10 hover:border-primary/30 hover:shadow-md'
-                            : 'bg-white/10 backdrop-blur-xl border-white/20 hover:border-white/40'
+                            ? 'bg-gradient-to-br from-emerald-50/50 to-white border-primary/10 hover:border-primary/30 hover:shadow-md glass-futuristic hover:bg-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:scale-105'
+                            : 'bg-white/10 backdrop-blur-xl border-white/20 hover:border-white/40 glass-futuristic-dark hover:bg-white/20 hover:shadow-xl hover:shadow-white/10 hover:scale-105'
                         }`}
                       >
                         <AccordionTrigger className="px-6 py-5 hover:no-underline group text-left">

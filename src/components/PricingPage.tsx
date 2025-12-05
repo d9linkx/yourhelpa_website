@@ -382,10 +382,10 @@ export function PricingPage({ onNavigate }: PricingPageProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.05 }}
-                  className={`p-6 rounded-2xl border transition-colors ${
+                  className={`p-6 rounded-2xl border transition-colors holographic neon-glow ${
                     isWhiteBackground
-                      ? 'bg-gradient-to-br from-emerald-50 to-white border-primary/10'
-                      : 'bg-white/10 backdrop-blur-xl border-white/20'
+                      ? 'bg-gradient-to-br from-emerald-50 to-white border-primary/10 glass-futuristic hover:bg-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:scale-105'
+                      : 'bg-white/10 backdrop-blur-xl border-white/20 glass-futuristic-dark hover:bg-white/20 hover:shadow-xl hover:shadow-white/10 hover:scale-105'
                   }`}
                 >
                   <h3 className={`text-lg mb-2 transition-colors ${

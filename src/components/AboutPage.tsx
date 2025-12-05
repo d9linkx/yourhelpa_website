@@ -254,7 +254,7 @@ export function AboutPage({ onBack, onNavigate }: AboutPageProps & { onNavigate?
         : 'bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B]'
     }`}>
       {/* Hero Section */}
-      <section className={`pt-32 pb-20 px-4 relative overflow-hidden transition-colors duration-500 ${
+      <section className={`pt-32 pb-20 px-4 relative overflow-hidden transition-colors duration-500 holographic-overlay ${
         isWhiteBackground
           ? 'bg-gradient-to-br from-emerald-50 via-white to-yellow-50'
           : 'bg-transparent'
@@ -311,7 +311,11 @@ export function AboutPage({ onBack, onNavigate }: AboutPageProps & { onNavigate?
             {stats.map((stat, index) => (
               <div
                 key={index}
-                className="text-center"
+                className={`text-center p-6 rounded-2xl border transition-all duration-300 holographic ${
+                  isWhiteBackground
+                    ? 'bg-primary/5 backdrop-blur-sm border-primary/20 shadow-lg shadow-primary/5 hover:bg-primary/10 hover:shadow-xl hover:shadow-primary/10 hover:scale-105 neon-glow'
+                    : 'bg-white/10 border-white/20 neon-glow-blue'
+                }`}
               >
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors ${
                   isWhiteBackground ? 'bg-primary/10' : 'bg-primary/20'
@@ -905,17 +909,17 @@ export function AboutPage({ onBack, onNavigate }: AboutPageProps & { onNavigate?
             {helpas.map((helpa, index) => (
               <motion.div
                 key={index}
-                whileHover={{ y: -4 }}
-                className={`rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border ${
+                whileHover={{ y: -4, scale: 1.02 }}
+                className={`group relative rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border cursor-pointer holographic ${
                   isWhiteBackground
-                    ? 'bg-gradient-to-br from-white to-emerald-50/30 border-primary/10'
-                    : 'bg-white/10 backdrop-blur-xl border-white/20'
+                    ? 'bg-gradient-to-br from-white to-emerald-50/30 border-primary/10 hover:border-primary/20 glass-futuristic'
+                    : 'bg-white/10 backdrop-blur-xl border-white/20 hover:border-accent/50 glass-futuristic-dark'
                 }`}
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${helpa.color} flex items-center justify-center mb-4 shadow-lg`}>
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${helpa.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <helpa.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className={`text-xl mb-2 transition-colors ${
+                <h3 className={`text-xl mb-2 group-hover:text-primary transition-colors ${
                   isWhiteBackground ? 'text-[#202124]' : 'text-white'
                 }`}>{helpa.title}</h3>
                 <p className={`text-sm transition-colors ${
@@ -927,12 +931,12 @@ export function AboutPage({ onBack, onNavigate }: AboutPageProps & { onNavigate?
             {/* CTA Card */}
             <motion.button
               onClick={handleChatClick}
-              whileHover={{ y: -4 }}
-              className="bg-gradient-to-br from-primary to-emerald-600 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center text-white w-full"
+              whileHover={{ y: -4, scale: 1.02 }}
+              className="group relative bg-gradient-to-br from-primary to-emerald-600 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center text-white w-full futuristic-button"
             >
               <h3 className="text-xl mb-2">Need Help?</h3>
               <p className="text-emerald-100 text-sm mb-4">Chat with us on WhatsApp now</p>
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm bg-white text-primary px-4 py-2 rounded-full group-hover:scale-105 transition-transform">
                 <span>Start Chat</span>
               </div>
             </motion.button>

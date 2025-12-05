@@ -348,10 +348,10 @@ export function UserDashboard({ onNavigate }: UserDashboardProps) {
                   <motion.div
                     key={index}
                     whileHover={{ y: -4 }}
-                    className={`rounded-2xl p-6 border shadow-lg transition-all ${
+                    className={`rounded-2xl p-6 border shadow-lg transition-all holographic neon-glow ${
                       isWhiteBackground
-                        ? 'bg-white border-primary/10'
-                        : 'bg-white/10 backdrop-blur-xl border-white/20'
+                        ? 'bg-white border-primary/10 glass-futuristic hover:bg-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:scale-105'
+                        : 'bg-white/10 backdrop-blur-xl border-white/20 glass-futuristic-dark hover:bg-white/20 hover:shadow-xl hover:shadow-white/10 hover:scale-105'
                     }`}
                   >
                     <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-4 shadow-lg`}>
