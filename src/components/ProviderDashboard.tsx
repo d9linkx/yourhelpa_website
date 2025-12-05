@@ -58,7 +58,6 @@ interface Transaction { id: string; amount: number; status: string; description:
 export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   const { user, loading: isAuthLoading } = useAuth();
   const { isWhiteBackground } = useBlogSettings();
-  const navigate = useNavigate();
 
   const [activeView, setActiveView] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
