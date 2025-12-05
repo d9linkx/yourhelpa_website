@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { registerUser, loginUser, validateSession, signInWithGoogleAppsScript } from '../../utils/google-apps-script';
+import { supabase } from '../../supabaseClient';
 
 interface User {
   id: string;
@@ -31,28 +31,51 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Check for existing session on mount
   useEffect(() => {
     checkSession();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.id);
+
+        if (session?.user) {
+          setUser({
+            id: session.user.id,
+            email: session.user.email || '',
+            firstName: session.user.user_metadata?.full_name || session.user.user_metadata?.firstName || '',
+            phone: session.user.user_metadata?.phone || '',
+            createdAt: session.user.created_at,
+          });
+        } else {
+          setUser(null);
+        }
+        setLoading(false);
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const checkSession = async () => {
     try {
-      const token = localStorage.getItem('yourhelpa_session_token');
-      if (!token) {
+      const { data: { session }, error } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error('Error checking session:', error);
         setLoading(false);
         return;
       }
 
-      // Validate session with Google Sheets backend
-      const result = await validateSession(token);
-      
-      if (result.success && result.user) {
-        setUser(result.user);
-      } else {
-        // Invalid session, clear it
-        localStorage.removeItem('yourhelpa_session_token');
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email || '',
+          firstName: session.user.user_metadata?.full_name || session.user.user_metadata?.firstName || '',
+          phone: session.user.user_metadata?.phone || '',
+          createdAt: session.user.created_at,
+        });
       }
     } catch (error) {
       console.error('Error checking session:', error);
-      localStorage.removeItem('yourhelpa_session_token');
     } finally {
       setLoading(false);
     }
@@ -61,43 +84,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = async (email: string, password: string, firstName: string, phone: string) => {
     try {
       console.log('🔄 Attempting signup...', { email, firstName, phone });
-      const result = await registerUser(email, password, firstName, phone);
-      
-      console.log('📥 Signup result:', result);
-      
-      if (!result.success) {
-        return { success: false, error: result.error || 'Registration failed' };
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: firstName,
+            phone: phone,
+          }
+        }
+      });
+
+      if (error) {
+        console.error('❌ Signup error:', error);
+        return { success: false, error: error.message };
       }
 
-      // Store session token
-      if (result.sessionToken) {
-        localStorage.setItem('yourhelpa_session_token', result.sessionToken);
-      }
-      
-      // Set user
-      if (result.user) {
-        setUser(result.user);
+      if (data.user) {
+        setUser({
+          id: data.user.id,
+          email: data.user.email || '',
+          firstName: firstName,
+          phone: phone,
+          createdAt: data.user.created_at,
+        });
       }
 
       return { success: true };
     } catch (error) {
       console.error('❌ Signup error:', error);
-      
-      // More detailed error messages
-      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-        return { 
-          success: false, 
-          error: 'Cannot connect to Google Sheets backend. The Google Apps Script may not be deployed yet. Please check the deployment guide.' 
-        };
-      }
-      
-      if (error instanceof Error && error.message.includes('CORS')) {
-        return { 
-          success: false, 
-          error: 'Connection blocked. Please ensure Google Apps Script is deployed with "Anyone" access.' 
-        };
-      }
-      
       return { success: false, error: 'Signup failed: ' + (error as Error).message };
     }
   };
@@ -171,27 +186,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
-      // Use Google Apps Script authentication instead of Supabase OAuth
-      const result = await signInWithGoogleAppsScript();
-      
-      if (!result.success) {
-        // Only log error if there's an actual error message
-        // If error is undefined, user just cancelled (closed popup)
-        if (result.error) {
-          console.error('Google Apps Script auth error:', result.error);
-          return { success: false, error: result.error };
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin
         }
-        // User cancelled - return without error message
-        return { success: false };
+      });
+
+      if (error) {
+        console.error('Google sign in error:', error);
+        return { success: false, error: error.message };
       }
-      
-      // User is authenticated via Google Apps Script
-      // Data is already in Google Sheets
-      if (result.user) {
-        setUser(result.user);
-        localStorage.setItem('yourhelpa_session_token', result.sessionToken || 'gas_authenticated');
-      }
-      
+
+      // OAuth will redirect, so we don't set user here
+      // The session will be handled by the auth state change listener
       return { success: true };
     } catch (error) {
       console.error('Google sign in error:', error);
@@ -205,17 +213,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const refreshUser = async () => {
-    const token = localStorage.getItem('yourhelpa_session_token');
-    if (token) {
-      try {
-        const result = await validateSession(token);
-        
-        if (result.success && result.user) {
-          setUser(result.user);
-        }
-      } catch (error) {
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+
+      if (error) {
         console.error('Error refreshing user:', error);
+        return;
       }
+
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email || '',
+          firstName: session.user.user_metadata?.full_name || session.user.user_metadata?.firstName || '',
+          phone: session.user.user_metadata?.phone || '',
+          createdAt: session.user.created_at,
+        });
+      }
+    } catch (error) {
+      console.error('Error refreshing user:', error);
     }
   };
 

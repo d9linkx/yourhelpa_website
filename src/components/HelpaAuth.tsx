@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { supabase } from '../supabaseClient'; // Assuming this is your initialized client
+import { supabase } from '../supabaseClient';
+import { useAuth } from './hooks/useAuth';
 
 export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void }) {
   const [mode, setMode] = useState<'login' | 'signup'>('signup');
@@ -29,14 +30,18 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
   };
 
 
-  // Google sign-in handler (Supabase OAuth)
+  // Google sign-in handler
   const handleGoogleSignIn = async () => {
     setError('');
     setLoading(true);
-    // Note: Supabase handles the session setting after the redirect for OAuth,
-    // so no manual setSession is needed here.
-    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
-    if (error) setError(error.message || 'Google sign-in failed.');
+    const result = await signInWithGoogle();
+    if (!result.success) {
+      setError(result.error || 'Google sign-in failed.');
+    } else {
+      // For OAuth, the success will be handled by the auth state change listener
+      setSuccess('Signed in with Google successfully!');
+      setTimeout(() => onAuthSuccess(), 500);
+    }
     setLoading(false);
   };
 
@@ -92,7 +97,7 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
     setLoading(false);
   };
 
-  // Phone auth handler (Supabase SMS OTP)
+  // Phone auth handler
   const handlePhoneAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -103,17 +108,20 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
       setLoading(false);
       return;
     }
-    const result = await supabase.auth.signInWithOtp({ phone });
-    if (result.error) {
-      setError(result.error.message || 'Phone authentication failed.');
-    } else {
+    const result = await signUpWithPhone(phone, fullName);
+    if (result.success && result.requiresOTP) {
       setSuccess('OTP sent! Check your phone.');
       setPhoneStep('verify');
+    } else if (result.success) {
+      setSuccess('Signed up successfully!');
+      setTimeout(() => onAuthSuccess(), 500);
+    } else {
+      setError(result.error || 'Phone authentication failed.');
     }
     setLoading(false);
   };
 
-  // OTP verify handler (Supabase)
+  // OTP verify handler
   const handleOtpVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -124,12 +132,12 @@ export default function HelpaAuth({ onAuthSuccess }: { onAuthSuccess: () => void
       setLoading(false);
       return;
     }
-    const result = await supabase.auth.verifyOtp({ phone, token: otp, type: 'sms' });
-    if (result.error) {
-      setError(result.error.message || 'OTP verification failed.');
-    } else if (result.data.session) {
-      // 💡 FIX 3: Call the new helper function on successful OTP verification
-      await setSessionAndNavigate(result.data.session, 'Phone verified and signed in!');
+    const result = await verifyPhoneOTP(phone, otp);
+    if (result.success) {
+      setSuccess('Phone verified and signed in!');
+      setTimeout(() => onAuthSuccess(), 500);
+    } else {
+      setError(result.error || 'OTP verification failed.');
     }
     setLoading(false);
   };
