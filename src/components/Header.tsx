@@ -56,9 +56,12 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/98 backdrop-blur-md shadow-lg"
-          : "bg-white border-b border-border"
+          ? "glass animate-shimmer"
+          : "glass-card border-glow"
       }`}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20 mx-0 lg:mx-[-20px] my-[0px]">
@@ -280,10 +283,10 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                {/* Primary CTA - Join Waitlist */}
+            {/* Primary CTA - Join Waitlist */}
                 <motion.button
                   onClick={() => onNavigate('waitlist-choice')}
-                  className="flex items-center gap-2.5 bg-primary text-white px-6 py-2.5 rounded-full hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/35 group border border-primary/20"
+                  className="flex items-center gap-2.5 gradient-primary text-white px-6 py-2.5 rounded-full hover-lift animate-glow border-glow group"
                   whileHover={{ scale: 1.05, y: -1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -293,7 +296,7 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                 {/* Secondary CTA - Helpa Onboarding/Login */}
                 <motion.button
                   onClick={() => onNavigate('helpa-onboarding')}
-                  className="flex items-center gap-2.5 bg-white/10 border border-white/20 text-foreground px-5 py-2.5 rounded-full hover:bg-white/15 hover:border-white/40 transition-all duration-300 shadow-md hover:shadow-lg group"
+                  className="flex items-center gap-2.5 glass-card border-glow text-foreground px-5 py-2.5 rounded-full hover-lift hover-glow group"
                   whileHover={{ scale: 1.05, y: -1 }}
                   whileTap={{ scale: 0.95 }}
                 >
