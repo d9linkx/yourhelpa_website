@@ -27,7 +27,7 @@ import { useBlogSettings } from './hooks/useBlogSettings';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { ProviderRegistrationModal } from './ProviderRegistrationModal';
+
 import { supabase } from '../supabaseClient';
 import { useNavigate } from 'react-router-dom'; // Assuming you use React Router
 
@@ -51,7 +51,7 @@ interface Provider {
 }
 interface Service { id: string; category: string; title: string; description: string; price: number; priceType: 'fixed' | 'hourly' | 'negotiable'; availability: 'available' | 'busy' | 'unavailable'; rating: number; completedJobs: number; responseTime: string; location: string; tags: string[]; }
 interface Notification { id: string; type: string; title: string; message: string; read: boolean; createdAt: string; }
-interface Transaction { id: string; amount; status: string; description: string; createdAt: string; }
+interface Transaction { id: string; amount: number; status: string; description: string; createdAt: string; }
 // -----------------------------
 
 
@@ -69,7 +69,7 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   const [analytics, setAnalytics] = useState<any>(null);
   const [isDataLoading, setIsDataLoading] = useState(false); // Renamed: Only controls data fetching
   const [error, setError] = useState<string | null>(null);
-  const [showRegistration, setShowRegistration] = useState(false);
+
 
   useEffect(() => {
     // 💡 FIX 2: Only proceed with data loading IF authentication is complete and a user exists.
@@ -113,8 +113,33 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
         .single();
         
       if (providerError || !providerData) {
-        setError('No provider profile found for this user. Please register as a provider.');
-        setProvider(null);
+        // Auto-create a basic provider profile if none exists
+        console.log('No provider profile found, creating one...');
+        const { data: newProvider, error: createError } = await supabase
+          .from('helpas')
+          .insert({
+            user_id: user.id,
+            business_name: user.firstName || 'New Helpa',
+            whatsapp_number: user.phone || '',
+            verification_status: 'pending',
+            account_type: 'individual',
+            bio: '',
+            total_earnings: 0,
+            pending_earnings: 0,
+            completed_jobs: 0,
+            rating: 0,
+            total_reviews: 0,
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error('Error creating provider profile:', createError);
+          setError('Failed to create provider profile. Please try again.');
+          setProvider(null);
+        } else {
+          setProvider(newProvider as Provider);
+        }
       } else {
         // Assert type for consistent use
         setProvider(providerData as Provider); 
@@ -165,62 +190,26 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
     );
   }
 
-  // Render registration prompt if NO provider profile is found
+  // Show loading/error state while data is being fetched or created
   if (!provider) {
     return (
-      <>
-        <div className={`min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 transition-colors duration-500 ${
-          isWhiteBackground 
-            ? 'bg-gradient-to-br from-emerald-50 via-white to-yellow-50' 
-            : 'bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B]'
-        }`}>
-          <div className="max-w-2xl mx-auto text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`rounded-3xl p-6 sm:p-12 border shadow-xl transition-colors ${
-                isWhiteBackground 
-                  ? 'bg-white border-primary/10' 
-                  : 'bg-white/10 backdrop-blur-xl border-white/20'
-              }`}
-            >
-              <Store className="w-16 h-16 text-primary mx-auto mb-4" />
-              <h2 className={`text-2xl sm:text-3xl mb-4 transition-colors ${
-                isWhiteBackground ? 'text-foreground' : 'text-white'
-              }`}>
-                Become a Service Provider
-              </h2>
-              <p className={`mb-8 text-sm sm:text-base transition-colors ${
-                isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-              }`}>
-                Join YourHelpa as a service provider and start earning by offering your services to thousands of customers.
-              </p>
-              {error && <p className="mb-4 text-red-500">{error}</p>}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  variant="outline"
-                  onClick={() => onNavigate('dashboard')}
-                  className="w-full sm:w-auto"
-                >
-                  Back to My requests
-                </Button>
-                <Button
-                  onClick={() => setShowRegistration(true)}
-                  className="w-full sm:w-auto px-8 py-6 text-lg"
-                >
-                  Register as Provider
-                </Button>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        <ProviderRegistrationModal
-          open={showRegistration}
-          onClose={() => setShowRegistration(false)}
-          onSuccess={() => loadProviderData()}
-        />
-      </>
+      <div className={`min-h-screen flex items-center justify-center transition-colors duration-500 ${
+        isWhiteBackground
+          ? 'bg-gradient-to-br from-emerald-50 via-white to-yellow-50'
+          : 'bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B]'
+      }`}>
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center"
+        >
+          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className={`transition-colors ${isWhiteBackground ? 'text-gray-600' : 'text-white'}`}>
+            Setting up your Helpa dashboard...
+          </p>
+          {error && <p className="mt-4 text-red-500">{error}</p>}
+        </motion.div>
+      </div>
     );
   }
 
