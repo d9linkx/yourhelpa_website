@@ -69,6 +69,13 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
   const [analytics, setAnalytics] = useState<any>(null);
   const [isDataLoading, setIsDataLoading] = useState(false); // Renamed: Only controls data fetching
   const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [profileForm, setProfileForm] = useState({
+    businessName: '',
+    whatsappNumber: '',
+    bio: '',
+    accountType: 'individual' as 'individual' | 'business'
+  });
 
 
   useEffect(() => {
@@ -135,8 +142,23 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
 
         if (createError) {
           console.error('Error creating provider profile:', createError);
-          setError('Failed to create provider profile. Please try again.');
-          setProvider(null);
+          // Create a temporary provider object for immediate dashboard access
+          const tempProvider: Provider = {
+            id: `temp-${user.id}`,
+            userId: user.id,
+            businessName: user.firstName || 'New Helpa',
+            whatsappNumber: user.phone || '',
+            verificationStatus: 'pending',
+            accountType: 'individual',
+            bio: '',
+            totalEarnings: 0,
+            pendingEarnings: 0,
+            completedJobs: 0,
+            rating: 0,
+            totalReviews: 0,
+          };
+          setProvider(tempProvider);
+          setError('Profile setup incomplete. Please complete your profile in Settings.');
         } else {
           setProvider(newProvider as Provider);
         }
@@ -162,6 +184,64 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
       setError('Error loading provider data. Please try again later.');
       setIsDataLoading(false);
       console.error('Error loading provider data:', error);
+    }
+  };
+
+  const saveProfile = async () => {
+    if (!user || !provider) return;
+
+    setIsSaving(true);
+    setError(null);
+
+    try {
+      const profileData = {
+        user_id: user.id,
+        business_name: profileForm.businessName || provider.businessName,
+        whatsapp_number: profileForm.whatsappNumber || provider.whatsappNumber,
+        verification_status: provider.verificationStatus,
+        account_type: profileForm.accountType || provider.accountType,
+        bio: profileForm.bio || provider.bio,
+        total_earnings: provider.totalEarnings,
+        pending_earnings: provider.pendingEarnings,
+        completed_jobs: provider.completedJobs,
+        rating: provider.rating,
+        total_reviews: provider.totalReviews,
+      };
+
+      if (provider.id.startsWith('temp-')) {
+        // Create new profile
+        const { data: newProvider, error: createError } = await supabase
+          .from('helpas')
+          .insert(profileData)
+          .select()
+          .single();
+
+        if (createError) {
+          throw createError;
+        }
+
+        setProvider(newProvider as Provider);
+        setError(null);
+      } else {
+        // Update existing profile
+        const { data: updatedProvider, error: updateError } = await supabase
+          .from('helpas')
+          .update(profileData)
+          .eq('id', provider.id)
+          .select()
+          .single();
+
+        if (updateError) {
+          throw updateError;
+        }
+
+        setProvider(updatedProvider as Provider);
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error);
+      setError('Failed to save profile. Please try again.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -740,32 +820,177 @@ export function ProviderDashboard({ onNavigate }: ProviderDashboardProps) {
             )}
           </TabsContent>
           
-          {/* Settings Tab (Placeholder) */}
+          {/* Settings Tab */}
           <TabsContent value="settings">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className={`rounded-3xl p-8 sm:p-12 text-center border shadow-xl transition-colors ${
+              className={`rounded-3xl p-6 sm:p-8 border shadow-xl transition-colors ${
                 isWhiteBackground
                   ? 'bg-white border-primary/10'
                   : 'bg-white/10 backdrop-blur-xl border-white/20'
               }`}
             >
-              <Settings className={`w-16 h-16 mx-auto mb-4 ${
-                isWhiteBackground ? 'text-primary' : 'text-white'
-              }`} />
-              <h3 className={`text-lg sm:text-xl mb-2 transition-colors ${
-                isWhiteBackground ? 'text-foreground' : 'text-white'
-              }`}>Account Settings</h3>
-              <p className={`text-sm sm:text-base mb-6 transition-colors ${
-                isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-              }`}>
-                Manage your profile, payout settings, and notification preferences.
-              </p>
-              <Button onClick={() => console.log('Go to settings')} className="w-full sm:w-auto">
-                <Settings className="w-4 h-4 mr-2" />
-                Configure Profile
-              </Button>
+              <div className="flex items-center gap-3 mb-6">
+                <Settings className={`w-6 h-6 ${
+                  isWhiteBackground ? 'text-primary' : 'text-white'
+                }`} />
+                <h3 className={`text-lg sm:text-xl transition-colors ${
+                  isWhiteBackground ? 'text-foreground' : 'text-white'
+                }`}>Account Settings</h3>
+              </div>
+
+              {error && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-800 text-sm">{error}</p>
+                </div>
+              )}
+
+              <div className="space-y-6">
+                {/* Profile Completion Status */}
+                <div className={`p-4 rounded-lg border transition-colors ${
+                  isWhiteBackground
+                    ? 'bg-blue-50 border-blue-200'
+                    : 'bg-blue-900/20 border-blue-500/20'
+                }`}>
+                  <h4 className={`text-sm font-medium mb-2 transition-colors ${
+                    isWhiteBackground ? 'text-blue-900' : 'text-blue-200'
+                  }`}>
+                    Profile Completion
+                  </h4>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      provider.id.startsWith('temp-') ? 'bg-yellow-500' : 'bg-green-500'
+                    }`} />
+                    <span className={`text-xs transition-colors ${
+                      isWhiteBackground ? 'text-blue-700' : 'text-blue-300'
+                    }`}>
+                      {provider.id.startsWith('temp-')
+                        ? 'Incomplete - Please save your profile'
+                        : 'Profile saved to database'
+                      }
+                    </span>
+                  </div>
+                </div>
+
+                {/* Business Information */}
+                <div>
+                  <h4 className={`text-base font-medium mb-4 transition-colors ${
+                    isWhiteBackground ? 'text-foreground' : 'text-white'
+                  }`}>
+                    Business Information
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className={`block text-sm font-medium mb-2 transition-colors ${
+                        isWhiteBackground ? 'text-foreground' : 'text-white'
+                      }`}>
+                        Business Name
+                      </label>
+                      <input
+                        type="text"
+                        value={profileForm.businessName || provider.businessName}
+                        onChange={(e) => setProfileForm(prev => ({ ...prev, businessName: e.target.value }))}
+                        className={`w-full px-3 py-2 border rounded-lg transition-colors ${
+                          isWhiteBackground
+                            ? 'bg-white border-gray-300 text-foreground'
+                            : 'bg-white/10 border-white/20 text-white'
+                        }`}
+                        placeholder="Enter your business name"
+                      />
+                    </div>
+                    <div>
+                      <label className={`block text-sm font-medium mb-2 transition-colors ${
+                        isWhiteBackground ? 'text-foreground' : 'text-white'
+                      }`}>
+                        WhatsApp Number
+                      </label>
+                      <input
+                        type="tel"
+                        value={profileForm.whatsappNumber || provider.whatsappNumber}
+                        onChange={(e) => setProfileForm(prev => ({ ...prev, whatsappNumber: e.target.value }))}
+                        className={`w-full px-3 py-2 border rounded-lg transition-colors ${
+                          isWhiteBackground
+                            ? 'bg-white border-gray-300 text-foreground'
+                            : 'bg-white/10 border-white/20 text-white'
+                        }`}
+                        placeholder="+234..."
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <label className={`block text-sm font-medium mb-2 transition-colors ${
+                      isWhiteBackground ? 'text-foreground' : 'text-white'
+                    }`}>
+                      Bio
+                    </label>
+                    <textarea
+                      value={profileForm.bio || provider.bio}
+                      onChange={(e) => setProfileForm(prev => ({ ...prev, bio: e.target.value }))}
+                      rows={3}
+                      className={`w-full px-3 py-2 border rounded-lg transition-colors ${
+                        isWhiteBackground
+                          ? 'bg-white border-gray-300 text-foreground'
+                          : 'bg-white/10 border-white/20 text-white'
+                      }`}
+                      placeholder="Tell customers about yourself and your services..."
+                    />
+                  </div>
+                </div>
+
+                {/* Account Type */}
+                <div>
+                  <h4 className={`text-base font-medium mb-4 transition-colors ${
+                    isWhiteBackground ? 'text-foreground' : 'text-white'
+                  }`}>
+                    Account Type
+                  </h4>
+                  <div className="flex gap-4">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="accountType"
+                        value="individual"
+                        checked={(profileForm.accountType || provider.accountType) === 'individual'}
+                        onChange={(e) => setProfileForm(prev => ({ ...prev, accountType: e.target.value as 'individual' | 'business' }))}
+                        className="mr-2"
+                      />
+                      <span className={`text-sm transition-colors ${
+                        isWhiteBackground ? 'text-foreground' : 'text-white'
+                      }`}>
+                        Individual
+                      </span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="accountType"
+                        value="business"
+                        checked={(profileForm.accountType || provider.accountType) === 'business'}
+                        onChange={(e) => setProfileForm(prev => ({ ...prev, accountType: e.target.value as 'individual' | 'business' }))}
+                        className="mr-2"
+                      />
+                      <span className={`text-sm transition-colors ${
+                        isWhiteBackground ? 'text-foreground' : 'text-white'
+                      }`}>
+                        Business
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Save Button */}
+                <div className="flex justify-end pt-4 border-t border-border">
+                  <Button
+                    onClick={saveProfile}
+                    disabled={isSaving}
+                    className="px-6"
+                  >
+                    <Settings className="w-4 h-4 mr-2" />
+                    {isSaving ? 'Saving...' : 'Save Profile'}
+                  </Button>
+                </div>
+              </div>
             </motion.div>
           </TabsContent>
         </Tabs>
