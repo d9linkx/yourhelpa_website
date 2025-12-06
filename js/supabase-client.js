@@ -1,11 +1,10 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+const SUPABASE_URL = 'https://iujxrjqasrfcbdmrrirn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1anhyanFhc3JmY2JkbXJyaXJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4NDMzMzQsImV4cCI6MjA4MDQxOTMzNH0.FMSG1PJRxQD0ZVXFAMsgK6hehAvLLIJBmMaC6dkhxLo';
 
-// IMPORTANT: Replace with your actual Supabase project URL and anon key
-const supabaseUrl = 'YOUR_SUPABASE_URL'; // Example: 'https://xyz.supabase.co'
-const supabaseKey = 'YOUR_SUPABASE_ANON_KEY'; // Example: 'ey...'
+// Create a single supabase client for interacting with your database
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-if (!supabaseUrl || supabaseUrl === 'YOUR_SUPABASE_URL' || !supabaseKey || supabaseKey === 'YOUR_SUPABASE_ANON_KEY') {
-    console.error("Supabase URL and Key are not configured. Please update 'YourHelpa HTMLCSSJS/js/supabase-client.js'");
-}
+// Expose the client to the global scope so other scripts can use it
+window.supabaseClient = supabase;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+console.log('Supabase client initialized.');

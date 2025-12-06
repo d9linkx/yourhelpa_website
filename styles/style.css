@@ -192,44 +192,78 @@ p {
 
 /* --- Footer --- */
 .main-footer {
-    background-color: var(--background-color);
+    background-color: var(--surface-color);
     color: var(--text-muted-color);
-    padding: 2rem 1.5rem;
+    padding: 4rem 1.5rem 2rem;
     margin-top: 4rem;
     border-top: 1px solid var(--border-color-light);
 }
 
 .main-footer a {
-    color: var(--text-muted-color);
+    color: var(--text-color);
+    transition: color 0.2s ease;
 }
 .main-footer a:hover {
-    color: var(--text-heading-color);
+    color: var(--primary-color);
 }
 
 .main-footer .footer-content {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
+    gap: 3rem;
     margin-bottom: 2rem;
 }
 
-.main-footer .footer-logo {
-    font-size: 1.5rem;
+.main-footer .footer-about {
+    flex: 2;
+    min-width: 250px; /* Prevent it from getting too squished */
+    margin-right: 2rem;
+}
+
+.main-footer .footer-about .footer-logo {
+    font-size: 1.75rem;
     font-weight: 800;
     color: var(--text-heading-color);
+    margin-bottom: 1rem;
+}
+
+.main-footer .footer-about p {
+    max-width: 350px;
+    margin-bottom: 1.5rem;
+}
+
+.main-footer .social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.main-footer .social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color-light);
+    border-radius: 50%;
+    color: var(--text-muted-color);
+    transition: all 0.2s ease;
+}
+
+.main-footer .social-links a:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .main-footer .footer-links {
     display: flex;
-    gap: 1.5rem;
-}
-
-.main-footer .footer-copyright {
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-muted-color);
-    border-top: 1px solid var(--border-color-light);
-    padding-top: 2rem;
+    flex-wrap: wrap;
+    gap: 3rem;
+    flex: 3;
+    justify-content: space-between;
 }
 
 /* --- Interactive Buttons --- */
