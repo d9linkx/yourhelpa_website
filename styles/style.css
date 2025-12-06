@@ -36,6 +36,11 @@ body.dark-mode {
     --text-color: #a3a3a3;
     --text-muted-color: #737373;
 
+    /* Custom dark mode menu background */
+    #main-nav {
+        background-color: var(--primary-color);
+    }
+
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -4px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
@@ -190,6 +195,65 @@ p {
     color: var(--text-heading-color);
 }
 
+/* Dropdown Menu */
+.has-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color-light);
+    border-radius: 12px;
+    padding: 0.75rem;
+    min-width: 220px;
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    z-index: 1001;
+}
+
+.has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--surface-color);
+    color: var(--primary-color);
+}
+
+/* Special CTA link in nav */
+.nav-cta {
+    background-color: rgba(5, 150, 105, 0.1);
+    color: var(--primary-color) !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 50px;
+    font-weight: 600 !important;
+}
+
+.nav-cta:hover {
+    background-color: rgba(5, 150, 105, 0.2);
+    color: var(--primary-hover) !important;
+}
+
+.desktop-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
 /* --- Footer --- */
 .main-footer {
     background-color: var(--surface-color);
@@ -266,6 +330,38 @@ p {
     justify-content: space-between;
 }
 
+.main-footer .footer-column h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-heading-color);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.main-footer .footer-column ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.main-footer .footer-copyright {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted-color);
+    border-top: 1px solid var(--border-color-light);
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.main-footer .footer-legal-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
 /* --- Interactive Buttons --- */
 .button-primary {
     display: inline-block;
@@ -1074,11 +1170,13 @@ main {
         bottom: 0;
         right: 0;
         width: 50%;
-        max-width: 320px; /* Set a max width for larger tablets */
-        justify-content: flex-start; /* Align items to the top */
+        max-width: 350px; /* Set a max width for larger tablets */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         background-color: var(--background-color);
         z-index: 1001;
-        padding: 20rem 5rem;
+        padding: 1.5rem;
         box-shadow: var(--shadow-lg);
         transform: translateX(100%); /* Start off-screen */
         transition: transform 0.3s ease-in-out;
@@ -1103,19 +1201,19 @@ main {
     #main-nav ul {
         flex-direction: column;
         align-items: flex-start; /* Align links to the left */
-        gap: 2rem;
+        gap: 1.5rem;
     }
     #main-nav a {
         font-size: 1.5rem;
-    }
-    .header-actions .button-primary,
-    .header-actions .button-secondary {
-        display: none;
     }
     .desktop-actions {
         display: none;
     }
     .main-header .container {
+        /* Ensure logo and toggles are on one line */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         flex-wrap: wrap;
         height: auto;
         padding-top: 0.5rem;
@@ -1123,6 +1221,19 @@ main {
     }
     .app-layout-header #main-nav a {
         color: var(--text-heading-color);
+    }
+
+    /* Mobile dropdown handling */
+    .has-dropdown:hover .dropdown-menu {
+        display: none; /* Disable hover on mobile */
+    }
+    .dropdown-menu {
+        position: static; /* Remove absolute positioning */
+    }
+    @media (min-width: 769px) {
+        .mobile-menu-header, .mobile-menu-footer {
+            display: none;
+        }
     }
 }
 

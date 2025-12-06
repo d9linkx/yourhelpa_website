@@ -1,24 +1,59 @@
 <header class="main-header">
     <div class="container">
         <a href="index.html" class="logo">YourHelpa</a>
+
         <nav id="main-nav">
+            <!-- Mobile-only header -->
+            <div class="mobile-menu-header">
+                <a href="index.html" class="logo">YourHelpa</a>
+                <button class="close-menu-btn" aria-label="Close Menu">&times;</button>
+            </div>
+
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Explore</a></li>
+                <li class="has-dropdown">
+                    <a href="services.html">Explore</a>
+                    <div class="dropdown-menu">
+                        <a href="how-it-works.html">How It Works</a>
+                        <a href="services.html">Browse Services</a>
+                        <a href="safety.html">Safety & Trust</a>
+                    </div>
+                </li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="register.html?role=helpa" class="nav-cta">Become a Helpa</a></li>
             </ul>
+
+            <!-- Mobile-only footer with auth buttons -->
+            <div class="mobile-menu-footer">
+                <div id="mobile-user-actions" style="display: none;">
+                    <!-- User-specific links will be injected here -->
+                </div>
+                <a href="login.html" class="button-secondary">Login</a>
+                <a href="register.html" class="button-primary">Sign Up</a>
+            </div>
         </nav>
+
+        <!-- Overlay for mobile menu -->
+        <div id="nav-overlay" class="nav-overlay"></div>
+
         <div class="header-actions">
-            <a href="login.html" class="button-secondary">Login</a>
-            <a href="register.html" class="button-primary">Sign Up</a>
-            <button id="theme-toggle" class="theme-toggle-button">
-                <!-- Icon will be injected by JS -->
+            <!-- Desktop auth buttons -->
+            <div id="desktop-user-actions" style="display: none;">
+                <!-- User-specific links will be injected here -->
+            </div>
+            <div id="desktop-guest-actions" class="desktop-actions">
+                <a href="login.html" class="button-secondary">Login</a>
+                <a href="register.html" class="button-primary">Sign Up</a>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="theme-toggle-button" aria-label="Toggle theme">
+                <!-- Icon will be inserted by JS -->
             </button>
-            <button id="nav-toggle" class="nav-toggle" aria-controls="main-nav" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
-            </button>
+
+            <!-- Mobile Nav Toggle -->
+            <button id="nav-toggle" class="nav-toggle" aria-label="Open Menu" aria-expanded="false"></button>
         </div>
     </div>
 </header>
-<div id="nav-overlay" class="nav-overlay"></div>
