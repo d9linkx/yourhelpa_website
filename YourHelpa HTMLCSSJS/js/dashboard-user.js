@@ -43,7 +43,11 @@ async function loadDashboard() {
 
     const transactionsList = document.getElementById('transactions-list');
     if (transactions && transactions.length > 0) {
-        transactionsList.innerHTML = transactions.map(tx => `<div>${tx.description} - $${tx.amount}</div>`).join('');
+        transactionsList.innerHTML = transactions.map(tx => `
+            <div class="transaction-item">
+                ${tx.description} - $${tx.amount || 'N/A'} - <strong>Status: ${tx.status}</strong>
+            </div>
+        `).join('');
     } else {
         transactionsList.innerHTML = '<p>You have no transactions yet.</p>';
     }

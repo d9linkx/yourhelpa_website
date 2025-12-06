@@ -1,15 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YourHelpa - Get Help, Get Things Done</title>
+    <link rel="stylesheet" href="style/styles.css">
+</head>
+<body>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>YourHelpa (WORKFLOWS ADDED)</title>
-    </head>
+    <div id="header-placeholder"></div>
 
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Don't Just Do It Yourself, Get a Helpa</h1>
+                <p>From everyday chores to specialized tasks, find trusted local help to get the job done.</p>
+                <div class="hero-search">
+                    <input type="text" placeholder="What do you need help with?">
+                    <button class="button-primary">Search</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories">
+            <div class="container">
+                <h2>Need something done? Browse by category</h2>
+                <div class="category-grid">
+                    <a href="services.html?category=handyman" class="category-card">Handyman</a>
+                    <a href="services.html?category=cleaning" class="category-card">Cleaning</a>
+                    <a href="services.html?category=assembly" class="category-card">Assembly</a>
+                    <a href="services.html?category=moving" class="category-card">Moving</a>
+                    <a href="services.html?category=delivery" class="category-card">Delivery</a>
+                    <a href="services.html?category=pets" class="category-card">Pet Care</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works alt-bg">
+            <div class="container">
+                <h2>How YourHelpa Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <h3>1. Post a Task</h3>
+                        <p>Describe what you need done, set your budget, and post your task for free.</p>
+                    </div>
+                    <div class="step">
+                        <h3>2. Get Offers</h3>
+                        <p>Receive offers from trusted and skilled Helpas in your area. Choose the best one for your job.</p>
+                    </div>
+                    <div class="step">
+                        <h3>3. Get It Done</h3>
+                        <p>Your chosen Helpa completes the task while you relax. Pay securely through the platform once it's done.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Become a Helpa</h2>
+                <p>Join our community of trusted Helpas and start earning money by helping people in your city. Set your own schedule, choose your tasks, and build your business.</p>
+                <a href="register.html?role=helpa" class="button-primary large">Start Earning Today</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/templates.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
