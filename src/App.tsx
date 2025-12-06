@@ -1,35 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import { BlogSettingsProvider } from "./components/hooks/useBlogSettings";
 import { AuthProvider } from "./components/hooks/useAuth";
 import { Toaster } from "./components/ui/sonner";
 import { USE_MOCK_AUTH } from "./utils/mock-auth";
-import { HomePage } from "./components/HomePage";
-import { ServicesPage } from "./components/ServicesPage";
-import { PricingPage } from "./components/PricingPage";
-import { JoinHelpaPage } from "./components/JoinHelpaPage";
-import { AboutPage } from "./components/AboutPage";
-import { APIPage } from "./components/APIPage";
-import { FAQPage } from "./components/FAQPage";
-import { ImprovedSignupPage } from "./components/ImprovedSignupPage";
-import { ImprovedSigninPage } from "./components/ImprovedSigninPage";
-
-
-import { SettingsPage } from "./components/SettingsPage";
-import { HelpaSettings } from "./components/HelpaSettings";
-import { EmailVerificationPage } from "./components/EmailVerificationPage";
-import { EmailVerifiedPage } from "./components/EmailVerifiedPage";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ScrollProgress } from "./components/ScrollProgress";
-import { DiagnosticPage } from "./components/DiagnosticPage";
-import { SignupDebugger } from "./components/SignupDebugger";
 import { MockAuthBanner } from "./components/MockAuthBanner";
 import { FloatingWhatsAppButton } from "./components/FloatingWhatsAppButton";
-import { WaitlistPage } from "./components/WaitlistPage";
-import { WaitlistChoicePage } from "./components/WaitlistChoicePage";
-import { HelpaSignupPage } from "./components/HelpaSignupPage";
 import { PageSEO } from "./components/PageSEO";
 
+// Lazy load pages for code splitting
+const HomePage = lazy(() => import("./components/HomePage").then(module => ({ default: module.HomePage })));
+const ServicesPage = lazy(() => import("./components/ServicesPage").then(module => ({ default: module.ServicesPage })));
+const PricingPage = lazy(() => import("./components/PricingPage").then(module => ({ default: module.PricingPage })));
+const AboutPage = lazy(() => import("./components/AboutPage").then(module => ({ default: module.AboutPage })));
+const APIPage = lazy(() => import("./components/APIPage").then(module => ({ default: module.APIPage })));
+const FAQPage = lazy(() => import("./components/FAQPage").then(module => ({ default: module.FAQPage })));
+const DiagnosticPage = lazy(() => import("./components/DiagnosticPage").then(module => ({ default: module.DiagnosticPage })));
+const WaitlistPage = lazy(() => import("./components/WaitlistPage").then(module => ({ default: module.WaitlistPage })));
+const WaitlistChoicePage = lazy(() => import("./components/WaitlistChoicePage").then(module => ({ default: module.WaitlistChoicePage })));
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -43,7 +33,6 @@ export default function App() {
     '/services': 'services',
     '/pricing': 'pricing',
     '/become-a-helpa': 'join',
-    '/helpa-onboarding': 'helpa-onboarding',
     '/about': 'about',
     '/api': 'api',
     '/frequently-asked-questions': 'faqs',
@@ -51,9 +40,6 @@ export default function App() {
     '/signin': 'signin',
     '/helpa-dashboard': 'provider-dashboard',
     '/account-settings': 'settings',
-    '/helpa-settings': 'helpa-settings',
-    '/verify-email': 'verify-email',
-    '/email-verified': 'email-verified',
     '/diagnostic': 'diagnostic',
     '/signup-debugger': 'signup-debugger',
     '/join-waitlist': 'waitlist-choice',
@@ -67,7 +53,6 @@ export default function App() {
     'services': '/services',
     'pricing': '/pricing',
     'join': '/become-a-helpa',
-    'helpa-onboarding': '/helpa-onboarding',
     'about': '/about',
     'api': '/api',
     'faqs': '/frequently-asked-questions',
@@ -76,9 +61,6 @@ export default function App() {
     'dashboard': '/dashboard',
 
     'settings': '/account-settings',
-    'helpa-settings': '/helpa-settings',
-    'verify-email': '/verify-email',
-    'email-verified': '/email-verified',
     'diagnostic': '/diagnostic',
     'signup-debugger': '/signup-debugger',
     'waitlist-choice': '/join-waitlist',
@@ -137,12 +119,6 @@ export default function App() {
   }, []);
 
   const handleNavigate = (page: string, data?: string) => {
-    // Route Helpa onboarding navigation to onboarding page
-    if (page === "helpa-onboarding") {
-      setCurrentPage('helpa-onboarding');
-      window.history.pushState(null, '', '/helpa-onboarding');
-      return;
-    }
     // Route Become a Helpa navigation to join page
     if (page === "join") {
       setCurrentPage('join');
@@ -152,15 +128,7 @@ export default function App() {
     // Prevent navigating to the same page
     if (page === currentPage && !data) return;
 
-    // Update page state and URL
-    if (page === "verify-email" && data) {
-      setVerificationEmail(data);
-      setCurrentPage(page);
-      const url = pageToPath[page] || '/';
-      window.history.pushState(null, '', url);
-      // Don't add verification pages to history (they're part of a flow)
-      window.scrollTo({ top: 0, behavior: "instant" });
-    } else if (page !== currentPage) {
+    if (page !== currentPage) {
       setCurrentPage(page);
       const url = pageToPath[page] || '/';
       window.history.pushState(null, '', url);
@@ -183,7 +151,6 @@ export default function App() {
       "home": <HomePage onNavigate={handleNavigate} />,
       "services": <ServicesPage onNavigate={handleNavigate} />,
       "pricing": <PricingPage onNavigate={handleNavigate} />,
-      "helpa-onboarding": <HelpaOnboardingPage onNavigate={handleNavigate} />,
       "join": <JoinHelpaPage onNavigate={handleNavigate} />,
       "about": <AboutPage onBack={handleBack} onNavigate={handleNavigate} />,
       "api": <APIPage onNavigate={handleNavigate} onBack={handleBack} />,
@@ -192,9 +159,6 @@ export default function App() {
       "signin": <ImprovedSigninPage onNavigate={handleNavigate} onBack={handleBack} />,
 
       "settings": <SettingsPage onNavigate={handleNavigate} onBack={handleBack} />,
-      "helpa-settings": <HelpaSettings onNavigate={handleNavigate} onBack={handleBack} />,
-      "verify-email": <EmailVerificationPage onNavigate={handleNavigate} email={verificationEmail} onBack={handleBack} />,
-      "email-verified": <EmailVerifiedPage onNavigate={handleNavigate} />,
       "diagnostic": <DiagnosticPage onNavigate={handleNavigate} onBack={handleBack} />,
       "signup-debugger": <SignupDebugger onNavigate={handleNavigate} onBack={handleBack} />,
       "waitlist-choice": <WaitlistChoicePage onNavigate={handleNavigate} onBack={handleBack} />,
@@ -213,9 +177,11 @@ export default function App() {
           <div style={{ paddingTop: USE_MOCK_AUTH ? '48px' : '0' }}>
             <ScrollProgress />
             <Header onNavigate={handleNavigate} currentPage={currentPage} />
-            <main className="relative">
-              {renderPage()}
-            </main>
+            <Suspense fallback={<div className="w-full h-screen flex items-center justify-center">Loading...</div>}>
+              <main className="relative">
+                {renderPage()}
+              </main>
+            </Suspense>
             <Footer onNavigate={handleNavigate} />
             <FloatingWhatsAppButton onNavigate={handleNavigate} />
             <Toaster position="top-right" />

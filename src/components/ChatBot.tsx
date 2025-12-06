@@ -303,7 +303,6 @@ export function ChatBot({ onClose }: ChatBotProps) {
         quickReplies: [
           { id: 'service', label: '🏠 Find a Service', action: 'REQUEST_SERVICE' },
           { id: 'recipes', label: '🍲 Get Recipes', action: 'GET_RECIPES' },
-          { id: 'become', label: '✨ Become a Provider', action: 'BECOME_HELPA' },
         ],
       };
       setMessages([welcomeMsg]);
@@ -519,49 +518,6 @@ export function ChatBot({ onClose }: ChatBotProps) {
           ],
         };
       }
-      else if (lowerContent.includes('become') || lowerContent.includes('provider') || lowerContent.includes('helpa') || action === 'BECOME_HELPA') {
-        botResponse = {
-          id: (Date.now() + 1).toString(),
-          role: 'bot',
-          content: "Awesome! Want to become a YourHelpa provider? ✨\n\nBenefits of joining:\n✅ Earn ₦50,000 - ₦500,000/month\n✅ Flexible schedule - work when you want\n✅ No registration fees\n✅ Access to thousands of customers\n✅ Weekly payments\n✅ Marketing support\n\nTo get started, please provide:\n1️⃣ Your full name\n2️⃣ Service category\n3️⃣ Years of experience\n4️⃣ Location\n5️⃣ Phone number\n\nOr click below to start the registration process!",
-          timestamp: new Date(),
-          quickReplies: [
-            { id: 'register', label: '📝 Start Registration', action: 'START_REGISTRATION' },
-            { id: 'learn', label: '📖 Learn More', action: 'LEARN_MORE_PROVIDER' },
-            { id: 'home', label: '🏠 Main Menu', action: 'MAIN_MENU' },
-          ],
-        };
-      }
-      else if (action === 'START_REGISTRATION') {
-        botResponse = {
-          id: (Date.now() + 1).toString(),
-          role: 'bot',
-          content: `Great! Let's get you registered! 📝\n\nYour email: ${user?.email || 'Not logged in'}\n\nPlease tell me:\n1. What service do you offer? (e.g., Cleaning, Plumbing, Tutoring, Cooking)\n2. How many years of experience?\n3. Your location in Lagos\n\nType your response or use the quick options below:`,
-          timestamp: new Date(),
-          quickReplies: [
-            { id: 'clean', label: '🧹 Cleaning Services', action: 'REGISTER_CLEANING' },
-            { id: 'food', label: '🍲 Food/Catering', action: 'REGISTER_FOOD' },
-            { id: 'repair', label: '🔧 Repairs/Handyman', action: 'REGISTER_REPAIRS' },
-            { id: 'tutor', label: '📚 Tutoring', action: 'REGISTER_TUTORING' },
-          ],
-        };
-        setConversationContext({ currentFlow: 'registration' });
-      }
-      else if (action?.startsWith('REGISTER_')) {
-        const serviceType = action.replace('REGISTER_', '').toLowerCase();
-        botResponse = {
-          id: (Date.now() + 1).toString(),
-          role: 'bot',
-          content: `Perfect! ${serviceType} is in high demand! 🚀\n\n✅ Service Type: ${serviceType}\n\nNext steps:\n1. Our team will review your application\n2. You'll receive verification documents via email\n3. Complete a short video interview\n4. Get approved and start earning!\n\nExpected approval time: 24-48 hours\n\nWe'll send you an email at ${user?.email || 'your registered email'} with next steps.\n\nWelcome to the YourHelpa family! 🎉`,
-          timestamp: new Date(),
-          quickReplies: [
-            { id: 'track', label: '📍 Track Application', action: 'TRACK_APPLICATION' },
-            { id: 'browse', label: '👀 Browse Services', action: 'REQUEST_SERVICE' },
-            { id: 'home', label: '🏠 Main Menu', action: 'MAIN_MENU' },
-          ],
-        };
-        setConversationContext({});
-      }
       else if (action === 'TRACK_BOOKING' || action === 'TRACK_APPLICATION') {
         botResponse = {
           id: (Date.now() + 1).toString(),
@@ -584,7 +540,6 @@ export function ChatBot({ onClose }: ChatBotProps) {
           quickReplies: [
             { id: 'service', label: '🏠 Find a Service', action: 'REQUEST_SERVICE' },
             { id: 'recipes', label: '🍲 Get Recipes', action: 'GET_RECIPES' },
-            { id: 'become', label: '✨ Become a Provider', action: 'BECOME_HELPA' },
           ],
         };
         setConversationContext({});

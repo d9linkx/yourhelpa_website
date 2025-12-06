@@ -17,7 +17,8 @@ import {
   Clock,
   BadgeCheck,
   Workflow,
-  BadgeDollarSign
+  BadgeDollarSign,
+  FileSearch2
 } from "lucide-react";
 import { useState, useCallback } from "react";
 import { PhoneMockup } from "./PhoneMockup";
@@ -150,16 +151,16 @@ export function HomePage({ onNavigate }: HomePageProps) {
       icon: MessageCircle
     },
     {
-      step: "3",
+      step: "2",
       title: "See available options",
-      description: "Browse different options near you and see their full details",
-      icon: Sparkles
+      description: "Browse different options near you and see their full details.",
+      icon: FileSearch2
     },
     {
       step: "3",
       title: "Pay to escrow",
       description: "Only release funds when satisfied with service or product",
-      icon: Sparkles
+      icon: BadgeDollarSign
     }
   ];
 
@@ -328,9 +329,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <h2 className={`text-4xl md:text-5xl font-bold mb-4 transition-colors ${
               isWhiteBackground ? 'text-[#202124]' : 'text-white'
             }`}>How It Works</h2>
-            <p className={`text-xl transition-colors ${
-              isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-            }`}>Get services and products in 3 simple steps</p>
+            <p className={`text-xl transition-colors ${isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
+}`}>Get services and products in 3 simple steps</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -378,15 +378,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 )}
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <button
-              onClick={handleChatClick}
-              className="inline-flex items-center gap-2 bg-primary hover:bg-emerald-600 text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <span>Start Getting Help Today</span>
-            </button>
           </div>
         </div>
       </section>

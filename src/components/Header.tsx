@@ -245,16 +245,6 @@ export function Header({ onNavigate, currentPage }: HeaderProps) {
                 >
                   <span className="tracking-wide">Join Waitlist</span>
                 </motion.button>
-
-                {/* Secondary CTA - Helpa Onboarding/Login */}
-                <motion.button
-                  onClick={() => onNavigate('helpa-onboarding')}
-                  className="flex items-center gap-2.5 glass-futuristic border-glow text-foreground px-5 py-2.5 rounded-full hover-lift hover-glow group holographic"
-                  whileHover={{ scale: 1.05, y: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <span className="text-sm font-medium">Helpa Login</span>
-                </motion.button>
               </div>
             )}
           </div>
