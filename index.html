@@ -17,6 +17,19 @@
     <meta property="og:image" content="https://yourhelpa.com/assets/og-image.png"> <!-- Replace with a link to a compelling image -->
 
     <link rel="stylesheet" href="styles/style.css">
+
+    <script>
+        // This script runs before the page renders to prevent a theme flash.
+        // It checks for a saved theme in localStorage or the user's OS preference.
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
 </head>
 <body>
     <div id="header-placeholder"></div>

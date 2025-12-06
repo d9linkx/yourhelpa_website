@@ -95,9 +95,7 @@ p {
 
 /* --- Futuristic Header (Glassmorphism) --- */
 .main-header {
-    background-color: var(--surface-color-translucent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: var(--surface-color);
     border-bottom: 1px solid var(--border-color-light);
     padding: 0 1.5rem;
     position: fixed;
@@ -844,9 +842,7 @@ main {
 }
 
 .step-card {
-    background: var(--surface-color-translucent);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-color: var(--background-color);
     padding: 2.5rem;
     border-radius: 16px;
     border: 1px solid var(--border-color-light);
@@ -1162,10 +1158,10 @@ main {
         right: 0;
         width: 70%;
         max-width: 350px; /* Set a max width for larger tablets */
-        justify-content: flex-start;
         background-color: var(--background-color);
         z-index: 1001;
         padding: 1.5rem;
+        justify-content: flex-start;
         box-shadow: var(--shadow-lg);
         transform: translateX(100%); /* Start off-screen */
         transition: transform 0.3s ease-in-out;
@@ -1177,11 +1173,13 @@ main {
     .nav-overlay {
         position: fixed;
         inset: 0;
+        background-color: rgba(0, 0, 0, 0.4);
         z-index: 999;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
         pointer-events: none; /* Not clickable when invisible */
     }
+
     .nav-overlay.active {
         opacity: 1;
         pointer-events: auto; /* Clickable when visible */
