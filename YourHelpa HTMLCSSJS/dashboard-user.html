@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - YourHelpa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome, <span id="user-name"></span>!</h1>
+            <a href="profile.html">My Profile</a>
+            <button id="logout-button">Logout</button>
+        </header>
+
+        <main>
+            <h2>My Transactions</h2>
+            <a href="request-service.html" class="button-primary">Create New Service Request</a>
+            <hr style="margin: 2rem 0;">
+            <div id="transactions-list">
+                <!-- Transactions will be loaded here by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="js/dashboard-user.js"></script>
+</body>
+</html>

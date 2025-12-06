@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Details - YourHelpa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Transaction Details</h1>
+            <a href="dashboard-helpa.html" class="back-link">&larr; Back to Dashboard</a>
+        </header>
+
+        <main id="transaction-details-container">
+            <p>Loading details...</p>
+            <!-- Transaction details will be loaded here -->
+        </main>
+
+        <section id="update-status-section" style="display: none;">
+            <h2>Update Status</h2>
+            <form id="update-status-form">
+                <input type="hidden" id="transaction-id">
+                <div>
+                    <label for="status">New Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="pending">Pending</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit">Update Status</button>
+            </form>
+            <p id="update-message"></p>
+        </section>
+    </div>
+
+    <script type="module" src="js/transaction-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Service - YourHelpa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="page-title">Add New Service</h1>
+            <a href="dashboard-helpa.html" class="back-link">&larr; Back to Dashboard</a>
+        </header>
+
+        <main>
+            <form id="service-form">
+                <input type="hidden" id="service-id">
+                <div>
+                    <label for="title">Service Title:</label>
+                    <input type="text" id="title" name="title" required placeholder="e.g., Professional Plumbing">
+                </div>
+                <div>
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="price">Price ($):</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
+                </div>
+                <div>
+                    <label for="price_type">Price Type:</label>
+                    <input type="text" id="price_type" name="price_type" placeholder="e.g., per hour, fixed, per item">
+                </div>
+                <div>
+                    <label for="images">Add Images:</label>
+                    <input type="file" id="images" name="images" multiple accept="image/*">
+                </div>
+                <div id="image-previews-container">
+                    <p><strong>Current Images:</strong></p>
+                    <div id="image-previews">
+                        <!-- Image previews will be shown here -->
+                    </div>
+                </div>
+                <button type="submit" id="submit-button">Save Service</button>
+            </form>
+            <p id="update-message"></p>
+            <button id="delete-button" class="button-danger" style="display: none;">Delete Service</button>
+        </main>
+    </div>
+
+    <script type="module" src="js/service-edit.js"></script>
+</body>
+</html>

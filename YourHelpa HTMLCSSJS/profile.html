@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - YourHelpa</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Profile</h1>
+            <a href="javascript:history.back()" class="back-link">&larr; Back to Dashboard</a>
+        </header>
+
+        <main>
+            <form id="profile-form">
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" disabled>
+                    <small>Email cannot be changed.</small>
+                </div>
+                <div>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div>
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+            <p id="update-message"></p>
+        </main>
+    </div>
+
+    <script type="module" src="js/profile.js"></script>
+</body>
+</html>
