@@ -36,11 +36,6 @@ body.dark-mode {
     --text-color: #a3a3a3;
     --text-muted-color: #737373;
 
-    /* Custom dark mode menu background */
-    #main-nav {
-        background-color: var(--primary-color);
-    }
-
     --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -4px rgba(0, 0, 0, 0.15);
     --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
@@ -1116,44 +1111,40 @@ main {
     grid-row: 1 / 2;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) { /* --- Mobile Navigation Styles --- */
     .nav-toggle {
         display: block;
     }
 
-    .mobile-menu-header, .mobile-menu-footer {
-        display: none; /* Hidden on desktop */
+    .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color-light);
     }
 
-    @media (max-width: 768px) {
-        .mobile-menu-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color-light);
-        }
-        .close-menu-btn {
-            background: none;
-            border: none;
-            color: var(--text-heading-color);
-            font-size: 2.5rem;
-            line-height: 1;
-            cursor: pointer;
-        }
-        .mobile-menu-footer {
-            display: flex;
-            gap: 1rem;
-            width: 100%;
-            margin-top: auto; /* Pushes footer to the bottom */
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color-light);
-        }
-        .mobile-menu-footer .button-primary, .mobile-menu-footer .button-secondary, .mobile-menu-footer .button-danger {
-            width: 100%;
-            text-align: center;
-        }
+    .close-menu-btn {
+        background: none;
+        border: none;
+        color: var(--text-heading-color);
+        font-size: 2.5rem;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .mobile-menu-footer {
+        display: flex;
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 1rem;
+        width: 100%;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color-light);
+    }
+    .mobile-menu-footer .button-primary, .mobile-menu-footer .button-secondary, .mobile-menu-footer .button-danger {
+        width: 100%;
+        text-align: center;
     }
 
     /* Hamburger to X animation */
@@ -1169,10 +1160,8 @@ main {
         top: 0;
         bottom: 0;
         right: 0;
-        width: 50%;
+        width: 70%;
         max-width: 350px; /* Set a max width for larger tablets */
-        display: flex;
-        flex-direction: column;
         justify-content: flex-start;
         background-color: var(--background-color);
         z-index: 1001;
@@ -1188,7 +1177,6 @@ main {
     .nav-overlay {
         position: fixed;
         inset: 0;
-        background-color: rgba(0, 0, 0, 0.5);
         z-index: 999;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
@@ -1204,7 +1192,8 @@ main {
         gap: 1.5rem;
     }
     #main-nav a {
-        font-size: 1.5rem;
+        font-size: 1.1rem; /* Adjusted font size */
+        color: var(--text-heading-color); /* Ensure consistent color */
     }
     .desktop-actions {
         display: none;
@@ -1219,9 +1208,6 @@ main {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
     }
-    .app-layout-header #main-nav a {
-        color: var(--text-heading-color);
-    }
 
     /* Mobile dropdown handling */
     .has-dropdown:hover .dropdown-menu {
@@ -1229,6 +1215,7 @@ main {
     }
     .dropdown-menu {
         position: static; /* Remove absolute positioning */
+        display: none; /* Hide dropdown by default on mobile */
     }
     @media (min-width: 769px) {
         .mobile-menu-header, .mobile-menu-footer {
