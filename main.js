@@ -3,26 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const navToggle = document.getElementById('nav-toggle');
         const mainNav = document.getElementById('main-nav');
 
-        // If nav isn't loaded yet, try again shortly.
-        if (!navToggle || !mainNav) {
+        // If header elements aren't loaded yet, try again shortly.
+        if (!mainNav || !navToggle) {
             setTimeout(initializeNav, 100); // Retry after 100ms
             return;
         }
-
-        // --- Hamburger Menu Toggle ---
-        navToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent event bubbling
-            mainNav.classList.toggle('active');
-        });
-
-        // --- Close Menu on Link Click (for mobile) ---
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (mainNav.classList.contains('active')) {
-                    mainNav.classList.remove('active');
-                }
-            });
-        });
 
         // Set active navigation link
         const currentPath = window.location.pathname.split("/").pop();

@@ -1,4 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Header Interactivity (Menu and Theme) ---
+    const initializeHeader = () => {
+        const navToggle = document.getElementById('nav-toggle');
+        const mainNav = document.getElementById('main-nav');
+        const navOverlay = document.getElementById('nav-overlay');
+
+        if (!navToggle || !mainNav) {
+            setTimeout(initializeHeader, 100);
+            return;
+        }
+
+        // Hamburger Menu Toggle
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isVisible = mainNav.classList.toggle('active');
+            navToggle.setAttribute('aria-expanded', isVisible);
+            if (navOverlay) navOverlay.classList.toggle('active');
+        });
+
+        const closeMenu = () => {
+            mainNav.classList.remove('active');
+            navToggle.setAttribute('aria-expanded', 'false');
+            if (navOverlay) navOverlay.classList.remove('active');
+        };
+
+        // Close menu when overlay or a link is clicked
+        if (navOverlay) navOverlay.addEventListener('click', closeMenu);
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        mainNav.querySelectorAll('.close-menu-btn').forEach(btn => {
+            btn.addEventListener('click', closeMenu);
+        });
+        mainNav.querySelectorAll('#logout-button-mobile').forEach(btn => {
+            btn.addEventListener('click', closeMenu);
+        });
+    };
+
+    // Start header initialization
+    initializeHeader();
+
+
     // --- Theme Toggle ---
     const themeToggle = document.getElementById('theme-toggle');
     const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>`;
