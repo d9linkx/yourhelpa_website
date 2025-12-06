@@ -24,7 +24,7 @@ import { PhoneMockup } from "./PhoneMockup";
 import { useBlogSettings } from "./hooks/useBlogSettings";
 import { useAuth } from "./hooks/useAuth";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { handleChatClick, getWhatsAppLink } from "../utils/chatHelpers";
+import { getWhatsAppLink } from "../utils/chatHelpers";
 import { EnhancedSEO, createLocalBusinessSchema, createWebSiteSchema } from "./EnhancedSEO";
 import heroImage from "figma:asset/4d7f10137f67f07d650e634aa31cb3696587d8f7.png";
 
