@@ -330,7 +330,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               isWhiteBackground ? 'text-[#202124]' : 'text-white'
             }`}>How It Works</h2>
             <p className={`text-xl transition-colors ${isWhiteBackground ? 'text-muted-foreground' : 'text-white/70'
-}`}>Get services and products in 3 simple steps</p>
+}`}>Get services and products in 2 simple steps</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">

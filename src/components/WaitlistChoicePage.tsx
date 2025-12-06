@@ -12,6 +12,7 @@ interface WaitlistChoicePageProps {
 export function WaitlistChoicePage({ onNavigate, onBack }: WaitlistChoicePageProps) {
   const { isWhiteBackground } = useBlogSettings();
   const [expandedCustomer, setExpandedCustomer] = useState(false);
+  const [expandedHelpa, setExpandedHelpa] = useState(false);
 
   return (
     <>
@@ -145,6 +146,83 @@ export function WaitlistChoicePage({ onNavigate, onBack }: WaitlistChoicePagePro
                     className="w-full sm:w-auto bg-[#1BBF72] hover:bg-[#1BBF72]/90 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg"
                   >
                     Register as Customer
+                  </button>
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* Helpa Dropdown */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <button
+                onClick={() => setExpandedHelpa(!expandedHelpa)}
+                className={`w-full rounded-2xl p-6 sm:p-8 border-2 transition-all duration-300 flex items-center justify-between ${
+                  expandedHelpa
+                    ? isWhiteBackground
+                      ? 'bg-[#FFD54F]/10 border-[#FFD54F]'
+                      : 'bg-[#FFD54F]/10 border-[#FFD54F]'
+                    : isWhiteBackground
+                    ? 'bg-white border-gray-200 hover:border-[#FFD54F]'
+                    : 'bg-[#2a2d31] border-gray-700 hover:border-[#FFD54F]'
+                }`}
+              >
+                <div className="flex items-center gap-4 text-left">
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
+                    expandedHelpa
+                      ? isWhiteBackground
+                        ? 'bg-[#FFD54F]/20'
+                        : 'bg-[#FFD54F]/20'
+                      : isWhiteBackground
+                      ? 'bg-[#FFD54F]/10'
+                      : 'bg-[#FFD54F]/10'
+                  }`}>
+                    <Store className="w-6 h-6 sm:w-7 sm:h-7 text-[#FFD54F]" />
+                  </div>
+                  <div>
+                    <h3 className={`text-xl sm:text-2xl font-semibold ${
+                      isWhiteBackground ? 'text-gray-900' : 'text-white'
+                    }`}>
+                      I want to be a service provider/seller
+                    </h3>
+                    {!expandedHelpa && (
+                      <p className={`text-sm mt-1 ${
+                        isWhiteBackground ? 'text-gray-600' : 'text-gray-400'
+                      }`}>
+                        Click to see details
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <ChevronDown className={`w-6 h-6 text-[#FFD54F] flex-shrink-0 transition-transform ${
+                  expandedHelpa ? 'rotate-180' : ''
+                }`} />
+              </button>
+
+              {expandedHelpa && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`mt-4 rounded-2xl p-6 sm:p-8 border-2 ${
+                    isWhiteBackground
+                      ? 'bg-gray-50 border-[#FFD54F]/20'
+                      : 'bg-[#1a1d21] border-[#FFD54F]/20'
+                  }`}
+                >
+                  <p className={`text-base sm:text-lg mb-6 ${
+                    isWhiteBackground ? 'text-gray-600' : 'text-gray-300'
+                  }`}>
+                    Offer your services or sell products to our growing community of customers.
+                  </p>
+                  <button
+                    onClick={() => onNavigate?.('waitlist-helpa')}
+                    className="w-full sm:w-auto bg-[#FFD54F] hover:bg-[#FFD54F]/90 text-gray-900 font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg"
+                  >
+                    Register as Provider/Seller
                   </button>
                 </motion.div>
               )}
