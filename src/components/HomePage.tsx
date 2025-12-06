@@ -145,20 +145,20 @@ export function HomePage({ onNavigate }: HomePageProps) {
   const howItWorks = [
     {
       step: "1",
-      title: "Start on WhatsApp",
-      description: "Send us a message to get started",
+      title: "Chat on WhatsApp",
+      description: "Send a WhatsApp message to request a service or ask for a product",
       icon: MessageCircle
     },
     {
-      step: "2",
-      title: "Tell Us What You Need",
-      description: "Request a service or ask about products",
-      icon: Workflow
+      step: "3",
+      title: "See available options",
+      description: "Browse different options near you and see their full details",
+      icon: Sparkles
     },
     {
       step: "3",
-      title: "Get Connected & Pay Safely",
-      description: "We connect you to verified providers and secure your payment",
+      title: "Pay to escrow",
+      description: "Only release funds when satisfied with service or product",
       icon: Sparkles
     }
   ];
@@ -167,8 +167,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
     <>
       <EnhancedSEO
         title="YourHelpa - Trusted Services & Products via WhatsApp Nigeria"
-        description="Get verified home services, food delivery, tutoring, health products & more through WhatsApp in Lagos, Abuja & Port Harcourt. Trusted by 10,000+ Nigerians."
-        keywords="yourhelpa, home services nigeria, whatsapp services, plumber lagos, food delivery nigeria, tutoring services, health products, home repairs nigeria, trusted service providers"
+        description="Get verified home services, food delivery, tutoring, health products & more through WhatsApp all over Lagos, Abuja, Ibadan, and al cities in Nigeria. Trusted by 10,000+ Nigerians."
+        keywords="yourhelpa, home services nigeria, whatsapp services, plumber lagos, food delivery nigeria, tutoring services, health products, home repairs nigeria, trusted service providers, buy online, shop online, escrow shopping nigeria"
         url="https://yourhelpa.com.ng"
         structuredData={[createLocalBusinessSchema(), createWebSiteSchema()]}
       />
@@ -220,7 +220,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <p className={`text-xl md:text-2xl mb-8 leading-relaxed transition-colors ${
                 isWhiteBackground ? 'text-muted-foreground' : 'text-white/80'
               }`}>
-                Request services, buy products, sort delivery, and pay safely. One <span className="text-primary">WhatsApp chat</span> handles everything so you never jump between apps again.
+                Buy an item or request a service, pay safely via escrow, and release payment when you're satisfied. One <span className="text-primary">WhatsApp chat</span> handles everything so you never jump between apps again.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
