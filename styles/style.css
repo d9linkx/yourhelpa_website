@@ -1042,15 +1042,12 @@ main {
         width: 50%;
         max-width: 320px; /* Set a max width for larger tablets */
         justify-content: flex-start; /* Align items to the top */
-        background-color: var(--surface-color-translucent);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        z-index: 1000;
+        background-color: var(--background-color);
+        z-index: 1001;
         padding: 20rem 5rem;
         box-shadow: var(--shadow-lg);
         transform: translateX(100%); /* Start off-screen */
         transition: transform 0.3s ease-in-out;
-        visibility: hidden;
     }
     #main-nav.active {
         transform: translateX(0); /* Slide into view */
