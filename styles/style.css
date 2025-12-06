@@ -971,6 +971,9 @@ main {
     .header-actions .button-secondary {
         display: none;
     }
+    .desktop-actions {
+        display: none;
+    }
     #main-nav {
         display: none;
         position: fixed;
@@ -995,6 +998,9 @@ main {
     }
     #main-nav a {
         font-size: 1.5rem;
+    }
+    .app-layout-header #main-nav a {
+        color: var(--text-heading-color);
     }
 }
 

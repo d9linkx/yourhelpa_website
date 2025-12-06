@@ -8,7 +8,29 @@
 </head>
 <body>
 
-    <div id="header-placeholder"></div>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">YourHelpa</a>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Explore</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="login.html" class="button-secondary">Login</a>
+                <a href="register.html" class="button-primary">Sign Up</a>
+                <button id="theme-toggle" class="theme-toggle-button">
+                    <!-- Icon will be injected by JS -->
+                </button>
+                <button id="nav-toggle" class="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
 
     <main>
         <!-- Hero Section -->
@@ -210,8 +232,7 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="js/templates.js"></script>
-    <script src="script.js"></script>
     <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
