@@ -1,196 +1,217 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YourHelpa - Trusted Services & Products via WhatsApp Nigeria</title>
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body class="bg-white dark:bg-gradient-to-br from-[#064E3B] via-[#065f46] to-[#064E3B] transition-colors duration-500">
+<body>
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-futuristic-dark border-glow holographic">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <a href="/" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 bg-gradient-to-br from-primary via-primary to-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
-                        <!-- SmileWinkIcon SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-7 h-7 text-white"><circle cx="8" cy="9" r="1" fill="currentColor"></circle><path d="M14 9 L17 9"></path><path d="M7 14 Q12 17 17 14"></path></svg>
-                    </div>
-                    <div>
-                        <span class="text-xl text-foreground dark:text-white leading-none tracking-tight">YourHelpa</span>
-                    </div>
-                </a>
-                <nav class="hidden lg:flex items-center gap-2 bg-muted/50 dark:bg-emerald-900 rounded-full px-2 py-2">
-                    <a href="/" class="px-5 py-2 rounded-full bg-white dark:bg-primary text-primary dark:text-white shadow-sm">Home</a>
-                    <a href="/services.html" class="px-5 py-2 rounded-full text-muted-foreground dark:text-emerald-100 hover:text-foreground">Products/Services</a>
-                    <a href="/pricing.html" class="px-5 py-2 rounded-full text-muted-foreground dark:text-emerald-100 hover:text-foreground">Pricing</a>
-                    <a href="/about.html" class="px-5 py-2 rounded-full text-muted-foreground dark:text-emerald-100 hover:text-foreground">About</a>
-                </nav>
-                <div class="hidden lg:flex items-center gap-4">
-                    <div class="p-2 rounded-full bg-gradient-to-br from-muted/40 to-muted/20 border border-border/40">
-                        <button id="theme-toggle" class="relative w-[52px] h-[52px] rounded-full flex items-center justify-center overflow-hidden group">
-                            <!-- Sun / Moon Icons will be injected by JS -->
-                        </button>
-                    </div>
-                    <a href="register.html" class="flex items-center gap-2.5 gradient-primary text-white px-6 py-2.5 rounded-full">
-                        <span class="tracking-wide">Join Waitlist</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main>
         <!-- Hero Section -->
-        <section class="relative pt-32 lg:pt-48 pb-20 px-4 overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-yellow-50 dark:bg-transparent">
-            <div class="max-w-7xl mx-auto relative z-10">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <div class="inline-block mb-4 px-4 py-2 rounded-full bg-primary/10 dark:bg-primary/20">
-                            <span class="text-primary inline-flex items-center gap-2">
-                                <!-- Sparkles Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg>
-                                Your Everyday Plug
-                            </span>
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-foreground dark:text-white mb-6">Services & Products in One Chat</h1>
-                        <p class="text-xl md:text-2xl mb-8 text-muted-foreground dark:text-white/80">
-                            Request services, buy products, sort delivery, and pay safely. One <span class="text-primary">WhatsApp chat</span> handles everything so you never jump between apps again.
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="app/request-service.html" class="group flex items-center justify-center gap-3 bg-primary hover:bg-emerald-600 text-white px-8 py-4 rounded-full shadow-lg">
-                                <span>Chat Now</span>
-                            </a>
-                            <a href="services.html" class="flex items-center justify-center gap-2 px-8 py-4 rounded-full border-2 bg-white hover:bg-gray-50 text-foreground border-border dark:bg-white/20 dark:hover:bg-white/30 dark:text-white dark:border-white/30">
-                                <span>Browse Categories</span>
-                            </a>
-                        </div>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-tag">Your Everyday Plug</div>
+                    <h1>Services & Products in One Chat</h1>
+                    <p>
+                        Request services, buy products, sort delivery, and pay safely. One <span class="text-primary">WhatsApp chat</span> handles everything so you never jump between apps again.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="app/request-service.html" class="button-primary large">Chat Now</a>
+                        <a href="services.html" class="button-secondary large">Browse Categories</a>
                     </div>
-                    <div class="relative rounded-3xl p-8 bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 dark:bg-white/10 dark:border-white/20">
-                        <div class="aspect-square bg-gradient-to-br from-emerald-100 to-yellow-100 rounded-2xl flex items-center justify-center overflow-hidden">
-                            <img src="../build/assets/4d7f10137f67f07d650e634aa31cb3696587d8f7-CseOAKnt.png" alt="Skilled Nigerian professionals" class="w-full h-full object-cover -scale-x-100" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Featured Listings Section -->
+        <section class="featured-listings">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Popular Listings</h2>
+                    <p>Get inspired by what others are getting done.</p>
+                </div>
+                <div class="listings-grid">
+                    <!-- Card 1 -->
+                    <a href="services.html?category=cleaning" class="service-card">
+                        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600" alt="Home Cleaning" class="service-card-image">
+                        <div class="service-card-content">
+                            <h3>Home Cleaning</h3>
+                            <p class="service-card-provider">Starting from $25</p>
                         </div>
-                    </div>
+                    </a>
+                    <!-- Card 2 -->
+                    <a href="services.html?category=handyman" class="service-card">
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600" alt="Handyman Services" class="service-card-image">
+                        <div class="service-card-content">
+                            <h3>Handyman Services</h3>
+                            <p class="service-card-provider">Get a quote</p>
+                        </div>
+                    </a>
+                    <!-- Card 3 -->
+                    <a href="services.html?category=assembly" class="service-card">
+                        <img src="https://images.unsplash.com/photo-1608259345847-54b415f65a2f?auto=format&fit=crop&w=600" alt="Furniture Assembly" class="service-card-image">
+                        <div class="service-card-content">
+                            <h3>Furniture Assembly</h3>
+                            <p class="service-card-provider">Hourly rates available</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- How It Works Section -->
-        <section class="py-20 px-4 bg-white dark:bg-transparent">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#202124] dark:text-white">How It Works</h2>
-                    <p class="text-xl text-muted-foreground dark:text-white/70">Get services and products in 2 simple steps</p>
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <h2>How It Works</h2>
+                    <p>Get services and products in 2 simple steps</p>
                 </div>
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="steps-grid">
                     <!-- Step 1 -->
-                    <div class="relative p-8 rounded-3xl border bg-gradient-to-br from-emerald-50 to-white border-primary/10 dark:bg-white/10 dark:border-white/20">
-                        <div class="flex items-start justify-between mb-6">
-                            <div class="relative">
-                                <div class="w-20 h-20 bg-gradient-to-br from-primary to-emerald-600 text-white rounded-2xl flex items-center justify-center shadow-lg">
-                                    <!-- MessageCircle Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
-                                </div>
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-accent text-primary rounded-full flex items-center justify-center shadow-md ring-2 ring-white dark:ring-white/10">
-                                    <span class="text-sm">1</span>
-                                </div>
-                            </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <span class="step-number">1</span>
+                            <!-- MessageCircle Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
                         </div>
-                        <h3 class="text-xl mb-3 text-foreground dark:text-white">Chat on WhatsApp</h3>
-                        <p class="leading-relaxed text-muted-foreground dark:text-white/70">Send a WhatsApp message to request a service or ask for a product</p>
+                        <h3>Chat on WhatsApp</h3>
+                        <p>Send a WhatsApp message to request a service or ask for a product.</p>
                     </div>
                     <!-- Step 2 -->
-                    <div class="relative p-8 rounded-3xl border bg-gradient-to-br from-emerald-50 to-white border-primary/10 dark:bg-white/10 dark:border-white/20">
-                        <div class="flex items-start justify-between mb-6">
-                            <div class="relative">
-                                <div class="w-20 h-20 bg-gradient-to-br from-primary to-emerald-600 text-white rounded-2xl flex items-center justify-center shadow-lg">
-                                    <!-- FileSearch2 Icon -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v3"/><path d="M14 2v6h6"/><path d="M5 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M9 18l-1.5-1.5"/></svg>
-                                </div>
-                                <div class="absolute -top-2 -right-2 w-8 h-8 bg-accent text-primary rounded-full flex items-center justify-center shadow-md ring-2 ring-white dark:ring-white/10">
-                                    <span class="text-sm">2</span>
-                                </div>
-                            </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <span class="step-number">2</span>
+                            <!-- FileSearch2 Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v3"/><path d="M14 2v6h6"/><path d="M5 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M9 18l-1.5-1.5"/></svg>
                         </div>
-                        <h3 class="text-xl mb-3 text-foreground dark:text-white">See available options</h3>
-                        <p class="leading-relaxed text-muted-foreground dark:text-white/70">Browse different options near you and see their full details.</p>
+                        <h3>See Available Options</h3>
+                        <p>Browse different options near you and see their full details.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section class="py-20 px-4 bg-gradient-to-br from-emerald-50 to-yellow-50/30 dark:bg-transparent">
-            <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#202124] dark:text-white">What Our Users Say</h2>
-                    <p class="text-xl text-muted-foreground dark:text-white/70">Real stories from real Nigerians</p>
+        <!-- 4. Why Choose Us Section -->
+        <section class="why-choose-us">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Your Peace of Mind is Our Priority</h2>
+                    <p>We built a platform you can rely on.</p>
                 </div>
-                <div id="testimonial-container" class="relative">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Vetted Helpas</h3>
+                        <p>Every Helpa is verified to ensure you're working with trusted and skilled professionals.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Secure Payments</h3>
+                        <p>Pay securely through our platform only after your task is completed to your satisfaction.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Dedicated Support</h3>
+                        <p>Our support team is always available to help you with any questions or issues.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Platform Stats Section -->
+        <section id="stats-section" class="platform-stats">
+            <div class="container">
+                <div class="stat-item">
+                    <h3 data-target="5000">0</h3>
+                    <p>Tasks Completed</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="1200">0</h3>
+                    <p>Trusted Helpas</p>
+                </div>
+                <div class="stat-item">
+                    <h3 data-target="98">0</h3>
+                    <p>Satisfaction Rate (%)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Become a Helpa CTA -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Become a Helpa</h2>
+                <p>Join our community of trusted Helpas and start earning money by helping people in your city. Set your own schedule, choose your tasks, and build your business.</p>
+                <a href="register.html?role=helpa" class="button-primary large">Start Earning Today</a>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What Our Users Say</h2>
+                    <p>Real stories from real Nigerians</p>
+                </div>
+                <div class="testimonial-slider-wrapper">
+                    <div id="testimonial-container">
+                        <!-- Testimonials will be injected by JS -->
+                    </div>
+                </div>
+                <div id="testimonial-dots" class="testimonial-dots">
                     <!-- Testimonials will be injected by JS -->
                 </div>
-                <div id="testimonial-dots" class="flex justify-center gap-2 mt-8">
-                    <!-- Dots will be injected by JS -->
+            </div>
+        </section>
+
+        <!-- 8. Safety & Trust Section -->
+        <section class="safety-trust">
+            <div class="container">
+                <div class="safety-content">
+                    <h2>Your Safety, Guaranteed.</h2>
+                    <p>From identity verification to our secure payment system, we’ve built a foundation of trust so you can hire with confidence. Every task is backed by the YourHelpa Happiness Guarantee.</p>
+                    <a href="/faq.html" class="button-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Our Promise Section -->
+        <section class="our-promise">
+            <div class="container">
+                <h2>Our Promise</h2>
+                <p>To connect communities and empower individuals by making help accessible, reliable, and simple for everyone.</p>
+            </div>
+        </section>
+
+        <!-- 10. FAQ Snippet -->
+        <section class="faq-snippet">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Quick Questions</h2>
+                    <p>Find answers to common questions below.</p>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item">
+                        <summary>Is it free to post a task?</summary>
+                        <p>Yes, it is completely free to post a task on YourHelpa. You only pay for the task once it's completed to your satisfaction.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How do I become a Helpa?</summary>
+                        <p>Click "Become a Helpa" and sign up. You'll build your profile, set your skills and rates, and go through a verification process. Once approved, you can start making offers on tasks in your area.</p>
+                    </details>
+                </div>
+                <div class="faq-link">
+                    <a href="faq.html">See All FAQs</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-card text-foreground">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
-                <div class="lg:col-span-4 space-y-6">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-gradient-to-br from-primary to-emerald-600 rounded-2xl flex items-center justify-center shadow-xl">
-                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-7 h-7 text-white"><circle cx="8" cy="9" r="1" fill="currentColor"></circle><path d="M14 9 L17 9"></path><path d="M7 14 Q12 17 17 14"></path></svg>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-2xl text-foreground dark:text-white">YourHelpa</span>
-                            <span class="text-xs text-primary/80">Help Is Just a Chat Away</span>
-                        </div>
-                    </div>
-                    <p class="text-muted-foreground text-sm">Your everyday solution for trusted home services, food, learning, health, and guidance — all through WhatsApp.</p>
-                </div>
-                <div class="lg:col-span-3">
-                    <h4 class="text-foreground text-sm uppercase tracking-wider mb-6 font-medium">Quick Links</h4>
-                    <ul class="space-y-3">
-                        <li><a href="/" class="text-muted-foreground hover:text-foreground text-sm">Home</a></li>
-                        <li><a href="/services.html" class="text-muted-foreground hover:text-foreground text-sm">Services</a></li>
-                        <li><a href="/pricing.html" class="text-muted-foreground hover:text-foreground text-sm">Pricing</a></li>
-                        <li><a href="/about.html" class="text-muted-foreground hover:text-foreground text-sm">About</a></li>
-                    </ul>
-                </div>
-                <div class="lg:col-span-2">
-                    <h4 class="text-foreground text-sm uppercase tracking-wider mb-6 font-medium">What We Do</h4>
-                     <ul class="space-y-3">
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>Fast Help via WhatsApp</span></li>
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>Trusted Helpas</span></li>
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>Secure Payments</span></li>
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>24/7 Support</span></li>
-                    </ul>
-                </div>
-                <div class="lg:col-span-3">
-                    <h4 class="text-foreground text-sm uppercase tracking-wider mb-6 font-medium">Reach Us</h4>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>Lagos, Nigeria</span></li>
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>+234 902 723 1243</span></li>
-                        <li class="flex items-start gap-3 text-muted-foreground text-sm"><span>hello@yourhelpa.ng</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-16 pt-8 border-t border-border/5">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p class="text-muted-foreground/40 text-sm text-center md:text-left">© 2025 YourHelpa. Built in Nigeria, for Nigerians. 🇳🇬</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="js/templates.js"></script>
     <script src="script.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

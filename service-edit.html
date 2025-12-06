@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1 id="page-title">Add New Service</h1>
-            <a href="dashboard-helpa.html" class="back-link">&larr; Back to Dashboard</a>
-        </header>
+    <div id="app-header-placeholder"></div>
 
-        <main>
+    <main>
+        <div class="container">
+            <h1 id="page-title">Add New Service</h1>
             <form id="service-form">
                 <input type="hidden" id="service-id">
                 <div>
@@ -46,9 +44,13 @@
             </form>
             <p id="update-message"></p>
             <button id="delete-button" class="button-danger" style="display: none;">Delete Service</button>
-        </main>
-    </div>
+        </div>
+    </main>
 
+    <div id="app-footer-placeholder"></div>
+
+    <script src="js/app-templates.js"></script>
+    <script src="script.js"></script>
     <script type="module" src="js/service-edit.js"></script>
 </body>
 </html>

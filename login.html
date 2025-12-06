@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container auth-container">
         <h1>Login to YourHelpa</h1>
         <form id="login-form">
-            <div>
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" class="button-primary">Login</button>
         </form>
-        <p>Don't have an account? <a href="register.html">Register here</a>.</p>
+        <p>
+            Don't have an account? <a href="register.html">Register here</a>.
+            <br><a href="index.html" style="font-size: 0.9rem; margin-top: 1rem; display: inline-block;">&larr; Back to Home</a>
+        </p>
     </div>
 
     <script type="module" src="js/auth.js"></script>

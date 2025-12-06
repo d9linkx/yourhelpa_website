@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>New Service Request</h1>
-            <a href="dashboard-user.html" class="back-link">&larr; Back to Dashboard</a>
-        </header>
+    <div id="app-header-placeholder"></div>
 
-        <main>
+    <main>
+        <div class="container">
+            <h1>New Service Request</h1>
             <form id="request-form">
                 <div>
                     <label for="description">Describe the service or item you need:</label>
@@ -26,9 +24,13 @@
                 <button type="submit">Submit Request</button>
             </form>
             <p id="request-message"></p>
-        </main>
-    </div>
+        </div>
+    </main>
 
+    <div id="app-footer-placeholder"></div>
+
+    <script src="js/app-templates.js"></script>
+    <script src="script.js"></script>
     <script type="module" src="js/request-service.js"></script>
 </body>
 </html>

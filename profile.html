@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>My Profile</h1>
-            <a href="javascript:history.back()" class="back-link">&larr; Back to Dashboard</a>
-        </header>
+    <div id="app-header-placeholder"></div>
 
-        <main>
+    <main>
+        <div class="container">
+            <h1>My Profile</h1>
             <form id="profile-form">
                 <div>
                     <label for="email">Email:</label>
@@ -31,9 +29,13 @@
                 <button type="submit">Save Changes</button>
             </form>
             <p id="update-message"></p>
-        </main>
-    </div>
+        </div>
+    </main>
 
+    <div id="app-footer-placeholder"></div>
+
+    <script src="js/app-templates.js"></script>
+    <script src="script.js"></script>
     <script type="module" src="js/profile.js"></script>
 </body>
 </html>

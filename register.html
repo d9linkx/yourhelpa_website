@@ -7,28 +7,31 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container auth-container">
         <h1>Create an Account</h1>
         <form id="register-form">
-            <div>
+            <div class="form-group">
                 <label for="firstName">First Name:</label>
                 <input type="text" id="firstName" name="firstName" required>
             </div>
-            <div>
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
             </div>
-             <div>
+             <div class="form-group">
                 <label for="phone">Phone:</label>
                 <input type="tel" id="phone" name="phone">
             </div>
-            <div>
+            <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required minlength="6">
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" class="button-primary">Register</button>
         </form>
-        <p>Already have an account? <a href="login.html">Login here</a>.</p>
+        <p>
+            Already have an account? <a href="login.html">Login here</a>.
+            <br><a href="index.html" style="font-size: 0.9rem; margin-top: 1rem; display: inline-block;">&larr; Back to Home</a>
+        </p>
     </div>
 
     <script type="module" src="js/auth.js"></script>

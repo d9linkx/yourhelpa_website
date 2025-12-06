@@ -7,14 +7,11 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Admin Dashboard</h1>
-            <a href="profile.html">My Profile</a>
-            <button id="logout-button">Logout</button>
-        </header>
+    <div id="app-header-placeholder"></div>
 
-        <main>
+    <main>
+        <div class="container">
+            <h1>Admin Dashboard</h1>
             <section id="analytics-summary">
                 <!-- Analytics cards will be loaded here -->
             </section>
@@ -47,9 +44,13 @@
             <div id="user-management-list">
                 <p>Loading users...</p>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
+    <div id="app-footer-placeholder"></div>
+
+    <script src="js/app-templates.js"></script>
+    <script src="script.js"></script>
     <script type="module" src="js/dashboard-admin.js"></script>
 </body>
 </html>

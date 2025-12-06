@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Welcome, Helpa <span id="helpa-name"></span>!</h1>
-            <a href="profile.html">My Profile</a>
-            <button id="logout-button">Logout</button>
-        </header>
+    <div id="app-header-placeholder"></div>
 
-        <main>
-            <h2>Your Assigned Transactions</h2>
+    <main>
+        <div class="container">
+            <h1>Helpa Dashboard</h1>
+            <p>Welcome, <span id="helpa-name"></span>!</p>
+            <h2 style="margin-top: 2rem;">Your Assigned Transactions</h2>
             <div id="transactions-list">
                 <p>Loading transactions...</p>
                 <!-- Transactions assigned to the Helpa will be loaded here -->
@@ -29,9 +27,13 @@
                 <p>Loading services...</p>
                 <!-- Services offered by the Helpa will be loaded here -->
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
-    <script type="module" src="../js/app/dashboard-helpa.js"></script>
+    <div id="app-footer-placeholder"></div>
+
+    <script src="js/app-templates.js"></script>
+    <script src="script.js"></script>
+    <script type="module" src="js/dashboard-helpa.js"></script>
 </body>
 </html>
