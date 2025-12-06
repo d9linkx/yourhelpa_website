@@ -12,7 +12,6 @@ interface WaitlistChoicePageProps {
 export function WaitlistChoicePage({ onNavigate, onBack }: WaitlistChoicePageProps) {
   const { isWhiteBackground } = useBlogSettings();
   const [expandedCustomer, setExpandedCustomer] = useState(false);
-  const [expandedHelpa, setExpandedHelpa] = useState(false);
 
   return (
     <>
@@ -149,23 +148,6 @@ export function WaitlistChoicePage({ onNavigate, onBack }: WaitlistChoicePagePro
                   </button>
                 </motion.div>
               )}
-            </motion.div>
-
-            {/* Become a Helpa CTA - direct to onboarding */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <p className="mb-3 text-base sm:text-lg font-medium text-center text-gray-700 dark:text-gray-200">
-                Or, have a product or service to sell? Then,
-              </p>
-              <button
-                onClick={() => onNavigate?.('helpa-onboarding')}
-                className="w-full sm:w-auto bg-[#FFD54F] hover:bg-[#FFD54F]/90 text-gray-900 font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:shadow-lg"
-              >
-                Become a Helpa
-              </button>
             </motion.div>
           </div>
 
