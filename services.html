@@ -3,46 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Services - YourHelpa</title>
-    <link rel="stylesheet" href="style/styles.css">
+    <title>Explore Listings - YourHelpa</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="container">
-            <a href="index.html" class="logo">YourHelpa</a>
-            <nav id="main-nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="faq.html">FAQ</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="register.html" class="button-primary">Sign Up</a></li>
-                </ul>
-            </nav>
-            <button id="nav-toggle" class="nav-toggle">Menu</button>
-        </div>
-    </header>
+    <div id="header-placeholder"></div>
 
     <main>
         <div class="container">
-            <h1>Explore All Services</h1>
-            <p>Find the perfect Helpa for your needs.</p>
-            <div id="services-grid" class="services-grid">
-                <!-- Services will be loaded here by JavaScript -->
-                <p>Loading services...</p>
+            <h1 id="listings-title">Explore All Listings</h1>
+            <p>Find the perfect Helpa for your needs, whether it's a service or an item.</p>
+            <div id="listings-grid" class="services-grid">
+                <!-- Listings will be loaded here by JavaScript -->
+                <p>Loading listings...</p>
             </div>
         </div>
     </main>
 
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2024 YourHelpa. All rights reserved. | <a href="about.html">About</a> | <a href="contact.html">Contact</a> | <a href="faq.html">FAQ</a></p>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
+    <script src="js/templates.js"></script>
     <script type="module" src="js/services.js"></script>
     <script src="js/main.js"></script>
 </body>
