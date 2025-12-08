@@ -37,7 +37,11 @@
         .contact-card h3 { margin-bottom: 0.5rem; }
         .contact-card p { color: var(--text-muted-color); margin-bottom: 1.5rem; }
         .contact-card a { font-weight: 600; }
-        .form-disclaimer { text-align: center; margin-top: 1.5rem; color: var(--text-muted-color); font-size: 0.9rem; }
+        .form-disclaimer { text-align: left; margin-top: 1.5rem; color: var(--text-muted-color); font-size: 0.9rem; }
+        /* Align form labels to the left */
+        #contact-form .form-group {
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -50,7 +54,7 @@
             <div class="container">
                 <h1>Need Help? We're Here.</h1>
                 <p class="sub-headline">For the fastest service, questions, or to find a Helpa, start a secure chat with our AI on WhatsApp.</p>
-                <a href="https://wa.me/2340000000000" target="_blank" class="button-primary large">Chat</a>
+                <a href="https://wa.me/2340000000000" target="_blank" class="button-primary large">WhatsApp<a>
             </div>
         </section>
 
@@ -96,7 +100,7 @@
         <!-- Fallback Contact Form -->
         <section class="cta-section">
             <div class="container" style="max-width: 700px;">
-                <div class="section-header">
+                <div class="section-header" style="text-align: left;">
                     <h2>Or, Send a Message</h2>
                 </div>
                 <form id="contact-form">
