@@ -1,45 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Header Interactivity (Menu and Theme) ---
-    const initializeHeader = () => {
-        const navToggle = document.getElementById('nav-toggle');
-        const mainNav = document.getElementById('main-nav');
-        const navOverlay = document.getElementById('nav-overlay');
-
-        if (!navToggle || !mainNav) {
-            setTimeout(initializeHeader, 100);
-            return;
-        }
-
-        // Hamburger Menu Toggle
-        navToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isVisible = mainNav.classList.toggle('active');
-            navToggle.setAttribute('aria-expanded', isVisible);
-            if (navOverlay) navOverlay.classList.toggle('active');
-        });
-
-        const closeMenu = () => {
-            mainNav.classList.remove('active');
-            navToggle.setAttribute('aria-expanded', 'false');
-            if (navOverlay) navOverlay.classList.remove('active');
-        };
-
-        // Close menu when overlay or a link is clicked
-        if (navOverlay) navOverlay.addEventListener('click', closeMenu);
-        mainNav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', closeMenu);
-        });
-        mainNav.querySelectorAll('.close-menu-btn').forEach(btn => {
-            btn.addEventListener('click', closeMenu);
-        });
-        mainNav.querySelectorAll('#logout-button-mobile').forEach(btn => {
-            btn.addEventListener('click', closeMenu);
-        });
-    };
-
-    // Start header initialization
-    initializeHeader();
-
 
     // --- Theme Toggle ---
     const themeToggle = document.getElementById('theme-toggle');
