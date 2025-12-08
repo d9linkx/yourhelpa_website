@@ -47,8 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Login';
             } else {
-                // On successful login, redirect to the dashboard
-                window.location.href = '/app/dashboard.html';
+                // On successful login, check if the user is a Helpa
+                const user = data.user;
+                if (user) {
+                    const { data: helpaProfile, error: profileError } = await supabase
+                        .from('helpas')
+                        .select('id')
+                        .eq('id', user.id)
+                        .single();
+
+                    if (profileError && profileError.code !== 'PGRST116') { // PGRST116 = 'No rows found'
+                        show_error('Could not verify user role. Please try again.');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Login';
+                        return;
+                    }
+
+                    if (helpaProfile) {
+                        window.location.href = '/dashboard-helpa.html'; // User is a Helpa
+                    } else {
+                        window.location.href = '/dashboard-user.html'; // User is a regular customer
+                    }
+                }
             }
         });
     }

@@ -212,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     data: {
                         full_name: signupData.fullName,
                         phone: signupData.phone,
+                        role: 'helpa' // Assign the 'helpa' role on creation
                     }
                 }
             });
