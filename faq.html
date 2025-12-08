@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frequently Asked Questions - YourHelpa</title>
     <meta name="description" content="Find answers to common questions about using YourHelpa for services, payments, and becoming a Helpa.">
     <link rel="stylesheet" href="styles/style.css">
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
 </head>
 <body>
     <div id="header-placeholder"></div>

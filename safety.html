@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety & Trust - YourHelpa</title>
+    <meta name="description" content="Learn how YourHelpa protects both customers and Helpas with our secure escrow system and verification process.">
+    <link rel="stylesheet" href="styles/style.css">
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Safety & Trust</h1>
+                <p>Your security is our top priority.</p>
+            </div>
+        </section>
+
+        <section class="container content-section">
+            <h2>Our Commitment to You</h2>
+            <p>At YourHelpa, we've built our platform on a foundation of trust. We understand that security is crucial when you're hiring someone for a service or providing your skills to a customer. Here’s how we protect you:</p>
+            <h3>For Customers: Escrow Protection</h3>
+            <p>When you hire a Helpa, your payment is held securely in our escrow system. We only release the funds to the Helpa after you confirm that the job has been completed to your satisfaction. This means you never have to worry about paying for incomplete or unsatisfactory work.</p>
+            <h3>For Helpas: Guaranteed Payment</h3>
+            <p>As a Helpa, you can work with confidence knowing that the customer's funds are secured before you begin. Once the job is marked as complete by the customer, your payment is processed instantly. No more chasing invoices or dealing with non-payment.</p>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/main.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing - YourHelpa</title>
     <link rel="stylesheet" href="styles/style.css">
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -23,7 +34,7 @@
                 <div class="pricing-grid">
                     <!-- Pricing Card for Customers -->
                     <div class="pricing-card">
-                        <div class="pricing-header">
+                        <div class="pricing-header" style="border-bottom: none;">
                             <h3>For Customers</h3>
                             <p class="price">Free</p>
                             <p class="price-desc">to post tasks</p>
@@ -37,21 +48,20 @@
                                 <li>Dedicated customer support</li>
                             </ul>
                         </div>
-                        <div class="pricing-footer">
-                            <a href="app/request-service.html" class="button-primary">Post a Task</a>
-                        </div>
                     </div>
 
                     <!-- Pricing Card for Helpas -->
                     <div class="pricing-card featured">
                         <div class="pricing-header">
                             <h3>For Helpas</h3>
-                            <p class="price">15%</p>
-                            <p class="price-desc">service fee per task</p>
+                            <p class="price">₦1,000<span style="font-size: 1rem; color: var(--text-muted-color);">/month</span></p>
+                            <p class="price-desc">+ 7% per completed job</p>
                         </div>
                         <div class="pricing-body">
-                            <p>Grow your business with access to a steady stream of clients. We only succeed when you do.</p>
+                            <p>Your investment in guaranteed pay and high-quality leads.</p>
                             <ul>
+                                <li>Access to verified job leads</li>
+                                <li>100% Payment Guarantee via Escrow</li>
                                 <li>No subscription fees</li>
                                 <li>Set your own rates</li>
                                 <li>Flexible work schedule</li>
@@ -69,7 +79,7 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="js/templates.js"></script>
     <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

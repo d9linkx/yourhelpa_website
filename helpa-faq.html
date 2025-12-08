@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpa FAQ - YourHelpa</title>
+    <meta name="description" content="Find answers to common questions about being a Helpa, receiving payments, and managing your profile.">
+    <link rel="stylesheet" href="styles/style.css">
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Helpa Questions</h1>
+                <p>Your guide to succeeding on the YourHelpa platform.</p>
+            </div>
+        </section>
+
+        <section class="container content-section">
+            <div class="faq-list">
+                <details class="faq-item" open>
+                    <summary>How and when do I get paid?</summary>
+                    <p>Once a customer confirms the job is complete via WhatsApp, our system automatically processes your payment. The funds (your agreed price minus the 7% commission) are transferred to your registered bank account instantly.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What are the fees for being a Helpa?</summary>
+                    <p>Helpas subscribe for ₦1,000 per month to get access to verified, pre-paid job leads. We also charge a 7% commission on the final price of each completed job. This commission funds the secure Escrow system, guaranteeing you always get paid.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What if a customer cancels a job?</summary>
+                    <p>If a customer cancels before you have started any work, there is no fee or penalty. If a dispute arises after work has begun, our support team will mediate to ensure a fair outcome for both parties based on the work completed.</p>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/main.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

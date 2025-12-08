@@ -1,27 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - YourHelpa</title>
     <meta name="description" content="Learn about YourHelpa's mission to simplify access to services and products in Nigeria through WhatsApp.">
     <link rel="stylesheet" href="styles/style.css">
+    <script>
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+    <style>
+        /* Styles specific to the new About page layout */
+        .hero { padding: 4rem 1.5rem; }
+        .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; text-align: center; }
+        @media (min-width: 992px) { 
+            .hero { padding: 6rem 1.5rem; }
+            .hero .container { grid-template-columns: 1.2fr 1fr; gap: 4rem; text-align: left; }
+        }
+        .hero-content h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
+        .hero-content .sub-headline { font-size: 1.25rem; color: var(--text-muted-color); max-width: 550px; margin: 1.5rem auto 0; }
+        @media (min-width: 992px) { .hero-content .sub-headline { margin-left: 0; margin-right: 0; } }
+        
+        .founder-visual { display: flex; justify-content: center; align-items: center; }
+        .founder-visual img {
+            max-width: 350px;
+            width: 100%;
+            border-radius: 50%;
+            border: 5px solid var(--surface-color);
+            box-shadow: 0 0 50px -10px rgba(5, 170, 22, 0.2);
+        }
+
+        .value-pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .pillar {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color-light);
+        }
+        .pillar svg { color: var(--primary-color); margin-bottom: 1rem; }
+
+        .founder-quote {
+            margin: 4rem 0;
+            padding: 3rem;
+            background-color: var(--surface-color);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 0 16px 16px 0;
+        }
+        .founder-quote p {
+            font-family: var(--font-heading);
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--text-heading-color);
+            line-height: 1.4;
+            margin: 0;
+        }
+        .founder-quote footer {
+            margin-top: 1.5rem;
+            font-weight: 600;
+            color: var(--text-muted-color);
+        }
+
+        .final-cta-block {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .final-cta-block { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="page-header">
+        <!-- 1. Core Mission & Vision -->
+        <section class="hero" id="home">
             <div class="container">
-                <h1>Our Mission</h1>
-                <p>To connect communities and empower individuals by making help accessible, reliable, and simple for everyone.</p>
+                <div class="hero-content">
+                    <h1>Built by an Artisan, Secured by a Technologist.</h1>
+                    <p class="sub-headline">Our mission is simple: to eliminate payment risk and unreliable service in the Nigerian local economy.</p>
+                </div>
+                <div class="founder-visual">
+                    <img src="assets/prince-dike.jpg" alt="Prince Dike, Founder of YourHelpa">
+                </div>
             </div>
         </section>
 
+        <!-- 2. The Genesis Story -->
         <section class="container content-section">
-            <h2>Who We Are</h2>
-            <p>YourHelpa was born from a simple idea: what if getting things done in Nigeria was as easy as sending a WhatsApp message? We were tired of the hassle of finding trustworthy professionals, the uncertainty of pricing, and the inconvenience of juggling multiple apps for simple tasks. We envisioned a single, reliable platform that connects people who need help with skilled individuals ready to provide it.</p>
-            <p>Today, YourHelpa is a growing community of customers and "Helpas" built on a foundation of trust, security, and convenience. From fixing a leaky tap to finding the perfect birthday cake, we are your everyday plug for services and products, all managed through the simplicity of a chat.</p>
+            <div class="section-header">
+                <h2>From the Field: Why We Built the Escrow System.</h2>
+            </div>
+            <p>The story of YourHelpa begins not in a boardroom, but on the ground, across cities like Lagos, Owerri, Osogbo, and Ibadan, and even extending to Ghana and Ivory Coast. Our founder, Prince Dike, spent years as a multi-skilled artisan and technician. He has mastered trades including:</p>
+            <ul>
+                <li>Painting, Plumbing, & Home Decorations</li>
+                <li>Graphic Design & UI/UX Design</li>
+                <li>Web/Software Development & Tech Product Management</li>
+                <li>Marketing, Copywriting, & Education</li>
+            </ul>
+            <p>Having been both the provider (a "Helpa") and the consumer, he intimately understood the deep-seated frustrations of the local service economy: the pain of completing a job only to be left unpaid, and the equal struggle of finding a reliable, verified professional you can trust. This dual experience revealed a critical gap. The problem demanded a guaranteed solution that was accessible to everyone—which led directly to the creation of the YourHelpa WhatsApp Chatbot and its core Escrow system.</p>
+        </section>
+
+        <!-- 3. The Solution -->
+        <section class="container content-section">
+            <div class="section-header">
+                <h2>The Dual Advantage: Field Wisdom Meets AI Power.</h2>
+            </div>
+            <p>Prince's journey didn't stop in the field. His transition into high-level tech product management and software development provided the final piece of the puzzle. He was now equipped not just to understand the problem, but to build the solution.</p>
+            <p>YourHelpa is not just another app. It's an intelligent system designed by someone who knows exactly what questions to ask and what securities to provide. We leverage AI for smart matching, automated verification to build a trusted community, and robust Escrow logic to manage financial risk, ensuring that both the Helpa's work and the consumer's money are fully protected.</p>
+        </section>
+
+        <!-- 4. Our Values & Geographic Commitment -->
+        <section class="container content-section">
+            <div class="section-header">
+                <h2>More Than a Platform: A Local Commitment.</h2>
+            </div>
+            <div class="value-pillars">
+                <div class="pillar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <h4>Trust</h4>
+                    <p>Absolute protection for every Naira transacted. Our Escrow system is the heart of our promise.</p>
+                </div>
+                <div class="pillar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <h4>Accessibility</h4>
+                    <p>No apps, no barriers. If you have WhatsApp, you have YourHelpa. It's that simple.</p>
+                </div>
+                <div class="pillar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <h4>Local Focus</h4>
+                    <p>A dedication shaped by years spent working and living in the communities we serve.</p>
+                </div>
+            </div>
+            <blockquote class="founder-quote">
+                <p>"Having held the wrench and written the code, I know exactly what needs fixing in the local economy. YourHelpa is that fix."</p>
+                <footer>— Prince Dike, Founder of YourHelpa</footer>
+            </blockquote>
+        </section>
+
+        <!-- 5. Final Call to Action -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="final-cta-block">
+                    <div>
+                        <h3>Ready to hire with absolute peace of mind?</h3>
+                        <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-primary large" style="margin-top: 1rem;">Start Chatting</a>
+                    </div>
+                    <div>
+                        <h3>Join the network built by one of your own.</h3>
+                        <a href="register.html?role=helpa" class="button-secondary large" style="margin-top: 1rem;">Apply to be a Helpa</a>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
 
