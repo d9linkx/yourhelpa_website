@@ -63,6 +63,14 @@
         .calculation p { margin: 0.5rem 0; }
         .calculation .payout { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
         .calculation .message { font-weight: 600; margin-top: 1rem; }
+        .calculator-row { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+        .calculator-row label { font-weight: 600; font-size: 1rem; }
+        .calculator-row input { width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--background-color); color: var(--text-color); font-size: 1.25rem; font-weight: 700; }
+        .calculator-row input:focus { outline: 2px solid var(--primary-color); border-color: var(--primary-color); }
+        /* Hide number input spinners */
+        .calculator-row input::-webkit-outer-spin-button,
+        .calculator-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .calculator-row input[type=number] { -moz-appearance: textfield; }
 
         .faq-list { max-width: 800px; margin: 0 auto; }
         .faq-item { background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 1rem; padding: 1rem 1.5rem; }
@@ -149,14 +157,17 @@
                         <p style="margin-top: 1rem;"><strong>7% Commission:</strong> This isn't a fee, it's your insurance. It saves you from the <strong>100% loss</strong> that comes from non-paying customers—a common problem for artisans. It ensures every job you complete translates to cash in your hand.</p>
                     </div>
                     <div class="value-block">
-                        <h4>Example Job Scenario</h4>
-                        <p>Imagine you complete a ₦50,000 job:</p>
+                        <h4>Calculate Your Payout</h4>
+                        <p>Enter the total value of a job to see your guaranteed payout.</p>
                         <div class="calculation">
-                            <p>Total Job Value: ₦50,000</p>
-                            <p>7% Success Fee: - ₦3,500</p>
+                            <div class="calculator-row">
+                                <label for="jobValue">Total Job Value (₦)</label>
+                                <input type="number" id="jobValue" value="50000" min="0" step="100">
+                            </div>
+                            <p>7% Success Fee: <span id="successFee">- ₦3,500</span></p>
                             <hr style="border-color: var(--border-color); margin: 0.5rem 0;">
-                            <p class="payout">Your Guaranteed Payout: ₦46,500</p>
-                            <p class="message">You guarantee ₦46,500 rather than risking the full ₦50,000.</p>
+                            <p class="payout">Your Guaranteed Payout: <span id="guaranteedPayout">₦46,500</span></p>
+                            <p class="message" id="riskMessage">You guarantee ₦46,500 rather than risking the full ₦50,000.</p>
                         </div>
                     </div>
                 </div>
@@ -206,5 +217,37 @@
     <script src="js/includes.js"></script>
     <script src="js/supabase-client.js"></script>
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobValueInput = document.getElementById('jobValue');
+            const successFeeEl = document.getElementById('successFee');
+            const guaranteedPayoutEl = document.getElementById('guaranteedPayout');
+            const riskMessageEl = document.getElementById('riskMessage');
+
+            const commissionRate = 0.07; // 7%
+
+            function calculatePayout() {
+                const jobValue = parseFloat(jobValueInput.value) || 0;
+                const fee = jobValue * commissionRate;
+                const payout = jobValue - fee;
+
+                // Format numbers with commas for readability
+                const formatter = new Intl.NumberFormat('en-NG', {
+                    style: 'currency',
+                    currency: 'NGN',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                });
+
+                successFeeEl.textContent = `- ${formatter.format(fee)}`;
+                guaranteedPayoutEl.textContent = formatter.format(payout);
+                riskMessageEl.textContent = `You guarantee ${formatter.format(payout)} rather than risking the full ${formatter.format(jobValue)}.`;
+            }
+
+            jobValueInput.addEventListener('input', calculatePayout);
+            calculatePayout(); // Initial calculation on page load
+        });
+    </script>
 </body>
 </html>
