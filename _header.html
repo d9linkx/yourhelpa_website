@@ -1,47 +1,3 @@
-<style>
-    /* Hamburger menu color for light theme */
-    .nav-toggle {
-        position: relative;
-        width: 24px; /* Icon width */
-        height: 24px; /* Icon height */
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        color: #000000; /* black */
-    }
-
-    /* Create the hamburger lines */
-    .nav-toggle::before,
-    .nav-toggle::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: 2px; /* Line thickness */
-        background-color: currentColor; /* Use the button's color */
-        transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
-    }
-
-    .nav-toggle::before {
-        top: 8px; /* Position of the top line */
-    }
-
-    .nav-toggle::after {
-        bottom: 8px; /* Position of the bottom line */
-    }
-
-    /* --- Active state for hamburger (X form) --- */
-    .nav-toggle.is-active::before {
-        top: 50%;
-        transform: translateY(-50%) rotate(45deg);
-    }
-
-    .nav-toggle.is-active::after {
-        bottom: 50%;
-        transform: translateY(50%) rotate(-45deg);
-    }
-</style>
-
 <header class="main-header">
     <div class="container">
         <a href="index.html" class="logo">YourHelpa</a>
@@ -66,36 +22,11 @@
             </div>
         </nav>
 
-        <!-- Overlay for mobile menu -->
-        <div id="nav-overlay" class="nav-overlay"></div>
-
         <div class="header-actions">
             <div id="desktop-guest-actions" class="desktop-actions">
                 <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-primary">Start Secure Chat (WhatsApp)</a>
             </div>
 
-            <!-- Mobile Nav Toggle -->
-            <button id="nav-toggle" class="nav-toggle" aria-label="Open Menu" aria-expanded="false"></button>
         </div>
     </div>
 </header>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const navToggle = document.getElementById('nav-toggle');
-        const mainNav = document.getElementById('main-nav');
-        const navOverlay = document.getElementById('nav-overlay');
-
-        function toggleMenu() {
-            navToggle.classList.toggle('is-active');
-            mainNav.classList.toggle('is-active');
-            navOverlay.classList.toggle('is-active');
-            
-            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-            navToggle.setAttribute('aria-expanded', !isExpanded);
-        }
-
-        navToggle.addEventListener('click', toggleMenu);
-        navOverlay.addEventListener('click', toggleMenu);
-    });
-</script>
