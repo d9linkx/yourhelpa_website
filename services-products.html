@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+    <!-- SEO and Core Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Any Service or Product, Risk-Free - YourHelpa</title>
+    <meta name="description" content="Find any Helpa, buy any product. Explore popular services like plumbing, A/C repair, and web design, all backed by YourHelpa's secure Escrow payment system.">
+    <link rel="canonical" href="https://yourhelpa.com/services-products.html"> <!-- Replace with your actual domain -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourhelpa.com/services-products.html"> <!-- Replace with your actual domain -->
+    <meta property="og:title" content="Find Any Service or Product, Risk-Free - YourHelpa">
+    <meta property="og:description" content="Explore popular services like plumbing, A/C repair, and web design, all backed by YourHelpa's secure Escrow payment system.">
+    <meta property="og:image" content="https://yourhelpa.com/assets/og-image.png"> <!-- Replace with a link to a compelling image -->
+
+    <link rel="stylesheet" href="styles/style.css">
+    <script>
+        // This script runs before the page renders to prevent a theme flash.
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode'); // Default to dark mode as requested
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+    <style>
+        /* Reusing styles from index.html for consistency */
+        :root { --primary-color: #05aa16; --primary-hover: #028a10; }
+        body.dark-mode { --background-color: #0A0A0A; --surface-color: #111111; }
+        .page-hero { text-align: center; padding: 4rem 1.5rem 3rem; }
+        .page-hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
+        .page-hero p { font-size: 1.25rem; color: var(--text-muted-color); max-width: 650px; margin: 1rem auto 2rem; }
+
+        .search-section { padding-top: 0; }
+        .search-bar { display: flex; max-width: 700px; margin: 0 auto 4rem; }
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--surface-color);
+            color: var(--text-color);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .service-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .service-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .service-card p { color: var(--primary-color); font-weight: 500; font-size: 0.9rem; }
+
+        .guarantee-banner {
+            background-color: var(--surface-color);
+            text-align: center;
+            padding: 4rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .guarantee-banner svg {
+            color: var(--primary-color);
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+        }
+        .guarantee-banner h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
+        .guarantee-banner p { max-width: 600px; margin: 1rem auto 1.5rem; color: var(--text-muted-color); }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .category-item {
+            display: block;
+            padding: 1.5rem;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .category-item:hover {
+            background-color: var(--background-color);
+        }
+
+        .final-cta { background: linear-gradient(145deg, var(--primary-color), var(--primary-hover)); color: #0A0A0A; text-align: center; }
+        .final-cta h2 { color: #0A0A0A; font-size: clamp(2rem, 5vw, 3rem); }
+        .final-cta p { color: rgba(0,0,0,0.8); max-width: 600px; margin: 1rem auto 2rem; }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- 1. Header & Call to Action -->
+        <section class="page-hero">
+            <div class="container">
+                <h1>Find Any Helpa. Buy Any Product. Zero Risk.</h1>
+                <p>Explore our most popular categories or chat with the AI to find exactly what you need in Lagos and Oyo.</p>
+                <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-primary large">Start Chat: What Are You Looking For?</a>
+            </div>
+        </section>
+
+        <!-- 2. Dynamic Search & Featured Services -->
+        <section class="search-section container">
+            <div class="search-bar">
+                <input type="search" placeholder="Search Services & Products..." aria-label="Search Services & Products">
+            </div>
+            <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <h2>Top 10 Most Requested Services & Products</h2>
+            </div>
+            <div class="services-grid">
+                <!-- Simulated data from Supabase -->
+                <div class="service-card"><h3>Plumbing Repair</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Used iPhone Sales</h3><p>Verified Seller, Escrow Mandatory</p></div>
+                <div class="service-card"><h3>Home Painting / Redecoration</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Web & Graphic Design</h3><p>Remote or Local</p></div>
+                <div class="service-card"><h3>A/C Installation & Servicing</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Car Mechanics (Tyre & Engine)</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Catering Services (Events)</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Educational Tutors (JAMB/WAEC)</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Generator Repair</h3><p>Secure Escrow Available</p></div>
+                <div class="service-card"><h3>Custom Furniture Makers</h3><p>Secure Escrow Available</p></div>
+            </div>
+        </section>
+
+        <!-- 3. Escrow Guarantee Reinforcement -->
+        <section class="guarantee-banner">
+            <div class="container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <h2>Every Service. Every Product. Guaranteed.</h2>
+                <p>Whether it's a ₦5,000 service or a ₦500,000 product, our Escrow system protects your payment until you confirm the job is done to your satisfaction.</p>
+                <a href="faq.html#escrow" class="button-secondary">How Escrow Protects Buyers and Sellers</a>
+            </div>
+        </section>
+
+        <!-- 4. Categories & Filters (Simulated) -->
+        <section class="container">
+            <div class="section-header" style="text-align: center;">
+                <h2>Browse by Category</h2>
+            </div>
+            <div class="category-grid">
+                <a href="#" class="category-item">Home Services</a>
+                <a href="#" class="category-item">Electronics & Gadgets</a>
+                <a href="#" class="category-item">Professional Skills</a>
+                <a href="#" class="category-item">Events & Lifestyle</a>
+                <a href="#" class="category-item">Automotive</a>
+                <a href="#" class="category-item">Education</a>
+            </div>
+        </section>
+
+        <!-- 5. Closing Call to Action -->
+        <section class="final-cta cta-section">
+            <div class="container">
+                <h2>Don't See It Listed? Ask the AI.</h2>
+                <p>Our AI can find verified Helpas for thousands of services and products not listed here. Just ask.</p>
+                <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-secondary large">Go Live: Chat with the AI to Find Your Perfect Helpa</a>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Supabase Client Library (if needed for actual dynamic data) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+    <script src="js/main.js"></script>
+    <!-- <script src="js/supabase-client.js"></script> -->
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>
