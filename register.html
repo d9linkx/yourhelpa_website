@@ -1,39 +1,289 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-mode">
 <head>
+    <!-- SEO and Core Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - YourHelpa</title>
+    <title>Become a Helpa - Get Guaranteed Pay for Your Services in Nigeria</title>
+    <meta name="description" content="Join YourHelpa's network of verified professionals. Get secure, pre-paid job leads directly on WhatsApp for a small monthly fee. Stop chasing payments and start growing your business.">
+    <meta name="keywords" content="get jobs in Nigeria, artisan jobs, plumber jobs, electrician jobs, freelance Nigeria, guaranteed payment, YourHelpa">
+    <link rel="canonical" href="https://yourhelpa.com/register.html"> <!-- Replace with your actual domain -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourhelpa.com/register.html"> <!-- Replace with your actual domain -->
+    <meta property="og:title" content="Become a Helpa - Get Guaranteed Pay for Your Services in Nigeria">
+    <meta property="og:description" content="Join YourHelpa's network of verified professionals. Get secure, pre-paid job leads directly on WhatsApp.">
+    <meta property="og:image" content="https://yourhelpa.com/assets/og-image-helpa.png"> <!-- Replace with a link to a compelling image for helpas -->
+
     <link rel="stylesheet" href="styles/style.css">
+    <script>
+        // This script runs before the page renders to prevent a theme flash.
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark-mode');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+    <style>
+        /* Reusing styles from index.html for consistency */
+        :root { --primary-color: #05aa16; --primary-hover: #028a10; }
+        body.dark-mode { --background-color: #0A0A0A; --surface-color: #111111; }
+        .hero { padding: 4rem 1.5rem; }
+        .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; text-align: center; }
+        @media (min-width: 992px) { 
+            .hero { padding: 6rem 1.5rem; }
+            .hero .container { grid-template-columns: 1fr 1fr; gap: 4rem; text-align: left; }
+        }
+        .hero-content h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
+        .hero-content .sub-headline { font-size: 1.25rem; color: var(--text-muted-color); max-width: 550px; margin: 1.5rem auto 2.5rem; }
+        @media (min-width: 992px) { .hero-content .sub-headline { margin-left: 0; margin-right: 0; } }
+        .hero-visual { display: flex; justify-content: center; align-items: center; }
+        .hero-visual img { max-width: 320px; width: 100%; border-radius: 24px; box-shadow: 0 0 50px -10px rgba(5, 170, 22, 0.2); }
+        @media (min-width: 992px) { .hero-visual img { max-width: 380px; } }
+        .hero-actions { display: flex; justify-content: center; }
+        @media (min-width: 992px) { .hero-actions { justify-content: flex-start; } }
+        
+        .trust-bar { background-color: var(--surface-color); padding: 1.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .trust-bar .container { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 1.5rem; }
+        .trust-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--text-muted-color); }
+        .trust-item svg { width: 24px; height: 24px; color: var(--primary-color); }
+
+        .dual-value-prop .container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 768px) { 
+            .dual-value-prop .container { grid-template-columns: 1fr 1fr; } 
+            .dual-value-prop .section-header { grid-column: 1 / -1; }
+        }
+        .value-block { background-color: var(--background-color); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        .value-block h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .value-block .price { font-size: 2.5rem; font-weight: bold; color: var(--primary-color); }
+        .value-block .price-desc { color: var(--text-muted-color); margin-bottom: 1.5rem; }
+        .value-block .comparison { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-style: italic; }
+
+        .objection-handling ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .objection-handling li { display: flex; align-items: flex-start; gap: 1rem; }
+        .objection-handling svg { color: var(--primary-color); flex-shrink: 0; margin-top: 4px; }
+
+        .final-cta { background: linear-gradient(145deg, var(--primary-color), var(--primary-hover)); color: #0A0A0A; text-align: center; }
+        .final-cta h2 { color: #0A0A0A; font-size: clamp(2rem, 5vw, 3rem); }
+
+        @media (min-width: 992px) {
+            section { padding-top: 6rem; padding-bottom: 6rem; }
+            .section-header { margin-bottom: 4rem; }
+        }
+    </style>
 </head>
 <body>
-    <div class="container auth-container">
-        <h1>Create an Account</h1>
-        <form id="register-form">
-            <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-             <div class="form-group">
-                <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone">
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required minlength="6">
-            </div>
-            <button type="submit" class="button-primary">Register</button>
-        </form>
-        <p>
-            Already have an account? <a href="login.html">Login here</a>.
-            <br><a href="index.html" style="font-size: 0.9rem; margin-top: 1rem; display: inline-block;">&larr; Back to Home</a>
-        </p>
-    </div>
+    <div id="header-placeholder"></div>
 
-    <script type="module" src="js/auth.js"></script>
+    <main>
+        <!-- 1. Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Guaranteed Pay, Zero Chase. The Smart Way to Get Jobs.</h1>
+                    <p class="sub-headline">Join a network of verified providers receiving secured, pre-paid leads directly on WhatsApp for only ₦1,000/month.</p>
+                    <div class="hero-actions">
+                        <a href="#apply" class="button-primary large">Apply Now & Secure Your First Lead</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="https://placehold.co/380x760/0A0A0A/05aa16?text=New+Job+Alert!+(Secured)" alt="WhatsApp notification showing a new, secured job lead for a Helpa">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Credibility & Social Proof (Trust Bar) -->
+        <div class="trust-bar">
+            <div class="container">
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Escrow Secured</span>
+                </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Verified Leads</span>
+                </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <span>Instant Payout</span>
+                </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
+                    <span>AI-Powered Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Justify the Investment -->
+        <section class="dual-value-prop" id="why-pay">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Pay to Earn?</h2>
+                    <p>Because your time and skill are valuable. We make sure you get paid for it.</p>
+                </div>
+                <div class="value-block">
+                    <h3>Verified Lead Access</h3>
+                    <div class="price">₦1,000<span style="font-size: 1.25rem; color: var(--text-muted-color);">/month</span></div>
+                    <p class="price-desc">This buys you automated marketing and access to a stream of serious, pre-qualified customers.</p>
+                    <p>It's your investment in working with clients who are ready to hire, not just inquire.</p>
+                    <div class="comparison">"Less than the cost of one wasted trip to an unserious customer."</div>
+                </div>
+                <div class="value-block">
+                    <h3>100% Payment Guarantee</h3>
+                    <div class="price">7%<span style="font-size: 1.25rem; color: var(--text-muted-color);">/job</span></div>
+                    <p class="price-desc">This small commission funds our Escrow system, which secures the customer's full payment before you start work.</p>
+                    <p>It's not a fee; it's your business insurance against non-payment.</p>
+                    <div class="comparison">"Would you rather pay 7% for a guaranteed payment, or risk a 100% loss from a client who won't pay?"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. How It Works -->
+        <section class="how-it-works" id="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Your Guaranteed Payout Flow</h2>
+                    <p>Simple, secure, and all on WhatsApp.</p>
+                </div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+                        <h3>Receive & Accept</h3>
+                        <p>Get a pre-qualified, secured job request on WhatsApp. The customer has already committed funds.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></div>
+                        <h3>Service Rendered</h3>
+                        <p>Complete the job with peace of mind, knowing the money is safely held for you in YourHelpa Escrow.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">3</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 17 5-5-5-5"/><path d="M3 12h18"/></svg></div>
+                        <h3>Instant Payout</h3>
+                        <p>Customer confirms satisfaction on WhatsApp, and your 93% share is transferred to you immediately.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Helpa Success Stories -->
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Success Stories from Helpas Like You</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="testimonial-card">
+                        <p>"My monthly income tripled because I stopped working for free. YourHelpa only sends me serious clients."</p>
+                        <div class="testimonial-author">- Akin, Electrician</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"I used to spend so much on transport for quotes. Now, I only go when the job is confirmed and paid for. It has saved me thousands."</p>
+                        <div class="testimonial-author">- Funke, Caterer</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"The best part is the instant payment. No more 'I will send it later'. As soon as the client approves, I get my alert. This is the future."</p>
+                        <div class="testimonial-author">- David, AC Technician</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Objection Handling -->
+        <section class="objection-handling why-choose-us" id="objections">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Your Time Is Money. We Guarantee Both.</h2>
+                </div>
+                <ul>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                        <div><strong>NO missed payments.</strong> Escrow holds the money before you start work. Period.</div>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                        <div><strong>NO complex new apps.</strong> If you have WhatsApp, you're ready to go.</div>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                        <div><strong>NO time wasted on unverified inquiries.</strong> We filter out the noise for you.</div>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+                        <div><strong>NO need for manual customer marketing.</strong> We bring the customers to you.</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6. Closing Section & FAQ -->
+        <section class="final-cta cta-section" id="apply">
+            <div class="container">
+                <h2>Ready to Grow Your Business?</h2>
+                <p style="color: rgba(0,0,0,0.8); font-size: 1.15rem; max-width: 600px; margin: 1rem auto 2rem;">Apply to join the Helpa Network and start receiving guaranteed job leads.</p>
+                <!-- NOTE: This should link to your actual application form or onboarding chat -->
+                <a href="https://wa.me/YOUR_WHATSAPP_NUMBER_FOR_ONBOARDING" target="_blank" class="button-secondary large">Apply to Join the Helpa Network</a>
+            </div>
+        </section>
+
+        <section class="faq-snippet" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Helpa Application FAQs</h2>
+                </div>
+                <div class="faq-list">
+                    <details class="faq-item" open>
+                        <summary>How long does the verification process take?</summary>
+                        <p>Our verification process is fast and simple. Once you submit your details, it typically takes between 24 to 48 hours for our team to review and approve your profile.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>What documents do I need to provide?</summary>
+                        <p>We require a valid means of identification (like a National ID, Driver's License, or Voter's Card) and basic information about your skills and services to ensure the safety and trust of our community.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>When is the ₦1,000 monthly fee deducted?</summary>
+                        <p>Your subscription is billed monthly from the date you are approved. You will receive a notification on WhatsApp to make the payment to keep your account active and continue receiving leads.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>If a job is canceled, do I pay the 7% fee?</summary>
+                        <p>No. The 7% commission is only charged on successfully completed and confirmed jobs. If a job is canceled by the customer before you start, there is no charge to you.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>How quickly are my earnings transferred after job completion?</summary>
+                        <p>Instantly. As soon as the customer confirms the job is done via WhatsApp, our system automatically processes and sends your payment to your registered bank account.</p>
+                    </details>
+                     <details class="faq-item">
+                        <summary>Can I pause my subscription?</summary>
+                        <p>Yes, you can choose not to renew your monthly subscription if you plan to be unavailable. You can easily reactivate it when you're ready to start receiving job leads again.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+        // Smooth scroll for the "Apply Now" button
+        document.addEventListener('DOMContentLoaded', () => {
+            const applyButton = document.querySelector('a[href="#apply"]');
+            if (applyButton) {
+                applyButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('#apply').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>

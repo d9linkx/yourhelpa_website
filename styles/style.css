@@ -5,8 +5,8 @@
 /* --- CSS Variables --- */
 :root {
     /* Futuristic White/Grey Palette */
-    --primary-color: #059669; /* Keep a strong accent color */
-    --primary-hover: #047857;
+    --primary-color: #05aa16; /* Keep a strong accent color */
+    --primary-hover: #028a10;
     --background-color: #ffffff;
     --surface-color: #f8f9fa;
     --surface-color-translucent: rgba(255, 255, 255, 0.6);
@@ -230,7 +230,7 @@ p {
 
 /* Special CTA link in nav */
 .nav-cta {
-    background-color: rgba(5, 150, 105, 0.1);
+    background-color: rgba(5, 170, 22, 0.1);
     color: var(--primary-color) !important;
     padding: 0.5rem 1rem !important;
     border-radius: 50px;
@@ -238,7 +238,7 @@ p {
 }
 
 .nav-cta:hover {
-    background-color: rgba(5, 150, 105, 0.2);
+    background-color: rgba(5, 170, 22, 0.2);
     color: var(--primary-hover) !important;
 }
 
@@ -449,7 +449,7 @@ select {
 input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    box-shadow: 0 0 0 3px rgba(5, 170, 22, 0.1);
 }
 
 textarea {
@@ -504,7 +504,7 @@ main {
     margin-bottom: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 50px;
-    background-color: rgba(5, 150, 105, 0.1);
+    background-color: rgba(5, 170, 22, 0.1);
     color: var(--primary-color);
     font-weight: 600;
 }
