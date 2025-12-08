@@ -81,6 +81,53 @@
         @media (min-width: 768px) {
             .final-cta-block { grid-template-columns: 1fr 1fr; }
         }
+
+        /* Founder Profile Styles */
+        .founder-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem; /* Space between photo and text block */
+        }
+
+        .founder-profile figcaption {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.1rem; /* Reduced space between name and title/icon */
+        }
+
+        .founder-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem; /* Space between title and icon */
+        }
+
+        .founder-name {
+            font-size: 1.5rem; /* 24px */
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-heading-color);
+        }
+
+        .founder-title {
+            font-size: 1rem; /* 16px */
+            font-weight: 400;
+            margin: 0;
+            color: var(--text-muted-color);
+        }
+
+        .social-link {
+            margin-top: 0; /* Reset margin as gap is now handled by flex */
+            color: #494949; /* Official LinkedIn blue */
+            transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+        }
+
+        .social-link:hover {
+            opacity: 0.8;
+            transform: scale(1.1); /* Slightly enlarges the icon on hover */
+        }
     </style>
 </head>
 <body>
@@ -91,11 +138,26 @@
         <section class="hero" id="home">
             <div class="container">
                 <div class="hero-content">
-                    <h1>Built by an Artisan, Secured by a Technologist.</h1>
+                    <h1>About YourHelpa</h1>
                     <p class="sub-headline">Our mission is simple: to eliminate payment risk and unreliable service in the Nigerian local economy.</p>
                 </div>
                 <div class="founder-visual">
-                    <img src="assets/prince-dike.jpg" alt="Prince Dike, Founder of YourHelpa">
+                    <figure class="founder-profile">
+                        <img src="assets/prince-dike.jpg" alt="Prince Dike, Founder of YourHelpa">
+                        <figcaption>
+                            <h3 class="founder-name">Prince Dike</h3>
+                            <div class="founder-meta">
+                                <p class="founder-title">Founder & CEO</p>
+                                <!-- TODO: Replace the href="#" with the actual LinkedIn profile URL. -->
+                                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Prince Dike's LinkedIn Profile" class="social-link">
+                                    <!-- LinkedIn SVG Icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                                        <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.75c0-1.4-1.2-2.5-2.5-2.5S11 12.85 11 14.25V19h-3v-9h2.9v1.3a3.11 3.11 0 012.6-1.4c2.5 0 4.5 2 4.5 5.25V19z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
