@@ -10,15 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Set active navigation link
-        const currentPath = window.location.pathname.split("/").pop();
+        const currentPath = window.location.pathname;
         const navLinks = document.querySelectorAll('#main-nav a');
 
         navLinks.forEach(link => {
-            const linkPath = link.getAttribute('href')?.split('/').pop();
-            // Check for index.html, root path, or exact match
-            if ((currentPath === '' || currentPath === 'index.html') && (linkPath === 'index.html' || linkPath === '')) {
+            const linkPath = link.getAttribute('href');
+            // Handle homepage (root path)
+            if (currentPath === '/' && (linkPath === '/' || linkPath === '/index.html')) {
                 link.classList.add('active');
-            } else if (linkPath && linkPath !== '' && currentPath === linkPath) {
+            // Handle other pages
+            } else if (linkPath && linkPath !== '/' && currentPath.startsWith(linkPath)) {
                 link.classList.add('active');
             }
         });
