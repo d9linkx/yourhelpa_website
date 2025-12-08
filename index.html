@@ -35,19 +35,34 @@
         /* Additional styles for the new design */
         :root { --primary-color: #05aa16; --primary-hover: #028a10; } /* Amber/Gold Theme */
         body.dark-mode { --background-color: #0A0A0A; --surface-color: #111111; }
-        .hero { padding: 6rem 1.5rem; display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
-        @media (min-width: 992px) { .hero { grid-template-columns: 1fr 1fr; padding: 8rem 1.5rem; } }
+        .hero { padding: 4rem 1.5rem; }
+        .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+        @media (min-width: 992px) { 
+            .hero { padding: 6rem 1.5rem; }
+            .hero .container { grid-template-columns: 1fr 1fr; gap: 4rem; }
+        }
         .hero-content h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
         .hero-content .sub-headline { font-size: 1.25rem; color: var(--text-muted-color); max-width: 550px; margin: 1.5rem 0 2.5rem; }
         .hero-visual { display: flex; justify-content: center; align-items: center; }
-        .hero-visual img { max-width: 320px; width: 100%; border-radius: 24px; box-shadow: 0 0 50px -10px rgba(251, 191, 36, 0.2); }
+        .hero-visual img { max-width: 320px; width: 100%; border-radius: 24px; box-shadow: 0 0 50px -10px rgba(5, 170, 22, 0.2); }
+        @media (min-width: 992px) { .hero-visual img { max-width: 380px; } }
+        .hero-actions { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+        @media (min-width: 768px) {
+            .hero-actions {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
         .trust-bar { background-color: var(--surface-color); padding: 1.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
         .trust-bar .container { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 1.5rem; }
         .trust-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--text-muted-color); }
         .trust-item svg { width: 24px; height: 24px; color: var(--primary-color); }
         .dual-value-prop { background-color: var(--surface-color); }
         .dual-value-prop .container { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-        @media (min-width: 768px) { .dual-value-prop .container { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 768px) { 
+            .dual-value-prop .container { grid-template-columns: 1fr 1fr; } 
+            .dual-value-prop .section-header { grid-column: 1 / -1; }
+        }
         .value-block { background-color: var(--background-color); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
         .value-block h4 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-color); }
         .objection-handling ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
@@ -58,6 +73,10 @@
         .fomo-notification { position: fixed; bottom: 1.5rem; left: 1.5rem; background-color: var(--surface-color); color: var(--text-color); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: var(--shadow-lg); z-index: 1001; opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; font-size: 0.9rem; border: 1px solid var(--border-color); }
         .fomo-notification.visible { opacity: 1; transform: translateY(0); }
         .location-reminder { text-align: center; padding: 1rem; background-color: var(--surface-color); font-weight: 600; color: var(--primary-color); }
+        @media (min-width: 992px) {
+            section { padding-top: 6rem; padding-bottom: 6rem; }
+            .section-header { margin-bottom: 4rem; }
+        }
     </style>
 </head>
 <body>
@@ -70,10 +89,13 @@
                 <div class="hero-content">
                     <h1>Stop Chasing Artisans. Start Securely Hiring.</h1>
                     <p class="sub-headline">AI-Powered Helpa Matching + Escrow Security. All on your WhatsApp.</p>
-                    <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-primary large">Start Chat Now (Free)</a>
+                    <div class="hero-actions">
+                        <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-primary large">Start Chat Now (Free)</a>
+                        <a href="register.html?role=helpa" class="button-secondary large">Become a Helpa</a>
+                    </div>
                 </div>
                 <div class="hero-visual">
-                    <img src="https://placehold.co/350x700/0A0A0A/FBBF24?text=WhatsApp+Chat+UI" alt="YourHelpa chatbot interface within a WhatsApp screen">
+                    <img src="https://placehold.co/380x760/0A0A0A/05aa16?text=WhatsApp+Chat+UI" alt="YourHelpa chatbot interface within a WhatsApp screen">
                 </div>
             </div>
         </section>
@@ -91,7 +113,7 @@
                 </div>
                 <div class="trust-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                    <span>Lagos & Oyo Coverage</span>
+                    <span>Nationwide Coverage</span>
                 </div>
                 <div class="trust-item">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
@@ -106,20 +128,20 @@
             <div class="container">
                 <div class="section-header">
                     <h2>What Our Users Say</h2>
-                    <p>Real stories from Lagos and Oyo.</p>
+                    <p>Real stories from users across Nigeria.</p>
                 </div>
                 <div class="features-grid">
                     <div class="testimonial-card">
                         <p>"I found a great plumber in 30 minutes. The best part? My money was safe with YourHelpa until the job was perfectly done. No more payment anxiety!"</p>
-                        <div class="testimonial-author">- Bukola S., Consumer in Lagos</div>
+                        <div class="testimonial-author">- Bukola S., Consumer</div>
                     </div>
                     <div class="testimonial-card">
                         <p>"As a carpenter, chasing payments was my biggest headache. With YourHelpa, my pay was guaranteed and I got the money instantly after the client approved. It's a game-changer."</p>
-                        <div class="testimonial-author">- Tunde A., Helpa in Ibadan</div>
+                        <div class="testimonial-author">- Tunde A., Helpa</div>
                     </div>
                     <div class="testimonial-card">
                         <p>"I needed a specific cake for a birthday and was tired of scrolling Instagram. YourHelpa connected me to a baker who delivered exactly what I wanted. So simple!"</p>
-                        <div class="testimonial-author">- Fatima K., Consumer in Oyo</div>
+                        <div class="testimonial-author">- Fatima K., Consumer</div>
                     </div>
                 </div>
             </div>
@@ -157,7 +179,7 @@
             <div class="container">
                 <div class="section-header">
                     <h2>Are You a Local Pro? Get Secure, Pre-Paid Leads.</h2>
-                    <p>Stop wasting time on unpaid invoices and uncertain clients.</p>
+                    <p>Stop wasting time on unpaid invoices and uncertain clients. Join a network that guarantees your pay.</p>
                 </div>
                 <div class="value-block">
                     <h4>Our Fair Partnership Model</h4>
@@ -175,9 +197,7 @@
                         <li><strong>Build Your Digital Reputation:</strong> Earn ratings and reviews to attract more high-paying clients.</li>
                     </ul>
                 </div>
-            </div>
-            <div class="container" style="text-align: center; padding-top: 2rem;">
-                 <a href="register.html?role=helpa" class="button-secondary large">I Want Guaranteed Pay: Join the Helpa Network</a>
+                <a href="register.html?role=helpa" class="button-secondary large" style="grid-column: 1 / -1; justify-self: center; margin-top: 1rem;">I Want Guaranteed Pay: Join the Helpa Network</a>
             </div>
         </section>
 
@@ -233,8 +253,8 @@
                         <p>You can find a wide range of services, from home repairs (plumbing, electrical) and cleaning to professional services like tutoring and event planning, as well as product sourcing and delivery. If you need it, a Helpa can probably do it.</p>
                     </details>
                     <details class="faq-item">
-                        <summary>Is this only for Lagos and Oyo?</summary>
-                        <p>Yes, for now, YourHelpa is exclusively available for services and products within Lagos and Oyo states in Nigeria. We are working hard to expand to more locations soon!</p>
+                        <summary>Where is YourHelpa available?</summary>
+                        <p>YourHelpa is available nationwide across Nigeria. We connect you with trusted Helpas in your local area, wherever you are in the country.</p>
                     </details>
                     <details class="faq-item">
                         <summary>What are the fees for being a Helpa?</summary>
@@ -245,7 +265,7 @@
         </section>
 
         <div class="location-reminder">
-            Currently serving Lagos & Oyo States
+            Now Serving All of Nigeria
         </div>
 
     </main>
@@ -269,10 +289,10 @@
             if (!fomo) return;
 
             const activities = [
-                "Just In: Ayo in <strong>Ibadan</strong> paid <strong>NGN 45,000</strong> for verified plumbing work.",
-                "A new request for 'Home Cleaning' was just posted in <strong>Lagos</strong>.",
+                "Just In: A user paid <strong>NGN 45,000</strong> for verified plumbing work.",
+                "A new request for 'Home Cleaning' was just posted in your area.",
                 "Success! A Helpa just completed a 'Graphic Design' task for <strong>NGN 75,000</strong>.",
-                "Just In: Chioma in <strong>Lekki</strong> paid <strong>NGN 20,000</strong> for cake delivery.",
+                "Just In: A customer paid <strong>NGN 20,000</strong> for a rush cake delivery.",
             ];
 
             let lastActivity = -1;
