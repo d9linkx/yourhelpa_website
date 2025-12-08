@@ -7,11 +7,11 @@
     <title>Contact Us - YourHelpa | Get in Touch</title>
     <meta name="description" content="Contact the YourHelpa team for support, partnerships, or any inquiries. We're here to help you get the most out of our secure service platform.">
     <meta name="keywords" content="contact YourHelpa, YourHelpa support, customer service, partnership inquiry">
-    <link rel="canonical" href="https://yourhelpa.com.ng/contact.html">
+    <link rel="canonical" href="https://yourhelpa.com.ng/contact">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourhelpa.com.ng/contact.html">
+    <meta property="og:url" content="https://yourhelpa.com.ng/contact">
     <meta property="og:title" content="Contact YourHelpa | We're Here to Help">
     <meta property="og:description" content="Have a question or need support? Reach out to the YourHelpa team. We're ready to assist with any inquiries.">
     <meta property="og:image" content="https://yourhelpa.com.ng/assets/og-image.png">
@@ -19,7 +19,25 @@
     <link rel="stylesheet" href="styles/style.css">
     <style>
         /* Match H1 size to homepage */
-        .page-header h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
+        .page-header h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; margin-bottom: 1.5rem; }
+        .page-header .sub-headline { font-size: 1.25rem; color: var(--text-muted-color); max-width: 650px; margin: 0 auto 2.5rem; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .contact-card {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .contact-card svg { margin-bottom: 1rem; color: var(--primary-color); }
+        .contact-card h3 { margin-bottom: 0.5rem; }
+        .contact-card p { color: var(--text-muted-color); margin-bottom: 1.5rem; }
+        .contact-card a { font-weight: 600; }
+        .form-disclaimer { text-align: center; margin-top: 1.5rem; color: var(--text-muted-color); font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -27,39 +45,96 @@
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="page-header">
+        <!-- Header & Primary Contact -->
+        <section class="page-header text-center">
             <div class="container">
-                <h1>Get In Touch</h1>
-                <p>We're here to help. Send us a message and we'll get back to you shortly.</p>
+                <h1>Need Help? We're Here.</h1>
+                <p class="sub-headline">For the fastest service, questions, or to find a Helpa, start a secure chat with our AI on WhatsApp.</p>
+                <a href="https://wa.me/2340000000000" target="_blank" class="button-primary large">Chat</a>
             </div>
         </section>
 
+        <!-- Segmented Communication Channels -->
         <section>
-            <div class="container content-section contact-layout">
-                <div class="contact-form">
-                    <h2>Send a Message</h2>
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="6" required></textarea>
-                        </div>
-                        <button type="submit" class="button-primary">Send Message</button>
-                    </form>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Reach the Right Team</h2>
                 </div>
-                <div class="contact-details">
-                    <h2>Contact Information</h2>
-                    <p><strong>Email:</strong> <a href="mailto:support@yourhelpa.com">support@yourhelpa.com</a></p>
-                    <p><strong>Phone:</strong> (123) 456-7890</p>
-                    <p><strong>Address:</strong> 123 Help St, Community City, 12345</p>
+                <div class="contact-grid">
+                    <!-- General & Support -->
+                    <div class="contact-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg>
+                        <h3>General & Support</h3>
+                        <p>For all support, disputes, service requests, and common questions.</p>
+                        <a href="https://wa.me/2340000000000" target="_blank" class="button-secondary">Chat on WhatsApp</a>
+                    </div>
+                    <!-- Helpa Onboarding -->
+                    <div class="contact-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <h3>Helpa Verification</h3>
+                        <p>For providers applying to join or managing their subscription.</p>
+                        <a href="https://wa.me/2340000000001" target="_blank" class="button-secondary">Helpa Support Chat</a>
+                    </div>
+                    <!-- Partnerships -->
+                    <div class="contact-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                        <h3>Partnerships</h3>
+                        <p>For media, corporate partnerships, and formal business inquiries.</p>
+                        <a href="mailto:partnerships@yourhelpa.ai">partnerships@yourhelpa.ai</a>
+                    </div>
+                    <!-- Careers -->
+                    <div class="contact-card">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+                        <h3>Careers</h3>
+                        <p>Interested in joining our internal tech or operations team?</p>
+                        <a href="mailto:careers@yourhelpa.ai">careers@yourhelpa.ai</a>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Fallback Contact Form -->
+        <section class="cta-section">
+            <div class="container" style="max-width: 700px;">
+                <div class="section-header">
+                    <h2>Or, Send a Message</h2>
+                </div>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="General">General Inquiry</option>
+                            <option value="Helpa">Helpa Inquiry</option>
+                            <option value="Partnership">Partnership</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="button-primary">Send Message</button>
+                </form>
+                <p class="form-disclaimer">Please note: For the fastest response, we strongly recommend using our WhatsApp Chatbot.</p>
+            </div>
+        </section>
+
+        <!-- Address & Hours -->
+        <section class="why-choose-us">
+            <div class="container text-center">
+                <div class="section-header">
+                    <h2>Our Operations</h2>
+                </div>
+                <p><strong>Digital Operations Hub:</strong> Lagos, Nigeria</p>
+                <p style="margin-top: 0.5rem;"><strong>WhatsApp AI Chatbot:</strong> Available 24/7</p>
+                <p style="margin-top: 0.5rem;"><strong>Formal Support:</strong> Mon - Sun, 8:00 AM - 5:00 PM WAT</p>
             </div>
         </section>
     </main>
@@ -71,6 +146,5 @@
     <script src="js/main.js"></script>
     <script src="js/includes.js"></script>
     <script src="js/supabase-client.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
