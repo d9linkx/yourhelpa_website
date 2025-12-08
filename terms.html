@@ -1,44 +1,137 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-mode">
+<html lang="en">
 <head>
+    <!-- SEO and Core Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - YourHelpa</title>
-    <meta name="description" content="Read the Terms of Service for using the YourHelpa platform.">
-    <link rel="stylesheet" href="styles/style.css">
-    <script>
-        (function() {
-            const theme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (theme === 'dark' || (!theme && prefersDark)) {
-                document.documentElement.classList.add('dark-mode');
-            } else if (theme === 'light') {
-                document.documentElement.classList.remove('dark-mode');
+    <title>Terms and Conditions - YourHelpa</title>
+    <meta name="description" content="Please read these Terms and Conditions carefully before using the YourHelpa service.">
+    <link rel="canonical" href="https://yourhelpa.com.ng/terms">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourhelpa.com.ng/terms">
+    <meta property="og:title" content="Terms and Conditions - YourHelpa">
+    <meta property="og:description" content="Please read these Terms and Conditions carefully before using the YourHelpa service.">
+    <meta property="og:image" content="https://yourhelpa.com.ng/assets/og-image.png">
+
+    <link rel="stylesheet" href="/styles/style.css">
+    <style>
+        /* Using styles from index.html for consistency */
+        :root { --primary-color: #05aa16; --primary-hover: #028a10; }
+        .hero { padding: 4rem 1.5rem; }
+        .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+        @media (min-width: 992px) { 
+            .hero { padding: 6rem 1.5rem; }
+            .hero .container { grid-template-columns: 1fr 1fr; gap: 4rem; }
+        }
+        .hero-content h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
+        .hero-content .sub-headline { font-size: 1.25rem; color: var(--text-muted-color); max-width: 550px; margin: 1.5rem 0 2.5rem; }
+        .hero-visual { display: flex; justify-content: center; align-items: center; }
+        .hero-visual img { max-width: 320px; width: 100%; border-radius: 24px; box-shadow: 0 0 50px -10px rgba(5, 170, 22, 0.2); }
+        @media (min-width: 992px) { .hero-visual img { max-width: 266px; } }
+        .hero-actions { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+        @media (min-width: 768px) {
+            .hero-actions {
+                flex-direction: row;
+                align-items: center;
             }
-        })();
-    </script>
+        }
+        .trust-bar { background-color: var(--surface-color); padding: 1.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .trust-bar .container { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 1.5rem; }
+        .trust-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--text-muted-color); }
+        .trust-item svg { width: 24px; height: 24px; color: var(--primary-color); }
+        .dual-value-prop { background-color: var(--surface-color); }
+        .dual-value-prop .container { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+        @media (min-width: 768px) { 
+            .dual-value-prop .container { grid-template-columns: 1fr 1fr; } 
+            .dual-value-prop .section-header { grid-column: 1 / -1; }
+        }
+        .value-block { background-color: var(--background-color); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        .value-block h4 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-color); }
+        .final-cta { background: linear-gradient(145deg, var(--primary-color), var(--primary-hover)); color: #0A0A0A; text-align: center; }
+        .final-cta h2 { color: #0A0A0A; font-size: clamp(2rem, 5vw, 3rem); }
+        .fomo-notification { position: fixed; bottom: 1.5rem; left: 1.5rem; background-color: var(--surface-color); color: var(--text-color); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: var(--shadow-lg); z-index: 1001; opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; font-size: 0.9rem; border: 1px solid var(--border-color); }
+        .fomo-notification.visible { opacity: 1; transform: translateY(0); }
+        .location-reminder { text-align: center; padding: 1rem; background-color: var(--surface-color); font-weight: 600; color: var(--primary-color); }
+        @media (min-width: 992px) {
+            section { padding-top: 6rem; padding-bottom: 6rem; }
+            .section-header { margin-bottom: 4rem; }
+        }
+        /* Styles for legal/content pages */
+        .content-page { padding: 4rem 1.5rem; }
+        @media (min-width: 992px) { .content-page { padding: 6rem 1.5rem; } }
+        .content-page .container { max-width: 800px; }
+        .content-page h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+        .content-page .last-updated { color: var(--text-muted-color); margin-bottom: 2.5rem; }
+        .content-page h2 { font-size: 1.75rem; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .content-page p { margin-bottom: 1rem; line-height: 1.7; }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="page-header">
+        <section class="content-page">
             <div class="container">
-                <h1>Terms of Service</h1>
-                <p>Last updated: [Date]</p>
-            </div>
-        </section>
+                <h1>Terms and Conditions ("Terms")</h1>
+                <p class="last-updated">Last updated: December 8, 2025</p>
 
-        <section class="container content-section">
-            <h2>1. Introduction</h2>
-            <p>Welcome to YourHelpa. These Terms of Service ("Terms") govern your use of our website and services. By using our platform, you agree to these terms in full. If you disagree with these terms or any part of these terms, you must not use our website.</p>
-            <p>[Placeholder for full Terms of Service content. You should consult with a legal professional to draft this section.]</p>
+                <p>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the YourHelpa website and the YourHelpa mobile application (the "Service") operated by YourHelpa ("us", "we", or "our").</p>
+                <p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who access or use the Service.</p>
+                <p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p>
+
+                <h2>1. Accounts</h2>
+                <p>When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.</p>
+                <p>You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password, whether your password is with our Service or a third-party service.</p>
+                <p>You agree not to disclose your password to any third party. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.</p>
+
+                <h2>2. Intellectual Property</h2>
+                <p>The Service and its original content (excluding content provided by users), features, and functionality are and will remain the exclusive property of YourHelpa and its licensors. The Service is protected by copyright, trademark, and other laws of both the State of California and foreign countries. Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of YourHelpa.</p>
+
+                <h2>3. Links To Other Web Sites</h2>
+                <p>Our Service may contain links to third-party web sites or services that are not owned or controlled by YourHelpa.</p>
+                <p>YourHelpa has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party web sites or services. You further acknowledge and agree that YourHelpa shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
+                <p>We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.</p>
+
+                <h2>4. Termination</h2>
+                <p>We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+                <p>Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service.</p>
+                <p>All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, ownership provisions, warranty disclaimers, indemnity, and limitations of liability.</p>
+
+                <h2>5. Indemnification</h2>
+                <p>You agree to defend, indemnify and hold harmless YourHelpa and its licensee and licensors, and their employees, contractors, agents, officers, and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not to attorney's fees), resulting from or arising out of a) your use and access of the Service, by you or any person using your account and password; b) a breach of these Terms, or c) Content posted on the Service.</p>
+
+                <h2>6. Limitation Of Liability</h2>
+                <p>In no event shall YourHelpa, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct or content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose.</p>
+
+                <h2>7. Disclaimer</h2>
+                <p>Your use of the Service is at your sole risk. The Service is provided on an "AS IS" and "AS AVAILABLE" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance.</p>
+                <p>YourHelpa and its subsidiaries, affiliates, and its licensors do not warrant that a) the Service will function uninterrupted, secure or available at any particular time or location; b) any errors or defects will be corrected; c) the Service is free of viruses or other harmful components; or d) the results of using the Service will meet your requirements.</p>
+
+                <h2>8. Governing Law</h2>
+                <p>These Terms shall be governed and construed in accordance with the laws of the Federal Republic of Nigeria without regard to its conflict of law provisions.</p>
+                <p>Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede and replace any prior agreements we might have between us regarding the Service.</p>
+
+                <h2>9. Changes</h2>
+                <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+                <p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.</p>
+
+                <h2>10. Contact Us</h2>
+                <p>If you have any questions about these Terms, please contact us at: support@yourhelpa.com or [123 Main Street, Suite 400, Anytown, CA 90210].</p>
+
+                <p>End of Terms and Conditions</p>
+            </div>
         </section>
     </main>
 
     <div id="footer-placeholder"></div>
 
-    <script src="js/main.js"></script>
-    <script src="script.js"></script>
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/includes.js"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
