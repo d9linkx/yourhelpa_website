@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - YourHelpa</title>
     <link rel="stylesheet" href="styles/style.css">
+    <style>
+        #error-message {
+            color: #e53e3e;
+            background-color: rgba(229, 62, 62, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none; /* Hidden by default */
+        }
+    </style>
 </head>
 <body>
     <div class="container auth-container">
         <h1>Login to YourHelpa</h1>
+        <div id="error-message"></div>
         <form id="login-form">
             <div class="form-group">
                 <label for="email">Email:</label>
@@ -18,7 +29,7 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="button-primary">Login</button>
+            <button type="submit" class="button-primary" style="width: 100%;">Login</button>
         </form>
         <p>
             Don't have an account? <a href="register.html">Register here</a>.
@@ -26,6 +37,8 @@
         </p>
     </div>
 
-    <script type="module" src="js/auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>

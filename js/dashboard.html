@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpa Dashboard - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        .dashboard-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>Welcome, <span id="helpa-name">Helpa</span>!</h1>
+                <button id="logout-btn" class="button-secondary">Logout</button>
+            </div>
+            <p>This is your dashboard. You can view your job leads, manage your profile, and see your earnings here.</p>
+            <!-- Dashboard content will go here -->
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>
