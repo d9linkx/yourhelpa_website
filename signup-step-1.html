@@ -49,6 +49,15 @@
             margin-bottom: 1.5rem;
             display: none; /* Hidden by default */
         }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .auth-footer a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +82,9 @@
                 <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required minlength="6" placeholder="Minimum 6 characters"></div>
                 <button type="submit" class="button-primary large" style="width: 100%;">Continue to Step 2</button>
             </form>
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
         </div>
     </main>
 

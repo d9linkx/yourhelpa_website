@@ -4,41 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - YourHelpa</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="/styles/style.css">
     <style>
-        #error-message {
-            color: #e53e3e;
-            background-color: rgba(229, 62, 62, 0.1);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            display: none; /* Hidden by default */
+        .auth-container {
+            max-width: 450px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+        .auth-footer a {
+            color: var(--primary-color);
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="container auth-container">
-        <h1>Login to YourHelpa</h1>
-        <div id="error-message"></div>
-        <form id="login-form">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Welcome Back</h2>
+                <p>Login to your Helpa account.</p>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <form id="login-form" class="auth-form">
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" class="button-primary">Login</button>
+            </form>
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="signup-step-1.html">Create one</a></p>
             </div>
-            <button type="submit" class="button-primary" style="width: 100%;">Login</button>
-        </form>
-        <p>
-            Don't have an account? <a href="signup-step-1.html">Register here</a>.
-            <br><a href="index.html" style="font-size: 0.9rem; margin-top: 1rem; display: inline-block;">&larr; Back to Home</a>
-        </p>
-    </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="/js/includes.js"></script>
 </body>
 </html>
