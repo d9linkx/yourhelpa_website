@@ -136,6 +136,21 @@ p {
     position: relative;
 }
 
+/* --- Header Navigation Link Styling --- */
+/* This ensures the desktop navigation links are not bold and have the correct color. */
+.main-header #main-nav ul li a {
+    color: #0A0A0A;
+    font-weight: lighter;
+}
+
+/* This targets the mobile menu links specifically. */
+@media (max-width: 991px) {
+    .main-header #main-nav.is-active ul li a {
+        color: #0A0A0A;
+        font-weight: lighter;
+    }
+}
+
 #main-nav a:hover {
     color: var(--text-heading-color);
 }
