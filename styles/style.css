@@ -102,8 +102,17 @@ p {
 .logo {
     font-size: 1.5rem;
     font-weight: 800;
-    color: var(--text-heading-color);
+    color: var(--text-heading-color) !important; /* Ensure text color is consistent */
     flex-shrink: 0; /* Prevent logo from shrinking */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-img {
+    height: 32px; /* Adjust size as needed */
+    width: auto;
+    border-radius: 6px; /* Optional: if you want slightly rounded corners on the logo */
 }
 
 .header-actions {
@@ -250,8 +259,12 @@ p {
 .main-footer .footer-about .footer-logo {
     font-size: 1.75rem;
     font-weight: 800;
-    color: var(--text-heading-color);
     margin-bottom: 1rem;
+    /* Inherits display:flex from the .logo class */
+}
+.main-footer .footer-about .footer-logo {
+    display: flex;
+    align-items: center;
 }
 
 .main-footer .footer-about p {
@@ -566,9 +579,13 @@ main {
         left: 3px;
     }
 
-    .nav-toggle-icon { top: 14px; }
-    .nav-toggle-icon::before { top: -8px; }
-    .nav-toggle-icon::after { top: 8px; }
+    .nav-toggle-icon {
+        background-color: transparent; /* Hide the middle line */
+        top: 14px; /* Center the container for pseudo-elements */
+    }
+
+    .nav-toggle-icon::before { top: -4px; } /* Position the top line */
+    .nav-toggle-icon::after { top: 4px; }  /* Position the bottom line */
 
     .nav-toggle.is-active .nav-toggle-icon {
         background-color: transparent; /* Middle line disappears */
@@ -583,34 +600,37 @@ main {
     }
 
     #main-nav {
+        display: none; /* Hide nav by default on mobile */
+        transform: translateX(100%); /* Start off-screen */
+    }
+
+    /* The slide-out panel itself */
+    #main-nav.is-active {
+        display: flex; /* Override desktop styles and make it visible */
         position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
-        width: 80%;
+        width: 85%;
         max-width: 320px;
         background-color: var(--background-color);
         z-index: 1001;
         padding: 6rem 2rem 2rem;
         box-shadow: var(--shadow-lg);
         transform: translateX(100%);
-        transition: transform 0.3s ease-in-out;
-        display: flex;
         flex-direction: column;
-    }
-
-    #main-nav.is-active {
         transform: translateX(0);
     }
 
-    #main-nav ul {
+    /* The list of links inside the active mobile menu */
+    #main-nav.is-active ul {
         flex-direction: column;
         align-items: flex-start;
         gap: 1.5rem;
         width: 100%;
     }
 
-    #main-nav a {
+    #main-nav.is-active a {
         font-size: 1.2rem;
         font-weight: 600;
     }
