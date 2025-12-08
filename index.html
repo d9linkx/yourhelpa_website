@@ -18,6 +18,18 @@
 
     <link rel="stylesheet" href="styles/style.css">
 
+    <style>
+        /* Apply styles for mobile view only */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem; /* Adds space between the buttons */
+                align-items: stretch; /* Makes buttons take full width of container */
+            }
+        }
+    </style>
+
     <script>
         // This script runs before the page renders to prevent a theme flash.
         // It checks for a saved theme in localStorage or the user's OS preference.
