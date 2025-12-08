@@ -1,57 +1,200 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-mode">
+<html lang="en">
 <head>
+    <!-- SEO and Core Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How It Works - YourHelpa</title>
-    <meta name="description" content="Learn the simple steps to get services and products with YourHelpa.">
+    <meta name="description" content="Learn how YourHelpa's zero-risk escrow system works for both buyers and sellers, all within WhatsApp. See the simple 4-step process for secure transactions.">
+    <link rel="canonical" href="https://yourhelpa.com/how-it-works.html"> <!-- Replace with your actual domain -->
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourhelpa.com/how-it-works.html"> <!-- Replace with your actual domain -->
+    <meta property="og:title" content="How It Works - The Zero-Risk Transaction on YourHelpa">
+    <meta property="og:description" content="From request to guaranteed payout, see the simple 4-step process that makes buying and selling services in Nigeria risk-free on YourHelpa.">
+    <meta property="og:image" content="https://yourhelpa.com/assets/og-image.png"> <!-- Replace with a link to a compelling image -->
+
     <link rel="stylesheet" href="styles/style.css">
-    <script>
-        (function() {
-            const theme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (theme === 'dark' || (!theme && prefersDark)) {
-                document.documentElement.classList.add('dark-mode');
-            } else if (theme === 'light') {
-                document.documentElement.classList.remove('dark-mode');
+    <style>
+        /* Custom styles for this page */
+        .how-it-works-section {
+            padding: 5rem 1.5rem;
+        }
+        .how-it-works-section:nth-of-type(odd) {
+            background-color: var(--surface-color);
+        }
+        .steps-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        @media (min-width: 1200px) {
+            .steps-grid-4 {
+                grid-template-columns: repeat(4, 1fr);
             }
-        })();
-    </script>
+        }
+        .escrow-deep-dive ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .escrow-deep-dive li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background-color: var(--surface-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color-light);
+        }
+        .escrow-deep-dive svg {
+            color: var(--primary-color);
+            flex-shrink: 0;
+            margin-top: 4px;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="how-it-works">
+        <!-- Page Header -->
+        <section class="page-header">
             <div class="container">
-                <div class="section-header">
-                    <h2>Getting Things Done is Easy</h2>
-                    <p>Follow these simple steps to connect with a Helpa.</p>
-                </div>
-                <div class="steps-grid">
-                    <div class="step-card">
-                        <div class="step-icon"><span class="step-number">1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></div>
-                        <h3>Chat on WhatsApp</h3>
-                        <p>Start a chat and tell us what you need. Be as detailed as possible—what service you need, your location, and your budget.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-icon"><span class="step-number">2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v3"/><path d="M14 2v6h6"/><path d="M5 17a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M9 18l-1.5-1.5"/></svg></div>
-                        <h3>Receive & Compare Options</h3>
-                        <p>We'll match your request with available Helpas. You'll receive their profiles, quotes, and ratings directly in the chat.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-icon"><span class="step-number">3</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
-                        <h3>Confirm & Get It Done</h3>
-                        <p>Choose the best Helpa for you. Confirm the job, pay securely through our platform, and relax while your task gets completed.</p>
+                <h1>The Zero-Risk Transaction: How YourHelpa Works.</h1>
+                <p>From request to guaranteed payout, the entire process happens in 4 simple steps, all within your WhatsApp.</p>
+                <!-- Visual Placeholder -->
+                <!-- You can replace this with a more descriptive image/SVG -->
+                <div class="trust-bar" style="background: transparent; border: none; padding-top: 2rem;">
+                    <div class="container" style="padding:0;">
+                        <div class="trust-item"><span>Your Phone</span></div>
+                        <div class="trust-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="m19 12-7-7"/></svg></div>
+                        <div class="trust-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg> <span>YourHelpa AI</span></div>
+                        <div class="trust-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="m5 19 7-7 7 7"/></svg></div>
+                        <div class="trust-item"><span>Helpa's Phone</span></div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Flowchart: For the Consumer (The Buyer) -->
+        <section class="how-it-works-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>If You Need a Service (The Buyer's Journey)</h2>
+                </div>
+                <div class="steps-grid-4">
+                    <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></div>
+                        <h3>Chat Your Need</h3>
+                        <p>Simply send a WhatsApp message describing the service, location (Lagos/Oyo), and budget to the AI.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+                        <h3>Confirm & Secure Funds</h3>
+                        <p>The AI matches you with a verified Helpa. Once you agree on the price, you deposit the amount into YourHelpa Escrow. (Your money is now safe.)</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">3</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l2 2"></path></svg></div>
+                        <h3>Service Delivered</h3>
+                        <p>The Helpa performs the work, knowing the payment is guaranteed by the secured Escrow funds.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">4</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+                        <h3>Approve & Release</h3>
+                        <p>You inspect the work. Once satisfied, you send a final confirmation via WhatsApp, releasing the Helpa's payment immediately. (Zero risk of poor service.)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flowchart: For the Helpa (The Provider) -->
+        <section class="how-it-works-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>If You Provide a Service (The Helpa's Secure Payout)</h2>
+                </div>
+                <div class="steps-grid-4">
+                    <!-- Step 1 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">1</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="m19 12-7-7"/></svg></div>
+                        <h3>Receive Secured Lead</h3>
+                        <p>Get a verified job request directly in your WhatsApp, pre-qualified by the AI to match your skills and location.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">2</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                        <h3>Payment Guaranteed</h3>
+                        <p>The customer's funds are secured in Escrow before you lift a finger. (Zero risk of non-payment.)</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">3</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z"/><path d="M18 9h2a2 2 0 0 1 2 2v9l-4-4h-2a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/></svg></div>
+                        <h3>Complete Service</h3>
+                        <p>Perform the work confidently. You know your payment is ready and waiting for your customer's final approval.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="step-card">
+                        <div class="step-icon"><span class="step-number">4</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></div>
+                        <h3>Instant Payout (93%)</h3>
+                        <p>Once the customer approves the job via WhatsApp, your fee (100% minus the 7% commission) is instantly paid to your bank account. (Guaranteed cash flow.)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Escrow Deep Dive -->
+        <section class="how-it-works-section escrow-deep-dive">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Why Escrow is the Game Changer</h2>
+                </div>
+                <ul>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="16" width="20" height="4" rx="2"/><path d="M12 16v-4"/></svg>
+                        <div><strong>Buyer Protection:</strong> Funds only release upon your explicit, written confirmation via WhatsApp.</div>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <div><strong>Seller Protection:</strong> Ensures funds are available before work starts, eliminating the risk of fraud or default.</div>
+                    </li>
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5V18.5"/><path d="M12 5.5V12.5"/><path d="M12 2a10 10 0 0 0-8.6 14.9L2 22l5.1-1.4A10 10 0 1 0 12 2Z"/></svg>
+                        <div><strong>Dispute Resolution:</strong> YourHelpa fairly mediates disputes using the immutable WhatsApp chat history as evidence.</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta cta-section" style="background: var(--primary-color);">
+            <div class="container">
+                <h2 style="color: white;">Start Experiencing the Zero-Risk Way to Buy and Sell. Chat Now!</h2>
+                <div class="hero-buttons" style="margin-top: 2rem;">
+                     <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" target="_blank" class="button-secondary large">Start Secure Chat</a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <div id="footer-placeholder"></div>
 
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/main.js"></script>
+    <script src="js/includes.js"></script>
+    <script src="js/supabase-client.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

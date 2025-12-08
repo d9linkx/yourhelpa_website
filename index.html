@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-mode">
+<html lang="en">
 <head>
     <!-- SEO and Core Meta Tags -->
     <meta charset="UTF-8">
@@ -17,24 +17,9 @@
     <meta property="og:image" content="https://yourhelpa.com/assets/og-image.png"> <!-- Replace with a link to a compelling image -->
 
     <link rel="stylesheet" href="styles/style.css">
-    <script>
-        // This script runs before the page renders to prevent a theme flash.
-        // It checks for a saved theme in localStorage or the user's OS preference.
-        (function() {
-            const theme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (theme === 'dark' || (!theme && prefersDark)) {
-                document.documentElement.classList.add('dark-mode'); // Default to dark mode as requested
-            } else if (theme === 'light') {
-                document.documentElement.classList.remove('dark-mode');
-            }
-        })();
-    </script>
     <style>
         /* Additional styles for the new design */
         :root { --primary-color: #05aa16; --primary-hover: #028a10; } /* Amber/Gold Theme */
-        body.dark-mode { --background-color: #0A0A0A; --surface-color: #111111; }
         .hero { padding: 4rem 1.5rem; }
         .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
         @media (min-width: 992px) { 

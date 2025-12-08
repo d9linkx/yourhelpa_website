@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
     // --- Testimonial Slider ---
     const testimonialContainer = document.getElementById('testimonial-container');
     const dotsContainer = document.getElementById('testimonial-dots');
@@ -8,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (testimonialContainer && dotsContainer) {
         const testimonials = [
             {
-                quote: "YourHelpa is a lifesaver! I found a reliable plumber in minutes and the whole process was handled on WhatsApp. So easy!",
+                quote: "YourHelpa is a lifesaver! I found a reliable plumber in minutes and the whole process was handled on WhatsApp. So easy.",
                 author: "Aisha B., Lagos"
             },
             {
