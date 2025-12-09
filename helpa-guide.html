@@ -43,6 +43,7 @@
         .guide-content {
             max-width: 800px;
             margin-left: auto;
+            width: 100%; /* Ensure it doesn't overflow its parent */
             margin-right: auto;
         }
 
@@ -64,6 +65,7 @@
         .guide-content p, .guide-content li {
             line-height: 1.7;
             font-size: 1.05rem;
+            word-break: break-word; /* Prevent long strings from causing overflow */
         }
 
         .guide-content .intro-text {
@@ -72,8 +74,14 @@
             margin-bottom: 2rem;
         }
 
+        section:not(.hero):not(.cta-section) {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
         @media (min-width: 992px) {
             section:not(.hero):not(.cta-section) { padding-top: 4rem; padding-bottom: 4rem; }
+            /* section.content-section { padding-left: 0; padding-right: 0; } */ /* Removing this rule to maintain padding */
             .cta-section { padding-top: 6rem; padding-bottom: 6rem; }
         }
 
