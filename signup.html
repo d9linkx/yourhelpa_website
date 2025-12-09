@@ -138,6 +138,7 @@
     <div id="footer-placeholder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/main.js"></script>
     <script src="js/includes.js"></script>
@@ -206,18 +207,18 @@
 
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
-            
-            // Clear previous messages and disable button
-            errorMessageDiv.style.display = 'none';
-            successMessageDiv.style.display = 'none';
-            submitButton.disabled = true;
-            submitButton.textContent = 'Processing...';
 
             const displayError = (message) => {
                 errorMessageDiv.innerHTML = message; // Use innerHTML to allow for links
                 errorMessageDiv.style.display = 'block';
                 resetSubmitButton();
             };
+
+            // Clear previous messages and disable button
+            errorMessageDiv.style.display = 'none';
+            successMessageDiv.style.display = 'none';
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
 
             // --- Validation ---
             // Validate password length
@@ -301,25 +302,24 @@
                     return;
                 }
             }
+            
+            if (authData.user) {
+                // --- Success ---
+                // This part only runs if both signup and profile insertion succeed.
+                form.style.display = 'none';
+                successMessageDiv.innerHTML = `
+                    <h4>Registration Complete. Check Your Email.</h4>
+                    <p>Welcome to YourHelpa. We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
+                `;
+                successMessageDiv.style.display = 'block';
+                localStorage.removeItem('helpaSignupFormData'); // Clear saved form data
+            } else {
+                // This case should ideally not be reached if authError is handled, but it's good practice.
+                displayError('<strong>Registration failed.</strong> Could not create user account.');
+            }
+        });
 
-            // --- Success ---
-            // This part only runs if both signup and profile insertion succeed.
-            form.style.display = 'none';
-            successMessageDiv.innerHTML = `
-                <h4>Registration Complete. Check Your Email.</h4>
-                <p>Welcome to YourHelpa. We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
-            `;
-            successMessageDiv.style.display = 'block';
-            localStorage.removeItem(localStorageKey); // Clear saved form data
-
-        } else {
-            // This case should ideally not be reached if authError is handled, but it's good practice.
-            displayError('<strong>Registration failed.</strong> Could not create user account.');
-        } 
-        // Don't reset button on success, as the form is hidden.
-        // If there's an error, displayError() handles the reset.
-    });
-
+        const localStorageKey = 'helpaSignupFormData';
         const saveFormData = () => {
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
