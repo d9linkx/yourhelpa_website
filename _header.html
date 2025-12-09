@@ -1,4 +1,12 @@
 <header class="main-header">
+    <style>
+        /* Hide hamburger button on desktop */
+        @media (min-width: 992px) {
+            #nav-toggle {
+                display: none;
+            }
+        }
+    </style>
     <div class="container">
         <a href="index.html" class="logo">
             <img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa Logo" class="logo-img">
@@ -12,13 +20,13 @@
                 <li><a href="services-products.html">Services & Products</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="register.html" class="nav-cta">Helpa Dashboard</a></li>
             </ul>
         </nav>
 
         <div class="header-actions">
             <div id="desktop-guest-actions" class="desktop-actions">
                 <a href="https://wa.me/2347070989034" target="_blank" class="button-primary">Chat</a>
+                <a href="login.html" class="button">Helpa Login</a>
             </div>
 
         </div>
