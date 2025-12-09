@@ -38,13 +38,27 @@
         /* Style the login link in the navigation */
         .nav-login-link {
             display: block;
-            margin-top: 1rem;
+            margin-top: 10rem;
+            
         }
 
         /* On desktop, hide the nav login link since it's in the header actions */
         @media (min-width: 992px) {
             .nav-login-link {
                 display: none;
+            }
+        }
+
+        /* Style the login button inside the mobile navigation menu */
+        @media (max-width: 991px) {
+            .nav-login-link a.button {
+                background-color: var(--primary-color);
+                color: white;
+                border-radius: 8px;
+                width: 10rem;
+                display: inline-block;
+                padding: 1.75rem 1.5rem;
+                text-align: center;
             }
         }
     </style>
