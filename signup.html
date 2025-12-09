@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join as a Helpa - YourHelpa</title>
+    <title>Become a Helpa - YourHelpa</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.5.1/styles/minimal.css">
     <style>
-        .signup-container { max-width: 550px; margin: 4rem auto; padding: 2rem; background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 16px; }
+        .signup-container { max-width: 390px; margin: 2rem auto; padding: 2rem; background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 16px; }
         .section-header { text-align: center; margin-bottom: 2rem; }
         .form-fieldset { border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
         .form-fieldset legend { font-size: 1.2rem; font-weight: 600; padding: 0 0.5rem; color: var(--primary-color); }
         .form-group { margin-bottom: 1.5rem; }
-        .autocomplete-container { position: relative; }
-        .autocomplete-container.is-loading::after { content: ''; display: block; width: 1.25rem; height: 1.25rem; position: absolute; top: 50%; right: 0.75rem; transform: translateY(-50%); border: 2px solid var(--border-color); border-left-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
         #error-message, #success-message { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: none; }
         #error-message { color: #e53e3e; background-color: rgba(229, 62, 62, 0.1); }
         #success-message { background-color: rgba(5, 170, 22, 0.1); color: var(--primary-color); }
@@ -39,7 +36,6 @@
             justify-content: center;
         }
         .auth-footer a { color: var(--primary-color); font-weight: 500; }
-        @keyframes spin { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -48,7 +44,7 @@
     <main>
         <div class="signup-container">
             <div class="section-header">
-                <h2>Join as a Helpa</h2>
+                <h2>Become a Helpa</h2>
                 <p>Complete the form below to start connecting with customers.</p>
             </div>
             
@@ -56,16 +52,15 @@
             <div id="success-message" style="display: none;"></div>
 
             <form id="helpa-signup-form">
-                <!-- Step 1: Account Details -->
-                <fieldset class="form-fieldset" style="border: none; padding: 0; margin: 0;">
-                    <legend class="sr-only">Registration Details</legend>
+                <fieldset class="form-fieldset">
+                    <legend>Personal Information</legend>
                     <div class="form-group">
                         <label for="full-name">Full Name</label>
-                        <input type="text" id="full-name" name="full-name" placeholder="e.g., John Doe" required>
+                        <input type="text" id="full-name" name="full-name" placeholder="e.g., John Doe" required autocomplete="name">
                     </div>
                     <div class="form-group">
                         <label for="phone-number">Phone Number (WhatsApp preferred)</label>
-                        <input type="tel" id="phone-number" name="phone-number" placeholder="e.g., 08012345678" required>
+                        <input type="tel" id="phone-number" name="phone-number" placeholder="e.g., 08012345678" required autocomplete="tel">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -75,30 +70,49 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <div class="password-wrapper">
-                            <input type="password" id="password" name="password" placeholder="Create a strong password" required minlength="6" autocomplete="new-password">
+                            <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required autocomplete="new-password">
                             <span class="toggle-password" id="toggle-password">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display: none;">
-                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                                </svg>
+                                <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-10-7-10-7a18.09 18.09 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 10 7 10 7a18.09 18.09 0 0 1-2.07 2.91m-2.19-2.19a3 3 0 0 0-4.24-4.24m3.35 3.35a3 3 0 0 1-4.24 4.24"/><line x1="1" x2="23" y1="1" y2="23"/></svg>
                             </span>
                         </div>
                     </div>
+                </fieldset>
+
+                <fieldset class="form-fieldset">
+                    <legend>Location</legend>
                     <div class="form-group">
                         <label for="location">Your Location (City)</label>
-                        <div id="autocomplete-container" class="autocomplete-container"></div>
-                        <input type="hidden" id="location-selected" name="location_selected" value="false">
-                    </div>
-                    <div class="form-group">
-                        <label for="service-name">Product or Service Name</label>
-                        <input type="text" id="service-name" name="service-name" placeholder="e.g., AC Technician, Fashion Designer" required>
+                        <div id="autocomplete-container">
+                            <input type="text" id="location" name="location" placeholder="e.g. Ikeja, Lagos" required autocomplete="address-level2">
+                        </div>
                     </div>
                 </fieldset>
 
+                <fieldset class="form-fieldset">
+                    <legend>What do you offer?</legend>
+                    <div class="form-group">
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" id="offering-type-service" name="offering_type" value="service" required>
+                                Service
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" id="offering-type-product" name="offering_type" value="product" required>
+                                Product
+                            </label>
+                        </div>
+                    </div>
+                    <div id="primary-service-group" class="form-group" style="display: none;">
+                        <label for="primary-service">Primary Service</label>
+                        <input type="text" id="primary-service" name="primary_service" placeholder="e.g., Home Cleaning, Tutoring">
+                    </div>
+                    <div id="primary-product-group" class="form-group" style="display: none;">
+                        <label for="primary-product">Primary Product</label>
+                        <input type="text" id="primary-product" name="primary_product" placeholder="e.g., Handmade Jewelry, Organic Produce">
+                    </div>
+                </fieldset>
+                <input type="hidden" id="location-selected" name="location_selected" value="false">
                 <button type="submit" id="submit-btn" class="button-primary large" style="width: 100%;">Complete Registration</button>
             </form>
 
@@ -111,41 +125,281 @@
     <div id="footer-placeholder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.5.1/dist/index.min.js"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/main.js"></script>
     <script src="js/includes.js"></script>
-    <script src="js/signup.js"></script>
+    <script src="https://api.geoapify.com/v1/api.js"></script>
     <script>
-        // Geoapify Places Autocomplete Logic
+        // Geoapify Places Autocomplete Logic (re-integrated and enhanced)
         const autocompleteContainer = document.getElementById("autocomplete-container");
-        const autocompleteInput = new autocomplete.GeocoderAutocomplete(
-            autocompleteContainer, 
-            '7451bd2d38914bfd85e442634d0d1287', // Replace with your Geoapify API key if needed
-            {
-                lang: 'en',
-                filter: 'countrycode:ng',
-                placeholder: 'e.g. Allen Avenue, Ikeja, Lagos',
-                inputAttributes: { id: 'location', name: 'location', required: 'required' }
-            }
-        );
+        const locationInput = document.getElementById("location");
+        const locationSelectedInput = document.getElementById("location-selected");
+        let autocomplete;
 
-        autocompleteInput.on('select', (location) => {
-            if (location && location.properties) {
-                document.getElementById('location').value = location.properties.formatted;
-                document.getElementById('location-selected').value = 'true';
-                document.getElementById('error-message').style.display = 'none';
+        if (locationInput && autocompleteContainer) {
+            autocomplete = new Geoapify.PlacesAutocomplete(autocompleteContainer, {
+                apiKey: 'YOUR_GEOAPIFY_API_KEY', // Replace with your actual Geoapify API Key
+                type: 'city', // Restrict to cities
+                limit: 5,
+                debounceDelay: 300
+            }, {
+                /* Geoapify callbacks */
+            });
+
+            autocomplete.on('select', (locationData) => {
+                locationInput.value = locationData.properties.formatted;
+                locationSelectedInput.value = 'true'; // Set to true on selection
+            });
+
+            locationInput.addEventListener('input', () => {
+                locationSelectedInput.value = 'false'; // Reset if user types
+            });
+        }
+
+        // Signup Logic
+        const form = document.getElementById('helpa-signup-form');
+        const submitButton = document.getElementById('submit-btn');
+        const errorMessageDiv = document.getElementById('error-message');
+        const successMessageDiv = document.getElementById('success-message');
+        const emailInput = document.getElementById('email');
+        const emailFeedback = document.getElementById('email-feedback');
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('toggle-password');
+        const offeringTypeServiceRadio = document.getElementById('offering-type-service');
+        const offeringTypeProductRadio = document.getElementById('offering-type-product');
+        const primaryServiceGroup = document.getElementById('primary-service-group');
+        const primaryProductGroup = document.getElementById('primary-product-group');
+        const primaryServiceInput = document.getElementById('primary-service');
+        const primaryProductInput = document.getElementById('primary-product');
+
+        // --- Password Toggle Logic ---
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.querySelector('.eye-icon').style.display = type === 'password' ? 'block' : 'none';
+                togglePassword.querySelector('.eye-off-icon').style.display = type === 'password' ? 'none' : 'block';
+            });
+        }
+
+        // --- Offering Type Toggle Logic ---
+        const updateOfferingVisibility = () => {
+            if (offeringTypeServiceRadio.checked) {
+                primaryServiceGroup.style.display = 'block';
+                primaryServiceInput.setAttribute('required', 'true');
+                primaryProductGroup.style.display = 'none';
+                primaryProductInput.removeAttribute('required');
+            } else if (offeringTypeProductRadio.checked) {
+                primaryProductGroup.style.display = 'block';
+                primaryProductInput.setAttribute('required', 'true');
+                primaryServiceGroup.style.display = 'none';
+                primaryServiceInput.removeAttribute('required');
+            } else {
+                primaryServiceGroup.style.display = 'none';
+                primaryServiceInput.removeAttribute('required');
+                primaryProductGroup.style.display = 'none';
+                primaryProductInput.removeAttribute('required');
             }
+        };
+
+        offeringTypeServiceRadio.addEventListener('change', updateOfferingVisibility);
+        offeringTypeProductRadio.addEventListener('change', updateOfferingVisibility);
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            // Clear previous messages and disable button
+            errorMessageDiv.style.display = 'none';
+            successMessageDiv.style.display = 'none';
+            submitButton.disabled = true;
+            submitButton.textContent = 'Processing...';
+
+            // --- Validation ---
+            if (!isEmailAvailable) {
+                errorMessageDiv.textContent = 'Please use an available email address to register.';
+                errorMessageDiv.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Complete Registration';
+                return;
+            }
+            
+            // Validate password length
+            if (passwordInput.value.length < 6) {
+                errorMessageDiv.textContent = 'Password must be at least 6 characters long.';
+                errorMessageDiv.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Complete Registration';
+                return;
+            }
+
+            // Validate location selection
+            if (locationSelectedInput.value !== 'true') {
+                errorMessageDiv.textContent = 'Please select a valid location from the suggestions.';
+                errorMessageDiv.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Complete Registration';
+                return;
+            }
+
+            // Validate offering type and primary service/product
+            const offeringType = document.querySelector('input[name="offering_type"]:checked');
+            if (!offeringType) {
+                errorMessageDiv.textContent = 'Please select what you offer (Service or Product).';
+                errorMessageDiv.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Complete Registration';
+                return;
+            }
+
+            // Get form data
+            const fullName = document.getElementById('full-name').value;
+            const phoneNumber = document.getElementById('phone-number').value;
+            const email = document.getElementById('email').value;
+            const password = passwordInput.value;
+            const location = locationInput.value;
+            const selectedOfferingType = offeringType.value;
+            const primaryService = primaryServiceInput.value;
+            const primaryProduct = primaryProductInput.value;
+
+            // Supabase email/password sign-up
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                        phone_number: phoneNumber,
+                        location: location,
+                        offering_type: selectedOfferingType,
+                        primary_service: selectedOfferingType === 'service' ? primaryService : null,
+                        primary_product: selectedOfferingType === 'product' ? primaryProduct : null,
+                        is_helpa: true // To identify this user as a 'helpa'
+                    }
+                }
+            });
+
+            if (error) {
+                errorMessageDiv.textContent = `Error: ${error.message}`;
+                errorMessageDiv.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+                successMessageDiv.innerHTML = `
+                    <h4>Registration Complete! Check Your Email.</h4>
+                    <p>Welcome to YourHelpa! We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
+                `;
+                successMessageDiv.style.display = 'block';
+                localStorage.removeItem(localStorageKey); // Clear saved form data
+            }
+
+            submitButton.disabled = false;
+            submitButton.textContent = 'Complete Registration';
         });
 
-        autocompleteInput.on('ready', () => {
-            const locationInput = document.getElementById('location');
-            if (locationInput) {
-                locationInput.addEventListener('input', () => {
-                    document.getElementById('location-selected').value = 'false';
-                });
+        // --- Real-time Email Validation ---
+        let emailCheckTimeout;
+        let isEmailAvailable = false; // Track email availability
+
+        const checkEmailAvailability = async () => {
+            const email = emailInput.value.trim();
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                emailFeedback.textContent = '';
+                isEmailAvailable = false;
+                return;
             }
+            
+            emailFeedback.textContent = 'Checking...';
+            emailFeedback.style.color = 'var(--text-muted-color)';
+
+            try {
+                // We check the public 'helpas' table. This is a reasonable approach
+                // as auth.users is not directly queryable from the client.
+                const { data, error } = await supabase
+                    .from('helpas')
+                    .select('email')
+                    .eq('email', email)
+                    .single();
+
+                if (error && error.code !== 'PGRST116') { // PGRST116 = 'No rows found'
+                    throw error;
+                }
+
+                if (data) {
+                    emailFeedback.textContent = 'Email is already registered. Please login.';
+                    emailFeedback.style.color = 'var(--error-color)';
+                    isEmailAvailable = false;
+                } else {
+                    emailFeedback.textContent = 'Email is available!';
+                    emailFeedback.style.color = 'var(--primary-color)';
+                    isEmailAvailable = true;
+                }
+            } catch (err) {
+                console.error('Error checking email:', err);
+                emailFeedback.textContent = 'Could not verify email.';
+                emailFeedback.style.color = 'var(--error-color)';
+                isEmailAvailable = false;
+            }
+        };
+
+        emailInput.addEventListener('input', () => {
+            clearTimeout(emailCheckTimeout);
+            emailCheckTimeout = setTimeout(checkEmailAvailability, 500); // Debounce for 500ms
         });
+
+        // --- Form Data Persistence (localStorage) ---
+        const localStorageKey = 'helpaSignupFormData';
+
+        const saveFormData = () => {
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            // Manually handle radio buttons and conditional fields for persistence
+            data.offering_type = document.querySelector('input[name="offering_type"]:checked')?.value || '';
+            data.primary_service = primaryServiceInput.value;
+            data.primary_product = primaryProductInput.value;
+            // Do not save password
+            delete data.password;
+            localStorage.setItem(localStorageKey, JSON.stringify(data));
+        };
+
+        const loadFormData = () => {
+            const savedData = localStorage.getItem(localStorageKey);
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                for (const key in data) {
+                    const element = form.elements[key];
+                    if (element) {
+                        if (element.type === 'radio' && element.name === 'offering_type' && element.value === data[key]) {
+                            element.checked = true;
+                        } else if (element.type !== 'radio') { // Avoid setting value for radio buttons directly
+                        form.elements[key].value = data[key];
+                        }
+                    }
+                }
+                // After loading, update visibility for offering type
+                if (data.offering_type) {
+                    if (data.offering_type === 'service') {
+                        offeringTypeServiceRadio.checked = true;
+                    } else if (data.offering_type === 'product') {
+                        offeringTypeProductRadio.checked = true;
+                    }
+                    updateOfferingVisibility(); // Call to show/hide groups
+                    // Ensure conditional inputs get their values
+                }
+                // Re-check email availability if email was pre-filled
+                if (emailInput.value) {
+                    checkEmailAvailability();
+                }
+            }
+        };
+
+        // Add event listeners for persistence
+        form.addEventListener('input', (e) => {
+            if (e.target.type !== 'password') { // Don't save password
+                saveFormData();
+            }});
+
+        // Load any saved data when the page loads
+        document.addEventListener('DOMContentLoaded', loadFormData);
+
     </script>
 </body>
 </html>
