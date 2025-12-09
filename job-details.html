@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        body {
+            background-color: var(--background-color);
+        }
+
+        .details-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-navigation {
+            margin-bottom: 2rem;
+        }
+
+        .page-navigation a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted-color);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .page-navigation a:hover {
+            color: var(--primary-color);
+        }
+
+        .job-details-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .job-details-card h1 {
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-meta-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            color: var(--text-muted-color);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .job-meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            color: var(--primary-color);
+        }
+
+        .job-actions-main {
+            margin-bottom: 2.5rem;
+        }
+
+        .job-actions-main .button-primary {
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .dispute-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .dispute-section p {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .dispute-actions {
+            display: flex;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="details-container">
+            <div class="page-navigation">
+                <a href="helpa-dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back to Dashboard
+                </a>
+            </div>
+
+            <div class="job-details-card">
+                <h1>Home Cleaning for 3-Bedroom Apartment</h1>
+
+                <div class="job-meta-info">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Jane A.</span>
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Ikeja, Lagos</span>
+                    <span class="status-badge">Payment in Escrow</span>
+                </div>
+
+                <div class="job-actions-main">
+                    <a href="#" class="button-primary">Visit Chat</a>
+                </div>
+
+                <div class="dispute-section">
+                    <h2>Having an issue?</h2>
+                    <p>If there's a problem with this job or the client, you can raise a dispute. Our support team will get in touch to help resolve it.</p>
+                    <div class="dispute-actions">
+                        <a href="#" class="button-secondary">Dispute via Chat</a>
+                        <a href="mailto:support@yourhelpa.com.ng?subject=Dispute for Job: Home Cleaning" class="button-secondary">Dispute via Email</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includes.js"></script>
+    <script>
+        // Future logic for this page will go here.
+        // e.g., get job ID from URL and fetch details from Supabase.
+    </script>
+</body>
+</html>

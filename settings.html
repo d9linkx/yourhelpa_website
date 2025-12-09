@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        body {
+            background-color: var(--background-color);
+        }
+
+        .settings-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .page-navigation {
+            margin-bottom: 2rem;
+        }
+
+        .page-navigation a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted-color);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .page-navigation a:hover {
+            color: var(--primary-color);
+        }
+
+        .settings-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .settings-card h1 {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Re-using signup form styles for consistency */
+        .form-fieldset { border: none; padding: 0; margin: 0 0 2.5rem 0; }
+        .form-fieldset:last-of-type { margin-bottom: 0; }
+        .form-fieldset legend { font-size: 1.2rem; font-weight: 600; padding: 0; margin-bottom: 1.5rem; color: var(--text-heading-color); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; }
+        .radio-group { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+        .radio-label { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer; }
+        .radio-label input[type="radio"] { width: auto; }
+
+        .form-actions {
+            padding-top: 2rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="settings-container">
+            <div class="page-navigation">
+                <a href="helpa-dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back to Dashboard
+                </a>
+            </div>
+
+            <div class="settings-card">
+                <h1>Profile Settings</h1>
+
+                <form id="settings-form">
+                    <fieldset class="form-fieldset">
+                        <legend>Personal Information</legend>
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" name="full-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone-number">Phone Number</label>
+                            <input type="tel" id="phone-number" name="phone-number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" disabled>
+                            <small style="margin-top: 0.5rem; display: block;">Email cannot be changed. Please contact support if you need to update it.</small>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-fieldset">
+                        <legend>Security</legend>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <button type="button" class="button-secondary">Change Password</button>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-fieldset">
+                        <legend>Location & Offering</legend>
+                        <div class="form-group">
+                            <label for="location">Your Location (City)</label>
+                            <input type="text" id="location" name="location" required>
+                        </div>
+                        <div class="form-group">
+                            <label>What do you offer?</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" id="offering-type-service" name="offering_type" value="service" required>
+                                    Service
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" id="offering-type-product" name="offering_type" value="product" required>
+                                    Product
+                                </label>
+                            </div>
+                        </div>
+                        <div id="primary-service-group" class="form-group" style="display: none;">
+                            <label for="primary-service">Primary Service</label>
+                            <input type="text" id="primary-service" name="primary_service">
+                        </div>
+                        <div id="primary-product-group" class="form-group" style="display: none;">
+                            <label for="primary-product">Primary Product</label>
+                            <input type="text" id="primary-product" name="primary_product">
+                        </div>
+                    </fieldset>
+
+                    <div class="form-actions">
+                        <button type="submit" class="button-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includes.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Logic to fetch user data and populate the form will go here ---
+            // Example:
+            // const { data: { user } } = await supabase.auth.getUser();
+            // const { data: profile, error } = await supabase.from('helpas').select('*').eq('id', user.id).single();
+            // if (profile) {
+            //     document.getElementById('full-name').value = profile.full_name;
+            //     // ... populate other fields
+            // }
+
+            // --- Logic to handle form submission and update data will go here ---
+
+            // --- Re-using offering type toggle logic from signup page ---
+            const offeringTypeServiceRadio = document.getElementById('offering-type-service');
+            const offeringTypeProductRadio = document.getElementById('offering-type-product');
+            const primaryServiceGroup = document.getElementById('primary-service-group');
+            const primaryProductGroup = document.getElementById('primary-product-group');
+
+            const updateOfferingVisibility = () => {
+                primaryServiceGroup.style.display = offeringTypeServiceRadio.checked ? 'block' : 'none';
+                primaryProductGroup.style.display = offeringTypeProductRadio.checked ? 'block' : 'none';
+            };
+
+            offeringTypeServiceRadio.addEventListener('change', updateOfferingVisibility);
+            offeringTypeProductRadio.addEventListener('change', updateOfferingVisibility);
+        });
+    </script>
+</body>
+</html>
