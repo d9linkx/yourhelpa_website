@@ -7,16 +7,24 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="styles/style.css">
     <style>
-        .signup-container { max-width: 390px; margin: 2rem auto; padding: 2rem; background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 16px; }
+        body { background-color: var(--background-color); }
+        .signup-container { max-width: 500px; margin: 3rem auto; padding: 2.5rem; background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .section-header { text-align: center; margin-bottom: 2rem; }
-        .form-fieldset { border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
-        .form-fieldset legend { font-size: 1.2rem; font-weight: 600; padding: 0 0.5rem; color: var(--primary-color); }
+        .section-header p { color: var(--text-muted-color); }
+        .form-fieldset { border: none; border-top: 1px solid var(--border-color); padding: 2rem 0 0.5rem; margin: 0; }
+        .form-fieldset:first-of-type { border-top: none; padding-top: 0; }
+        .form-fieldset legend { font-size: 1.1rem; font-weight: 600; padding: 0; margin-bottom: 1.5rem; color: var(--text-color); }
         .form-group { margin-bottom: 1.5rem; }
         #error-message, #success-message { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: none; }
         #error-message { color: #e53e3e; background-color: rgba(229, 62, 62, 0.1); }
         #success-message { background-color: rgba(5, 170, 22, 0.1); color: var(--primary-color); }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; }
+        /* Add a clear focus state for better accessibility and UX */
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: 2px solid transparent;
+            box-shadow: 0 0 0 2px var(--surface-color), 0 0 0 4px var(--primary-color-light);
+        }
         .radio-group { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
         .radio-label { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer; }
         .radio-label input[type="radio"] { width: auto; }
@@ -36,6 +44,12 @@
             justify-content: center;
         }
         .auth-footer a { color: var(--primary-color); font-weight: 500; }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 600px) {
+            .signup-container { margin: 1rem; padding: 2rem 1.5rem; border: none; box-shadow: none; }
+            body { background-color: var(--surface-color); }
+        }
     </style>
 </head>
 <body>
@@ -72,8 +86,8 @@
                         <div class="password-wrapper">
                             <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required autocomplete="new-password">
                             <span class="toggle-password" id="toggle-password">
-                                <svg class="eye-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                                <svg class="eye-off-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-10-7-10-7a18.09 18.09 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 10 7 10 7a18.09 18.09 0 0 1-2.07 2.91m-2.19-2.19a3 3 0 0 0-4.24-4.24m3.35 3.35a3 3 0 0 1-4.24 4.24"/><line x1="1" x2="23" y1="1" y2="23"/></svg>
+                                <svg class="eye-icon" aria-label="Show password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-off-icon" aria-label="Hide password" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-10-7-10-7a18.09 18.09 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 10 7 10 7a18.09 18.09 0 0 1-2.07 2.91m-2.19-2.19a3 3 0 0 0-4.24-4.24m3.35 3.35a3 3 0 0 1-4.24 4.24"/><line x1="1" x2="23" y1="1" y2="23"/></svg>
                             </span>
                         </div>
                     </div>
@@ -130,31 +144,6 @@
     <script src="js/includes.js"></script>
     <script src="https://api.geoapify.com/v1/api.js"></script>
     <script>
-        // Geoapify Places Autocomplete Logic (re-integrated and enhanced)
-        const autocompleteContainer = document.getElementById("autocomplete-container");
-        const locationInput = document.getElementById("location");
-        const locationSelectedInput = document.getElementById("location-selected");
-        let autocomplete;
-
-        if (locationInput && autocompleteContainer) {
-            autocomplete = new Geoapify.PlacesAutocomplete(autocompleteContainer, {
-                apiKey: 'YOUR_GEOAPIFY_API_KEY', // Replace with your actual Geoapify API Key
-                type: 'city', // Restrict to cities
-                limit: 5,
-                debounceDelay: 300
-            }, {
-                /* Geoapify callbacks */
-            });
-
-            autocomplete.on('select', (locationData) => {
-                locationInput.value = locationData.properties.formatted;
-                locationSelectedInput.value = 'true'; // Set to true on selection
-            });
-
-            locationInput.addEventListener('input', () => {
-                locationSelectedInput.value = 'false'; // Reset if user types
-            });
-        }
 
         // Signup Logic
         const form = document.getElementById('helpa-signup-form');
@@ -171,6 +160,8 @@
         const primaryProductGroup = document.getElementById('primary-product-group');
         const primaryServiceInput = document.getElementById('primary-service');
         const primaryProductInput = document.getElementById('primary-product');
+        const locationInput = document.getElementById('location');
+        const locationSelectedInput = document.getElementById('location-selected');
 
         // --- Password Toggle Logic ---
         if (togglePassword && passwordInput) {
@@ -187,14 +178,18 @@
             if (offeringTypeServiceRadio.checked) {
                 primaryServiceGroup.style.display = 'block';
                 primaryServiceInput.setAttribute('required', 'true');
+                primaryProductInput.value = ''; // Clear other field
                 primaryProductGroup.style.display = 'none';
                 primaryProductInput.removeAttribute('required');
             } else if (offeringTypeProductRadio.checked) {
                 primaryProductGroup.style.display = 'block';
                 primaryProductInput.setAttribute('required', 'true');
+                primaryServiceInput.value = ''; // Clear other field
                 primaryServiceGroup.style.display = 'none';
                 primaryServiceInput.removeAttribute('required');
             } else {
+                primaryServiceInput.value = '';
+                primaryProductInput.value = '';
                 primaryServiceGroup.style.display = 'none';
                 primaryServiceInput.removeAttribute('required');
                 primaryProductGroup.style.display = 'none';
@@ -205,6 +200,12 @@
         offeringTypeServiceRadio.addEventListener('change', updateOfferingVisibility);
         offeringTypeProductRadio.addEventListener('change', updateOfferingVisibility);
 
+        const resetSubmitButton = (message = 'Complete Registration') => {
+            submitButton.disabled = false;
+            submitButton.textContent = message;
+        };
+
+
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             
@@ -214,52 +215,51 @@
             submitButton.disabled = true;
             submitButton.textContent = 'Processing...';
 
+            const displayError = (message) => {
+                errorMessageDiv.textContent = message;
+                errorMessageDiv.style.display = 'block';
+                resetSubmitButton();
+            };
+
             // --- Validation ---
             if (!isEmailAvailable) {
-                errorMessageDiv.textContent = 'Please use an available email address to register.';
-                errorMessageDiv.style.display = 'block';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Complete Registration';
-                return;
+                return displayError('Please use an available email address to register.');
             }
             
             // Validate password length
             if (passwordInput.value.length < 6) {
-                errorMessageDiv.textContent = 'Password must be at least 6 characters long.';
-                errorMessageDiv.style.display = 'block';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Complete Registration';
-                return;
+                return displayError('Password must be at least 6 characters long.');
             }
 
             // Validate location selection
             if (locationSelectedInput.value !== 'true') {
-                errorMessageDiv.textContent = 'Please select a valid location from the suggestions.';
-                errorMessageDiv.style.display = 'block';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Complete Registration';
-                return;
+                return displayError('Please select a valid location from the suggestions.');
             }
 
             // Validate offering type and primary service/product
             const offeringType = document.querySelector('input[name="offering_type"]:checked');
             if (!offeringType) {
-                errorMessageDiv.textContent = 'Please select what you offer (Service or Product).';
-                errorMessageDiv.style.display = 'block';
-                submitButton.disabled = false;
-                submitButton.textContent = 'Complete Registration';
-                return;
+                return displayError('Please select what you offer (Service or Product).');
+            }
+
+            if (offeringType.value === 'service' && !primaryServiceInput.value.trim()) {
+                return displayError('Please enter your primary service.');
+            }
+
+            if (offeringType.value === 'product' && !primaryProductInput.value.trim()) {
+                return displayError('Please enter your primary product.');
             }
 
             // Get form data
-            const fullName = document.getElementById('full-name').value;
-            const phoneNumber = document.getElementById('phone-number').value;
-            const email = document.getElementById('email').value;
-            const password = passwordInput.value;
-            const location = locationInput.value;
-            const selectedOfferingType = offeringType.value;
-            const primaryService = primaryServiceInput.value;
-            const primaryProduct = primaryProductInput.value;
+            const formData = new FormData(form);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const fullName = formData.get('full-name');
+            const phoneNumber = formData.get('phone-number');
+            const location = formData.get('location');
+            const selectedOfferingType = formData.get('offering_type');
+            const primaryService = formData.get('primary_service');
+            const primaryProduct = formData.get('primary_product');
 
             // Supabase email/password sign-up
             const { data, error } = await supabase.auth.signUp({
@@ -279,8 +279,7 @@
             });
 
             if (error) {
-                errorMessageDiv.textContent = `Error: ${error.message}`;
-                errorMessageDiv.style.display = 'block';
+                displayError(`Error: ${error.message}`);
             } else {
                 form.style.display = 'none';
                 successMessageDiv.innerHTML = `
@@ -289,10 +288,9 @@
                 `;
                 successMessageDiv.style.display = 'block';
                 localStorage.removeItem(localStorageKey); // Clear saved form data
-            }
-
-            submitButton.disabled = false;
-            submitButton.textContent = 'Complete Registration';
+            } 
+            // Don't reset button on success, as the form is hidden.
+            // If there's an error, displayError() handles the reset.
         });
 
         // --- Real-time Email Validation ---
@@ -363,30 +361,29 @@
         const loadFormData = () => {
             const savedData = localStorage.getItem(localStorageKey);
             if (savedData) {
-                const data = JSON.parse(savedData);
-                for (const key in data) {
-                    const element = form.elements[key];
-                    if (element) {
-                        if (element.type === 'radio' && element.name === 'offering_type' && element.value === data[key]) {
-                            element.checked = true;
-                        } else if (element.type !== 'radio') { // Avoid setting value for radio buttons directly
-                        form.elements[key].value = data[key];
+                try {
+                    const data = JSON.parse(savedData);
+                    for (const key in data) {
+                        const element = form.elements[key];
+                        if (!element) continue;
+
+                        if (element.type === 'radio' && element.name === 'offering_type') {
+                            element.checked = (element.value === data[key]);
+                        } else if (element.type !== 'radio') {
+                            element.value = data[key];
                         }
                     }
-                }
-                // After loading, update visibility for offering type
-                if (data.offering_type) {
-                    if (data.offering_type === 'service') {
-                        offeringTypeServiceRadio.checked = true;
-                    } else if (data.offering_type === 'product') {
-                        offeringTypeProductRadio.checked = true;
+                    // After loading, update visibility for offering type
+                    if (data.offering_type) {
+                        updateOfferingVisibility(); // Call to show/hide groups based on loaded radio state
                     }
-                    updateOfferingVisibility(); // Call to show/hide groups
-                    // Ensure conditional inputs get their values
-                }
-                // Re-check email availability if email was pre-filled
-                if (emailInput.value) {
-                    checkEmailAvailability();
+                    // Re-check email availability if email was pre-filled
+                    if (emailInput.value) {
+                        checkEmailAvailability();
+                    }
+                } catch (e) {
+                    console.error("Error loading form data from localStorage:", e);
+                    localStorage.removeItem(localStorageKey); // Clear corrupted data
                 }
             }
         };
