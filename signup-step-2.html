@@ -12,6 +12,7 @@
         .progress-step { flex: 1; height: 6px; background-color: var(--border-color); border-radius: 3px; }
         .progress-step.active { background-color: var(--primary-color); }
         .form-group { margin-bottom: 1.5rem; }
+        #notification-banner { padding: 1rem; background-color: rgba(5, 170, 22, 0.1); color: var(--primary-color); border-radius: 8px; margin-bottom: 1.5rem; display: none; text-align: center; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
         .form-group input, .form-group select, .form-group textarea { width: 100%; }
         #error-message { color: #e53e3e; background-color: rgba(229, 62, 62, 0.1); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: none; }
@@ -45,6 +46,7 @@
                 <h2>Your Professional Profile</h2>
                 <p>Step 2/3: Service Details</p>
             </div>
+            <div id="notification-banner"></div>
             <div id="error-message"></div>
             <form id="signup-step-2-form">
                 <div class="form-group">
@@ -115,10 +117,33 @@
 
     <div id="footer-placeholder"></div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=7451bd2d38914bfd85e442634d0d1287&libraries=places"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/main.js"></script> <!-- Added for hamburger menu functionality -->
     <script src="js/includes.js"></script>
     <script src="js/signup.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (sessionStorage.getItem('showEmailConfirmationNotice') === 'true') {
+                const banner = document.getElementById('notification-banner');
+                banner.innerHTML = '<strong>Account created!</strong> Please check your email to confirm your account.';
+                banner.style.display = 'block';
+                // Clear the flag so it doesn't show again on refresh
+                sessionStorage.removeItem('showEmailConfirmationNotice');
+            }
+        });
+
+        // --- Google Places Autocomplete ---
+        function initAutocomplete() {
+            const locationInput = document.getElementById('location');
+            const autocomplete = new google.maps.places.Autocomplete(locationInput, {
+                types: ['(cities)'],
+                componentRestrictions: { country: 'ng' } // Restrict to Nigeria
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initAutocomplete);
+    </script>
 </body>
 </html>

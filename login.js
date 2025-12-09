@@ -26,8 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (error) {
                 console.error('Login failed:', error.message);
-                // Provide a more user-friendly error message
-                errorMessage.textContent = 'That email and password combination is not correct. Please check your details and try again.';
+                // Check for specific auth errors
+                if (error.message.includes('Email not confirmed')) {
+                    errorMessage.textContent = 'Your email has not been confirmed. Please check your inbox for a confirmation link.';
+                } else {
+                    errorMessage.textContent = 'That email and password combination is not correct. Please check your details and try again.';
+                }
                 errorMessage.style.display = 'block';
                 // Re-enable the button
                 submitButton.disabled = false;

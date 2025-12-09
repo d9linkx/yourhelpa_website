@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Ensure we have a Supabase client available
     if (typeof supabase === 'undefined') {
+        // This check is for older files. The new supabase-client.js should always define it.
         console.error('Supabase client is not loaded. Make sure supabase-client.js is included before signup.js.');
         return;
     }
@@ -26,39 +27,29 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- STEP 1: Basic Account Info ---
-    if (form1) {
+    // This logic is now handled by the form with id="register-form" in signup-step-1.html
+    const step1Form = document.getElementById('register-form');
+    if (step1Form) {
         // Pre-fill form on page load if data exists
         const existingDataStep1 = JSON.parse(sessionStorage.getItem('helpaSignupData'));
         if (existingDataStep1) {
-            form1.querySelector('#full-name').value = existingDataStep1.fullName || '';
-            form1.querySelector('#email').value = existingDataStep1.email || '';
-            form1.querySelector('#phone').value = existingDataStep1.phone || '';
+            step1Form.querySelector('#full-name').value = existingDataStep1.fullName || '';
+            step1Form.querySelector('#whatsapp-number').value = existingDataStep1.whatsappNumber || '';
+            step1Form.querySelector('#email').value = existingDataStep1.email || '';
             // Do not pre-fill password for security reasons
         }
 
-        form1.addEventListener('submit', (e) => {
+        step1Form.addEventListener('submit', (e) => {
             e.preventDefault();
             clear_error();
 
-            const formData = new FormData(form1);
+            const formData = new FormData(step1Form);
             const signupData = {
                 fullName: formData.get('full-name'),
+                whatsappNumber: formData.get('whatsapp-number'),
                 email: formData.get('email'),
-                phone: formData.get('phone'),
                 password: formData.get('password'),
             };
-            
-            // Basic validation
-            // Only require password if it's not already stored (i.e., first time through)
-            if (!existingDataStep1?.password && signupData.password.length < 6) {
-                show_error('Password must be at least 6 characters long.');
-                return;
-            }
-
-            // Preserve existing password if the field is left blank on a return visit
-            if (existingDataStep1?.password && !signupData.password) {
-                signupData.password = existingDataStep1.password;
-            }
 
             // Store data in sessionStorage and move to the next step
             sessionStorage.setItem('helpaSignupData', JSON.stringify(signupData));
@@ -140,19 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
             clear_error();
 
             const formData = new FormData(form2);
-            let primarySkillValue = formData.get('primary-skill');
-            
-            // If 'Other' is selected, use the value from the text input
-            if (primarySkillValue === 'Other') {
-                primarySkillValue = formData.get('other-skill');
-            }
-
             const profileData = {
                 offeringType: formData.get('offering-type'),
-                primarySkill: primarySkillValue,
                 location: formData.get('location'),
                 bio: formData.get('bio'),
+                primarySkill: formData.get('primary-skill')
             };
+
+            // If 'Other' is selected, use the value from the text input for the skill
+            if (profileData.primarySkill === 'Other') {
+                profileData.primarySkill = formData.get('other-skill');
+            }
 
             if (!profileData.primarySkill || !profileData.location || !profileData.offeringType) {
                 show_error('Please fill out all required fields.');
@@ -172,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const successMessageDiv = document.getElementById('success-message');
 
         // Check for data from previous steps
+        // This ensures a user can't jump directly to step 3
         const signupData = JSON.parse(sessionStorage.getItem('helpaSignupData'));
         if (!signupData || !signupData.email || !signupData.primarySkill) {
             window.location.href = '/signup-step-1.html';
@@ -184,8 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
             form3.querySelector('#account-number').value = signupData.accountNumber || '';
             form3.querySelector('#account-name').value = signupData.accountName || '';
         }
-
-
 
         form3.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -203,15 +191,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // Merge final data into the main object before submission
             const fullSignupData = { ...signupData, ...finalData };
             sessionStorage.setItem('helpaSignupData', JSON.stringify(fullSignupData));
-
+            
             // 1. Create the user in Supabase Auth
             const { data: authData, error: authError } = await supabase.auth.signUp({
                 email: signupData.email,
-                password: signupData.password,
+                password: fullSignupData.password,
                 options: {
                     data: {
-                        full_name: signupData.fullName,
-                        phone: signupData.phone,
+                        full_name: fullSignupData.fullName,
+                        whatsapp_number: fullSignupData.whatsappNumber,
                         role: 'helpa' // Assign the 'helpa' role on creation
                     }
                 }
@@ -238,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .insert({
                     id: authData.user.id, // Link to the auth.users table
                     full_name: fullSignupData.fullName,
-                    phone_number: fullSignupData.phone,
+                    phone_number: fullSignupData.whatsappNumber,
                     email: fullSignupData.email,
                     offering_type: fullSignupData.offeringType,
                     primary_skill: fullSignupData.primarySkill,
@@ -259,7 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // 3. Handle profile picture upload (if provided)
-            const profilePictureFile = document.getElementById('profile-picture')?.files[0];
+            // The file input is on step 2, so we can't access it here directly.
+            // This part needs to be handled differently, perhaps by storing the file in memory or uploading it in step 2.
             if (profilePictureFile) {
                 // Upload logic will be added in a follow-up
                 console.log('Profile picture selected, ready for upload.');
@@ -268,13 +257,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // 4. Success!
             sessionStorage.removeItem('helpaSignupData'); // Clear session data
             form3.style.display = 'none';
+            // Update success message to be more explicit about email confirmation
+            successMessageDiv.innerHTML = `
+                <h4>Registration Complete! Check Your Email.</h4>
+                <p>Welcome to YourHelpa! We've sent a confirmation link to <strong>${fullSignupData.email}</strong>. Please click the link in that email to activate your account before you can log in.</p>
+            `;
             successMessageDiv.style.display = 'block';
             window.scrollTo(0, 0);
 
-            // Redirect to login after a few seconds
-            setTimeout(() => {
-                window.location.href = '/login.html';
-            }, 5000);
         });
     }
 });
