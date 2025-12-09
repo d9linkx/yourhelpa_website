@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- SEO and Core Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Become a Helpa: Step 1 of 3 - YourHelpa</title>
-    <meta name="robots" content="noindex, nofollow"> <!-- Prevent search engines from indexing signup pages -->
-    <link rel="stylesheet" href="styles/style.css">
+    <meta name="description" content="Start your journey as a verified Helpa. Create your account to get access to secure job leads and guaranteed payments.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="stylesheet" href="/styles/style.css">
     <style>
+        /* Styles from login.html for consistency */
         .signup-container {
             max-width: 500px;
             margin: 4rem auto;
@@ -15,21 +19,9 @@
             border: 1px solid var(--border-color);
             border-radius: 16px;
         }
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            gap: 0.5rem;
-        }
-        .progress-step {
-            flex: 1;
-            height: 6px;
-            background-color: var(--border-color);
-            border-radius: 3px;
-        }
-        .progress-step.active {
-            background-color: var(--primary-color);
-        }
+        .progress-bar { display: flex; justify-content: space-between; margin-bottom: 2rem; gap: 0.5rem; }
+        .progress-step { flex: 1; height: 6px; background-color: var(--border-color); border-radius: 3px; }
+        .progress-step.active { background-color: var(--primary-color); }
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -41,13 +33,19 @@
         .form-group input {
             width: 100%;
         }
-        #error-message {
-            color: #e53e3e;
-            background-color: rgba(229, 62, 62, 0.1);
+        #error-message, #success-message {
             padding: 0.75rem 1rem;
             border-radius: 8px;
             margin-bottom: 1.5rem;
             display: none; /* Hidden by default */
+        }
+        #error-message {
+            color: #e53e3e;
+            background-color: rgba(229, 62, 62, 0.1);
+        }
+        #success-message {
+            color: var(--primary-color);
+            background-color: rgba(5, 170, 22, 0.1);
         }
         .auth-footer {
             text-align: center;
@@ -75,15 +73,16 @@
                 <p>Step 1/3: Basic Information</p>
             </div>
             <div id="error-message"></div>
-            <form id="signup-step-1-form">
+            <div id="success-message"></div>
+            <form id="register-form">
                 <div class="form-group"><label for="full-name">Full Name</label><input type="text" id="full-name" name="full-name" required placeholder="e.g. Bisi Adekunle"></div>
+                <div class="form-group"><label for="whatsapp-number">WhatsApp Number</label><input type="tel" id="whatsapp-number" name="whatsapp-number" required placeholder="e.g. 08012345678"></div>
                 <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" required placeholder="you@example.com"></div>
-                <div class="form-group"><label for="phone">WhatsApp Number</label><input type="tel" id="phone" name="phone" required placeholder="e.g. 08012345678"></div>
-                <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required minlength="6" placeholder="Minimum 6 characters"></div>
+                <div class="form-group"><label for="password">Password</label><input type="password" id="password" name="password" required placeholder="Choose a strong password"></div>
                 <button type="submit" class="button-primary large" style="width: 100%;">Continue to Step 2</button>
             </form>
             <div class="auth-footer">
-                <p>Already have an account? <a href="login.html">Login</a></p>
+                <p>Already have an account? <a href="login.html">Log in</a></p>
             </div>
         </div>
     </main>
@@ -91,9 +90,10 @@
     <div id="footer-placeholder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-client.js"></script>
-    <script src="js/main.js"></script> <!-- Added for hamburger menu functionality -->
-    <script src="js/includes.js"></script>
-    <script src="js/signup.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/includes.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/js/auth/register.js"></script>
 </body>
 </html>

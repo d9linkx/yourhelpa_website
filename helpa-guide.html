@@ -47,27 +47,6 @@
             margin-right: auto;
         }
 
-        .guide-content h2 {
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .guide-content h3 {
-            font-size: clamp(1.3rem, 4vw, 1.75rem);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-heading-color);
-        }
-
-        .guide-content p, .guide-content li {
-            line-height: 1.7;
-            font-size: 1.05rem;
-            word-break: break-word; /* Prevent long strings from causing overflow */
-        }
-
         .guide-content .intro-text {
             font-size: 1.1rem;
             color: var(--text-muted-color);
@@ -85,12 +64,51 @@
             .cta-section { padding-top: 6rem; padding-bottom: 6rem; }
         }
 
+        /* New Card-based Layout Styles */
+        .guide-section {
+            margin-top: 3rem;
+        }
+        .guide-section h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .guide-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .guide-card h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: var(--text-heading-color);
+        }
+        .guide-card p, .guide-card li {
+            font-size: 0.95rem; /* Slightly smaller font for better fit in cards */
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+
         /* Enhanced list styles from index.html */
         .value-list {
             list-style: none;
             padding: 0;
             margin-top: 1.5rem;
-            display: flex;
+            display: grid; /* Use grid for better alignment */
             flex-direction: column;
             gap: 1rem;
         }
@@ -125,101 +143,137 @@
         <!-- Guide Content Section -->
         <section class="content-section">
             <div class="container guide-content">
-                <p class="intro-text">Welcome to the definitive guide for every successful Helpa! This documentation provides detailed information, actionable tips, and tutorials to help you succeed. Always check back often for updates. We will also notify you directly when we make any significant updates to our Helpa documentation.</p>
+                <p class="intro-text">Welcome to the official guide for every successful Helpa! This page contains actionable tips to help you win more jobs, earn higher ratings, and maximize your income. We update this guide regularly, so check back often.</p>
+ 
+                <!-- Section 1: Profile -->
+                <div class="guide-section">
+                    <h2>1. Build a Stellar Profile</h2>
+                    <p>Your profile is your storefront. A complete, professional, and engaging profile is the single most effective tool for winning jobs and setting a premium rate.</p>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h3>1.1 Crafting a Winning Bio</h3>
+                            <ul class="value-list">
+                                <li><strong>Be Clear & Concise:</strong> Immediately state what you offer (e.g., "Experienced plumber for emergency repairs").</li>
+                                <li><strong>Highlight Value:</strong> Mention certifications, speed, or special equipment you use.</li>
+                                <li><strong>Set Expectations:</strong> Briefly describe your process, reliability, and commitment to satisfaction.</li>
+                                <li><strong>Professional Tone:</strong> Maintain a friendly yet confident and reliable tone.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>1.2 Optimize Skills & Categories</h3>
+                            <ul class="value-list">
+                                <li><strong>Be Specific:</strong> Instead of "Cleaning," list "Deep Residential Cleaning," "Move-out Cleaning," etc.</li>
+                                <li><strong>Use Keywords:</strong> Match your skills to the terms customers are searching for.</li>
+                                <li><strong>Show Certifications:</strong> Upload verifiable licenses to significantly increase trust.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>1.3 Professional Photography</h3>
+                            <ul class="value-list">
+                                <li><strong>Profile Picture:</strong> A clear, well-lit, smiling headshot.</li>
+                                <li><strong>Portfolio:</strong> High-quality photos of your best work (e.g., Before/After shots).</li>
+                                <li><strong>Show Your Tools:</strong> Photos of professional equipment build confidence.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>1.4 Setting Your Rate</h3>
+                            <ul class="value-list">
+                                <li><strong>Market Research:</strong> Check rates of other top-rated Helpas in your area.</li>
+                                <li><strong>Value-Based Pricing:</strong> Price based on your expertise, not just time. Specialists can charge more.</li>
+                                <li><strong>Be Transparent:</strong> Clearly define what your rate includes to avoid surprises.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-                <h2>1. The Foundation: Building Your Stellar Profile</h2>
-                <p>Your profile is your storefront. A complete, professional, and engaging profile is the single most effective tool for winning jobs and setting a premium rate.</p>
+                <!-- Section 2: Communication -->
+                <div class="guide-section">
+                    <h2>2. Master Your Communication</h2>
+                    <p>Effective, timely, and polite communication is crucial for converting inquiries into booked jobs and earning high ratings.</p>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h3>2.1 Responding to Inquiries</h3>
+                            <ul class="value-list">
+                                <li><strong>Speed is Key:</strong> Aim to respond within 30 minutes to secure the job.</li>
+                                <li><strong>Personalize:</strong> Use templates but always address the customer by name and reference their request.</li>
+                                <li><strong>Clarify:</strong> Ask questions to fully understand the job scope before quoting.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>2.2 Providing Accurate Quotes</h3>
+                            <ul class="value-list">
+                                <li><strong>Stick to Your Quote:</strong> Only adjust the price if the job scope changes, and always get customer approval first.</li>
+                                <li><strong>Break it Down:</strong> If applicable, list costs for materials, labor, etc., for transparency.</li>
+                                <li><strong>Confirm Details:</strong> Restate the time, date, location, and total price before finalizing.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>2.3 Professionalism in Chat</h3>
+                            <ul class="value-list">
+                                <li><strong>Good Etiquette:</strong> Use complete sentences, correct grammar, and polite language.</li>
+                                <li><strong>Keep it on Platform:</strong> All communication must stay on YourHelpa to ensure you're protected.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-                <h3>1.1 Crafting a Winning Bio (The Hook)</h3>
-                <ul class="value-list">
-                    <li><strong>Be Clear and Concise:</strong> Immediately state what services you offer (e.g., "Experienced plumber specializing in emergency repairs," or "Certified virtual assistant for small business owners.").</li>
-                    <li><strong>Highlight Unique Value:</strong> What makes you different? Mention specific certifications, speed of service, or specialized equipment you use.</li>
-                    <li><strong>Set Expectations:</strong> Use the bio to briefly describe your working process, reliability, and commitment to customer satisfaction.</li>
-                    <li><strong>Tone:</strong> Maintain a professional yet friendly tone that conveys confidence and reliability.</li>
-                </ul>
+                <!-- Section 3: Job Execution -->
+                <div class="guide-section">
+                    <h2>3. Perfect Your Job Execution</h2>
+                    <p>Executing a job successfully is about efficiency, attention to detail, and a focus on the customer experience.</p>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h3>3.1 Pre-Job Preparation</h3>
+                            <ul class="value-list">
+                                <li><strong>Confirm:</strong> Send a confirmation message 24 hours before the job.</li>
+                                <li><strong>Be Punctual:</strong> Plan your route. If you'll be late, communicate immediately.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>3.2 The Service Delivery</h3>
+                            <ul class="value-list">
+                                <li><strong>Initial Check-in:</strong> Briefly review the job scope with the customer before starting.</li>
+                                <li><strong>Quality & Efficiency:</strong> Deliver high-quality results and always leave the work area clean and tidy.</li>
+                                <li><strong>Final Walkthrough:</strong> Ask the customer to review the work before you finish to ensure 100% satisfaction.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>3.3 Driving 5-Star Reviews</h3>
+                            <p>Your reputation is everything. High ratings drive future bookings and higher earnings.</p>
+                            <ul class="value-list">
+                                <li><strong>Politely Ask:</strong> After a successful job, ask the customer to leave a review on the platform.</li>
+                                <li><strong>Respond to All Reviews:</strong> Thank positive reviewers. Address negative reviews professionally and offer solutions.</li>
+                            </ul>
+                        </div>
+                        <div class="guide-card">
+                            <h3>3.4 Payouts and Platform Fees</h3>
+                            <ul class="value-list">
+                                <li><strong>Invoice Promptly:</strong> Submit your invoice via the platform as soon as the job is done.</li>
+                                <li><strong>Instant Payout:</strong> Funds are transferred to you the moment a customer confirms job completion.</li>
+                                <li><strong>Our Fees:</strong> A <strong>7% commission</strong> per job plus a <strong>₦1,000/month</strong> subscription. This covers your payment guarantee, verified leads, and platform support.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-                <h3>1.2 Optimize Your Skills and Categories</h3>
-                <ul class="value-list">
-                    <li><strong>Be Specific:</strong> Instead of listing "Cleaning," list "Deep Residential Cleaning," "Move-in/Move-out Cleaning," and "Commercial Office Cleaning." Specificity attracts the right customers.</li>
-                    <li><strong>Use Keywords:</strong> Ensure the skills you list match what customers are searching for. Review the popular categories on YourHelpa regularly.</li>
-                    <li><strong>Certifications:</strong> Upload and display verifiable licenses, certifications, and background check confirmations. This significantly increases customer trust.</li>
-                </ul>
-
-                <h3>1.3 Professional Photography</h3>
-                <ul class="value-list">
-                    <li><strong>Profile Picture:</strong> Use a clear, well-lit headshot where you are smiling. Your face should be clearly visible. Avoid distracting backgrounds.</li>
-                    <li><strong>Portfolio/Gallery:</strong> Use high-quality photos that showcase your best work.</li>
-                    <li><strong>Before/After Shots:</strong> Ideal for physical tasks (repairs, cleaning, landscaping).</li>
-                    <li><strong>Equipment:</strong> Showcasing your professional tools or organized workspace (for virtual services).</li>
-                    <li><strong>Consistency:</strong> Ensure photos accurately reflect the quality of service a customer can expect.</li>
-                </ul>
-
-                <h3>1.4 Setting Your Rate Structure</h3>
-                <ul class="value-list">
-                    <li><strong>Market Research:</strong> Check the rates of highly-rated Helpa providers in your area for similar services.</li>
-                    <li><strong>Value-Based Pricing:</strong> Price your service based on the value and expertise you provide, not just the time it takes. A specialist can charge more than a generalist.</li>
-                    <li><strong>Transparency:</strong> Clearly define what your rate includes (e.g., travel, supplies, platform fee) to avoid unexpected charges for the customer.</li>
-                </ul>
-
-                <h2>2. The Art of Communication: From Inquiry to Booking</h2>
-                <p>Effective, timely, and polite communication is crucial for converting inquiries into booked jobs and earning high ratings.</p>
-
-                <h3>2.1 Responding to Inquiries (Speed is Key)</h3>
-                <ul class="value-list">
-                    <li><strong>Respond Quickly:</strong> Aim to respond to all inquiries within 30 minutes. The faster you respond, the higher the likelihood of securing the job.</li>
-                    <li><strong>Template Responses:</strong> Use saved templates for initial greetings and FAQs, but always personalize the response by addressing the customer by name and referencing their specific job request.</li>
-                    <li><strong>Ask Clarifying Questions:</strong> Never book a job based on ambiguous information. Use this opportunity to understand the scope fully. Example: "To confirm the scope, is the total area approximately 500 sq ft, and are all supplies provided by you, or should I factor that into the quote?"</li>
-                </ul>
-
-                <h3>2.2 Providing Accurate Quotes</h3>
-                <ul class="value-list">
-                    <li><strong>The Helpa Guarantee:</strong> Always stick to the quote you provide unless the job scope materially changes. If the scope changes upon arrival, immediately communicate the revised estimate and get customer approval before proceeding.</li>
-                    <li><strong>Quote Breakdown:</strong> If applicable, break down the quote into materials, labor, and platform fees. Transparency builds trust.</li>
-                    <li><strong>Confirm Booking Details:</strong> Before finalizing, restate the time, date, location, and total price verbally or in the in-app chat to ensure mutual agreement.</li>
-                </ul>
-
-                <h3>2.3 Professionalism in the Chat</h3>
-                <ul class="value-list">
-                    <li><strong>Maintain Etiquette:</strong> Use complete sentences, correct grammar, and polite language. Avoid slang or overly casual language.</li>
-                    <li><strong>Keep it on Platform:</strong> Conduct all communications, scheduling, and payments through the YourHelpa platform. This ensures you are covered by our Helpa Protection Policy and provides an official record of the agreement.</li>
-                </ul>
-
-                <h2>3. Mastering Job Execution & Earning</h2>
-                <p>Executing a job successfully is about efficiency, attention to detail, and a focus on the customer experience.</p>
-
-                <h3>3.1 Pre-Job Preparation</h3>
-                <ul class="value-list">
-                    <li><strong>Confirm:</strong> 24 hours before the job, send a brief confirmation message (e.g., "Looking forward to helping you tomorrow at 10 AM!").</li>
-                    <li><strong>Arrival:</strong> Plan your route and arrival time carefully. If you anticipate a delay, communicate it immediately with an estimated new arrival time.</li>
-                </ul>
-
-                <h3>3.2 The Service Delivery (The Gold Standard)</h3>
-                <ul class="value-list">
-                    <li><strong>Initial Check-in:</strong> Upon arrival, briefly review the job scope with the customer before starting work. This is the last chance to address scope changes or unforeseen issues.</li>
-                    <li><strong>Quality and Efficiency:</strong> Focus on delivering high-quality results efficiently. Always leave the work area clean and tidy.</li>
-                    <li><strong>Final Walkthrough:</strong> Before submitting the final invoice, ask the customer to review the completed work. Address any minor issues immediately to ensure 100% satisfaction.</li>
-                </ul>
-
-                <h3>3.3 Driving 5-Star Reviews</h3>
-                <p>Your reputation is everything. A high star rating and positive reviews are the primary drivers of future bookings and higher earnings.</p>
-                <ul class="value-list">
-                    <li><strong>The Request:</strong> After the job is completed and the customer has confirmed satisfaction, politely request a rating and review through the app. Example: "Thank you for your business. If you were happy with the service, I would greatly appreciate you taking a moment to leave a review on the YourHelpa platform. It helps my business grow!"</li>
-                    <li><strong>Respond to Reviews:</strong> Always respond to all reviews (positive and negative). Thank positive reviewers personally. For negative reviews, address concerns professionally and offer a solution. This shows future customers your commitment to service recovery.</li>
-                </ul>
-
-                <h3>3.4 Payouts and Platform Fees</h3>
-                <ul class="value-list">
-                    <li><strong>Invoicing:</strong> Submit the invoice promptly through the app upon job completion. Accuracy is mandatory.</li>
-                    <li><strong>Payout Schedule:</strong> Funds are typically processed <strong>3-5 business days</strong> after the customer confirms the job and payment is cleared.</li>
-                    <li><strong>Platform Fees:</strong> Our standard Helpa platform fee is <strong>7% commission</strong> per job, plus a <strong>₦1,000/month</strong> subscription. This fee covers payment guarantee, verified lead access, marketing, and 24/7 support.</li>
-                </ul>
-
-                <h2>4. Safety, Security, and Compliance</h2>
-                <ul class="value-list">
-                    <li><strong>Insurance:</strong> Understand the coverage provided by YourHelpa’s Helpa Protection Policy. This typically covers damage to customer property or injuries sustained during the job.</li>
-                    <li><strong>Local Regulations:</strong> You are responsible for complying with all local, state, and national laws, including licensing, taxes, and permits related to the services you offer.</li>
-                    <li><strong>Privacy:</strong> Never share customer contact information or personal details outside of the YourHelpa platform.</li>
-                </ul>
+                <!-- Section 4: Safety -->
+                <div class="guide-section">
+                    <h2>4. Stay Safe & Compliant</h2>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h3>Insurance</h3>
+                            <p>Understand the coverage provided by YourHelpa’s Helpa Protection Policy, which typically covers damage to customer property or injuries sustained during the job.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h3>Local Regulations</h3>
+                            <p>You are responsible for complying with all local, state, and national laws, including licensing, taxes, and permits related to the services you offer.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h3>Privacy</h3>
+                            <p>Never share customer contact information or personal details outside of the YourHelpa platform to protect both yourself and the customer.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -227,8 +281,8 @@
         <section class="final-cta cta-section">
             <div class="container">
                 <h2>Ready to Grow Your Business?</h2>
-                <p style="color: rgba(0,0,0,0.8); font-size: 1.15rem; max-width: 600px; margin: 1rem auto 2rem;">Success on YourHelpa starts here. We are committed to providing you with the tools and resources you need to run a successful, high-earning service business.</p>
-                <a href="/login.html" class="button-secondary large">Join the Helpa Network</a>
+                <p style="color: rgba(0,0,0,0.8); font-size: 1.15rem; max-width: 600px; margin: 1rem auto 2rem;">Apply these principles to every job to build a high-earning, top-rated business on YourHelpa. Your success is our mission.</p>
+                <a href="/register.html" class="button-secondary large">Join the Helpa Network</a>
             </div>
         </section>
 
