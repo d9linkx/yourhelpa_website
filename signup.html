@@ -216,7 +216,7 @@
             submitButton.textContent = 'Processing...';
 
             const displayError = (message) => {
-                errorMessageDiv.textContent = message;
+                errorMessageDiv.innerHTML = message; // Use innerHTML to allow for links
                 errorMessageDiv.style.display = 'block';
                 resetSubmitButton();
             };
@@ -279,12 +279,20 @@
             });
 
             if (error) {
-                displayError(`Error: ${error.message}`);
+                // Provide more user-friendly error messages
+                let friendlyMessage = `<strong>Registration failed.</strong> An unexpected error occurred: ${error.message}`;
+                if (error.message.includes("User already registered")) {
+                    friendlyMessage = `<strong>This email is already registered.</strong> Please <a href="login.html" class="text-primary">log in</a> instead.`;
+                } else if (error.message.toLowerCase().includes("password")) {
+                    friendlyMessage = `<strong>There's an issue with your password.</strong> Please ensure it meets the requirements (e.g., minimum length).`;
+                }
+
+                displayError(friendlyMessage);
             } else {
                 form.style.display = 'none';
                 successMessageDiv.innerHTML = `
                     <h4>Registration Complete! Check Your Email.</h4>
-                    <p>Welcome to YourHelpa! We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
+                    <p>Welcome to YourHelpa. We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
                 `;
                 successMessageDiv.style.display = 'block';
                 localStorage.removeItem(localStorageKey); // Clear saved form data
