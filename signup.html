@@ -79,7 +79,6 @@
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
-                        <div id="email-feedback" class="form-text-feedback"></div>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -151,7 +150,6 @@
         const errorMessageDiv = document.getElementById('error-message');
         const successMessageDiv = document.getElementById('success-message');
         const emailInput = document.getElementById('email');
-        const emailFeedback = document.getElementById('email-feedback');
         const passwordInput = document.getElementById('password');
         const togglePassword = document.getElementById('toggle-password');
         const offeringTypeServiceRadio = document.getElementById('offering-type-service');
@@ -222,18 +220,9 @@
             };
 
             // --- Validation ---
-            if (!isEmailAvailable) {
-                return displayError('Please use an available email address to register.');
-            }
-            
             // Validate password length
             if (passwordInput.value.length < 6) {
                 return displayError('Password must be at least 6 characters long.');
-            }
-
-            // Validate location selection
-            if (locationSelectedInput.value !== 'true') {
-                return displayError('Please select a valid location from the suggestions.');
             }
 
             // Validate offering type and primary service/product
@@ -261,37 +250,78 @@
             const primaryService = formData.get('primary_service');
             const primaryProduct = formData.get('primary_product');
 
-            // Supabase email/password sign-up
-            const { data, error } = await supabase.auth.signUp({
+            // --- STEP 1: Sign up the user (fast) ---
+            // We only sign up with email and password first for a quick response.
+            const { data: authData, error: authError } = await supabase.auth.signUp({
                 email: email,
                 password: password,
-                options: {
-                    data: {
+            });
+
+            if (authError) {
+                // Provide more user-friendly error messages
+                let friendlyMessage = `<strong>Registration failed.</strong> An unexpected error occurred: ${authError.message}`;
+                if (authError.message.includes("User already registered")) {
+                    friendlyMessage = `<strong>This email is already registered.</strong> Please <a href="login.html" class="text-primary">log in</a> instead.`;
+                } else if (authError.message.toLowerCase().includes("password")) {
+                    friendlyMessage = `<strong>There's an issue with your password.</strong> Please ensure it meets the requirements (e.g., minimum length).`;
+                }
+
+                displayError(friendlyMessage);
+                return; // Stop execution if auth fails
+            }
+
+            // --- STEP 2: Insert profile data into 'helpas' table (runs after signup succeeds) ---
+            // This assumes you have a table named 'helpas' with RLS policies that allow a newly signed-up user to insert their own profile.
+            // The 'id' column in 'helpas' should be a foreign key to 'auth.users.id'.
+            if (authData.user) {
+                const { error: profileError } = await supabase
+                    .from('helpas')
+                    .insert({ 
+                        id: authData.user.id, // Link to the user in auth.users
+                        email: email,
                         full_name: fullName,
                         phone_number: phoneNumber,
                         location: location,
                         offering_type: selectedOfferingType,
                         primary_service: selectedOfferingType === 'service' ? primaryService : null,
                         primary_product: selectedOfferingType === 'product' ? primaryProduct : null,
-                        is_helpa: true // To identify this user as a 'helpa'
-                    }
-                }
-            });
+                     });
 
-            if (error) {
-                // Provide more user-friendly error messages
-                let friendlyMessage = `<strong>Registration failed.</strong> An unexpected error occurred: ${error.message}`;
-                if (error.message.includes("User already registered")) {
-                    friendlyMessage = `<strong>This email is already registered.</strong> Please <a href="login.html" class="text-primary">log in</a> instead.`;
-                } else if (error.message.toLowerCase().includes("password")) {
-                    friendlyMessage = `<strong>There's an issue with your password.</strong> Please ensure it meets the requirements (e.g., minimum length).`;
+                if (profileError) {
+                    // If profile insertion fails, the user is still signed up.
+                    // We should inform them but also log the error for debugging.
+                    console.error("Critical: User was created but profile insertion failed:", profileError);
+                    displayError(`<strong>Your account was created, but we couldn't save your profile details.</strong> Please contact support. Error: ${profileError.message}`);
+                    return;
                 }
+            }
 
-                displayError(friendlyMessage);
+            // --- Success ---
+            // This part only runs if both signup and profile insertion succeed.
+            form.style.display = 'none';
+            successMessageDiv.innerHTML = `
+                <h4>Registration Complete. Check Your Email.</h4>
+                <p>Welcome to YourHelpa. We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
+            `;
+            successMessageDiv.style.display = 'block';
+            localStorage.removeItem(localStorageKey); // Clear saved form data
+
+        } else {
+            // This case should ideally not be reached if authError is handled, but it's good practice.
+            displayError('<strong>Registration failed.</strong> Could not create user account.');
+        } 
+        // Don't reset button on success, as the form is hidden.
+        // If there's an error, displayError() handles the reset.
+    });
+
+    // --- Form Data Persistence (localStorage) ---
+    const localStorageKey = 'helpaSignupFormData';
+
+    const saveFormData = () => {
             } else {
                 form.style.display = 'none';
                 successMessageDiv.innerHTML = `
-                    <h4>Registration Complete! Check Your Email.</h4>
+                    <h4>Registration Complete. Check Your Email.</h4>
                     <p>Welcome to YourHelpa. We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
                 `;
                 successMessageDiv.style.display = 'block';
@@ -299,56 +329,6 @@
             } 
             // Don't reset button on success, as the form is hidden.
             // If there's an error, displayError() handles the reset.
-        });
-
-        // --- Real-time Email Validation ---
-        let emailCheckTimeout;
-        let isEmailAvailable = false; // Track email availability
-
-        const checkEmailAvailability = async () => {
-            const email = emailInput.value.trim();
-            if (!/^\S+@\S+\.\S+$/.test(email)) {
-                emailFeedback.textContent = '';
-                isEmailAvailable = false;
-                return;
-            }
-            
-            emailFeedback.textContent = 'Checking...';
-            emailFeedback.style.color = 'var(--text-muted-color)';
-
-            try {
-                // We check the public 'helpas' table. This is a reasonable approach
-                // as auth.users is not directly queryable from the client.
-                const { data, error } = await supabase
-                    .from('helpas')
-                    .select('email')
-                    .eq('email', email)
-                    .single();
-
-                if (error && error.code !== 'PGRST116') { // PGRST116 = 'No rows found'
-                    throw error;
-                }
-
-                if (data) {
-                    emailFeedback.textContent = 'Email is already registered. Please login.';
-                    emailFeedback.style.color = 'var(--error-color)';
-                    isEmailAvailable = false;
-                } else {
-                    emailFeedback.textContent = 'Email is available!';
-                    emailFeedback.style.color = 'var(--primary-color)';
-                    isEmailAvailable = true;
-                }
-            } catch (err) {
-                console.error('Error checking email:', err);
-                emailFeedback.textContent = 'Could not verify email.';
-                emailFeedback.style.color = 'var(--error-color)';
-                isEmailAvailable = false;
-            }
-        };
-
-        emailInput.addEventListener('input', () => {
-            clearTimeout(emailCheckTimeout);
-            emailCheckTimeout = setTimeout(checkEmailAvailability, 500); // Debounce for 500ms
         });
 
         // --- Form Data Persistence (localStorage) ---
@@ -384,10 +364,6 @@
                     // After loading, update visibility for offering type
                     if (data.offering_type) {
                         updateOfferingVisibility(); // Call to show/hide groups based on loaded radio state
-                    }
-                    // Re-check email availability if email was pre-filled
-                    if (emailInput.value) {
-                        checkEmailAvailability();
                     }
                 } catch (e) {
                     console.error("Error loading form data from localStorage:", e);
