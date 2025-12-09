@@ -1,1 +1,14 @@
 node_modules
+
+# Supabase config file for local development
+js/config.js
+
+# Build artifacts
+dist/
+build/
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
