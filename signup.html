@@ -291,7 +291,13 @@
                     // If profile insertion fails, the user is still signed up.
                     // We should inform them but also log the error for debugging.
                     console.error("Critical: User was created but profile insertion failed:", profileError);
-                    displayError(`<strong>Your account was created, but we couldn't save your profile details.</strong> Please contact support. Error: ${profileError.message}`);
+                    
+                    // Check for a unique phone number violation
+                    if (profileError.message.includes('duplicate key value') && profileError.message.includes('phone_number')) {
+                        displayError(`<strong>This phone number is already registered.</strong> Please use a different number or log in if you already have an account.`);
+                    } else {
+                        displayError(`<strong>Your account was created, but we couldn't save your profile details.</strong> Please contact support. Error: ${profileError.message}`);
+                    }
                     return;
                 }
             }
@@ -313,26 +319,6 @@
         // Don't reset button on success, as the form is hidden.
         // If there's an error, displayError() handles the reset.
     });
-
-    // --- Form Data Persistence (localStorage) ---
-    const localStorageKey = 'helpaSignupFormData';
-
-    const saveFormData = () => {
-            } else {
-                form.style.display = 'none';
-                successMessageDiv.innerHTML = `
-                    <h4>Registration Complete. Check Your Email.</h4>
-                    <p>Welcome to YourHelpa. We've sent a confirmation link to <strong>${email}</strong>. Please click the link in that email to activate your account.</p>
-                `;
-                successMessageDiv.style.display = 'block';
-                localStorage.removeItem(localStorageKey); // Clear saved form data
-            } 
-            // Don't reset button on success, as the form is hidden.
-            // If there's an error, displayError() handles the reset.
-        });
-
-        // --- Form Data Persistence (localStorage) ---
-        const localStorageKey = 'helpaSignupFormData';
 
         const saveFormData = () => {
             const formData = new FormData(form);
