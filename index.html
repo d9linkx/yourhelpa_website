@@ -23,6 +23,11 @@
         .hero { padding: 4rem 1.5rem; }
         .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
         @media (min-width: 992px) { 
+            .hero { 
+                position: relative; 
+                overflow: hidden; /* Needed for animation container */
+                z-index: 1; /* Ensure hero content is above the animation */
+            }
             .hero { padding: 6rem 1.5rem; }
             .hero .container { grid-template-columns: 1fr 1fr; gap: 4rem; }
         }
@@ -84,6 +89,92 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
+
+        .value-block {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(145deg, rgba(5, 170, 22, 0.05), rgba(5, 170, 22, 0.02));
+        }
+        .value-block:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -10px rgba(5, 170, 22, 0.2);
+            border-color: var(--primary-color);
+        }
+        .value-block-icon {
+            display: inline-flex;
+            padding: 0.75rem;
+            background-color: rgba(5, 170, 22, 0.1);
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Swelling text animation */
+        .swell-text {
+            display: inline-block; /* Needed for transform to work */
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        @keyframes swell-animation {
+            0%, 50%, 100% {
+                transform: scale(1);
+            }
+            25%, 75% {
+                transform: scale(1.2);
+            }
+        }
+        .swell-text.swelling {
+            animation: swell-animation 0.8s ease-in-out;
+        }
+
+        /* Dove Animation Styles */
+        #animation-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none; /* Allows clicks to pass through */
+        }
+        #flight-path {
+            stroke: rgba(255,255,255,0.1); /* Make path visible for debugging if needed */
+            stroke-width: 1px;
+            fill: none;
+            opacity: 0;
+        }
+        #dove {
+            fill: #ffffff;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            offset-path: path("M-50,650 C150,500 250,200 550,350 C850,500 750,150 500,150 C250,150 200,300 450,450 C700,600 950,400 1150,200 S1400,100 150,50");
+            animation: fly 10s 1s linear forwards;
+            opacity: 0;
+        }
+        #dove .wing {
+            animation: flap 0.3s infinite ease-in-out;
+            transform-origin: 6px 10px;
+        }
+        .stardust {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px var(--primary-color);
+            animation: fade-out 1.5s linear forwards;
+        }
+        @keyframes fly {
+            0% { motion-offset: 0%; opacity: 1; transform: scale(0.8); }
+            90% { opacity: 1; transform: scale(1.2); }
+            100% { motion-offset: 100%; opacity: 0; transform: scale(0); }
+        }
+        @keyframes flap {
+            50% { transform: rotate(-25deg); }
+        }
+        @keyframes fade-out {
+            to { transform: scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -93,8 +184,20 @@
         <!-- Hero Section -->
         <section class="hero" id="home">
             <div class="container">
+                <!-- Dove Animation Container -->
+                <div id="animation-container">
+                    <svg width="100%" height="100%" viewBox="0 0 1440 650" preserveAspectRatio="xMidYMid slice">
+                        <path id="flight-path" d="M-50,650 C150,500 250,200 550,350 C850,500 750,150 500,150 C250,150 200,300 450,450 C700,600 950,400 1150,200 S1400,100 150,50" />
+                    </svg>
+                    <svg id="dove" viewBox="0 0 24 24">
+                        <g class="wing">
+                            <path d="M6,10 C2,8 1,12 3,14 C5,16 8,12 6,10Z" />
+                        </g>
+                        <path d="M6,10 C8,8 18,4 22,3 C18,8 14,14 10,18 C8,20 4,22 3,20 C2,18 4,12 6,10Z" />
+                    </svg>
+                </div>
                 <div class="hero-content">
-                    <h1>Stop Chasing Artisans. Start Securely Hiring.</h1>
+                    <h1>Buy Anything in One Chat, 3x Safer & 99% Deliverability</h1>
                     <p class="sub-headline">AI-Powered Helpa Matching + Escrow Security. All on your WhatsApp.</p>
                     <div class="hero-actions">
                         <a href="https://wa.me/2347070989034" target="_blank" class="button-primary large">Find on WhatsApp (Free)</a>
@@ -186,10 +289,13 @@
         <section class="dual-value-prop cta-section">
             <div class="container">
                 <div class="section-header">
-                    <h2>Are You a Local Pro? Get Secure, Pre-Paid Leads.</h2>
+                    <h2>Are You a Local Pro? Get <span class="swell-text">Secure</span>, Pre-Paid Leads.</h2>
                     <p>Stop wasting time on unpaid invoices and uncertain clients. Join a network that guarantees your pay.</p>
                 </div>
                 <div class="value-block">
+                    <div class="value-block-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
+                    </div>
                     <h4>Our Fair Partnership Model</h4>
                     <p>We charge a transparent <strong>₦1,000/month</strong> for access to verified leads and a <strong>7% commission</strong> per job. This isn't a fee; it's your business insurance.</p>
                     <ul class="value-list">
@@ -198,6 +304,9 @@
                     </ul>
                 </div>
                 <div class="value-block">
+                    <div class="value-block-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
                     <h4>Focus On Your Work, Not Admin</h4>
                      <ul class="value-list">
                         <li><strong>Zero Collection Risk:</strong> We secure the customer's payment before you even start.</li>
@@ -205,7 +314,7 @@
                         <li><strong>Build Your Digital Reputation:</strong> Earn ratings and reviews to attract more high-paying clients.</li>
                     </ul>
                 </div>
-                <a href="/signup-step-1.html" class="button-secondary large" style="grid-column: 1 / -1; justify-self: center; margin-top: 1rem;">Join the Helpa Network</a>
+                <a href="register.html" class="button-secondary large" style="grid-column: 1 / -1; justify-self: center; margin-top: 1rem;">Join the Helpa Network</a>
             </div>
         </section>
 
@@ -385,6 +494,85 @@
                 showRandomActivity();
                 setInterval(showRandomActivity, 12000); // Show a new one every 12 seconds
             }, 7000); // Initial delay of 7 seconds
+        });
+
+        // Swelling text on scroll
+        document.addEventListener('DOMContentLoaded', () => {
+            const swellText = document.querySelector('.swell-text');
+            if (!swellText) return;
+
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                if (!swellText.classList.contains('swelling')) {
+                    swellText.classList.add('swelling');
+                }
+                
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    swellText.classList.remove('swelling');
+                }, 500); // Reset after 500ms of no scrolling
+            });
+        });
+
+        // Scroll-in animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.value-block, .step-card, .testimonial-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                observer.observe(el);
+            });
+        });
+
+        // Dove Animation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const dove = document.getElementById('dove');
+            const container = document.getElementById('animation-container');
+            if (!dove || !container) return;
+
+            let particleInterval;
+
+            const createStardust = () => {
+                const rect = dove.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+
+                // Only create particles if the dove is visible within the container
+                if (rect.top > 0 && rect.left > 0) {
+                    const particle = document.createElement('div');
+                    particle.className = 'stardust';
+                    // Position relative to the container, not the viewport
+                    particle.style.left = `${rect.left - containerRect.left + (rect.width / 2)}px`;
+                    particle.style.top = `${rect.top - containerRect.top + (rect.height / 2)}px`;
+                    container.appendChild(particle);
+
+                    // Clean up the DOM
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1500);
+                }
+            };
+
+            // Start creating stardust after the animation begins
+            setTimeout(() => {
+                particleInterval = setInterval(createStardust, 60);
+            }, 1100); // Start after main animation delay + a bit
+            setTimeout(() => clearInterval(particleInterval), 10000); // Stop after 9 seconds of flight
         });
     </script>
 </body>
