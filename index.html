@@ -46,7 +46,15 @@
         .trust-bar { background-color: var(--surface-color); padding: 1.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
         .trust-bar .container { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 1.5rem; }
         .trust-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--text-muted-color); }
-        .trust-item svg { width: 24px; height: 24px; color: var(--primary-color); }
+        .trust-item {
+            border: 1px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Pill shape */
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .trust-item svg { width: 20px; height: 20px; color: var(--primary-color); transition: color 0.3s; }
+        .trust-item:hover { background-color: var(--primary-color); color: white; }
+        .trust-item:hover svg { color: white; }
         .dual-value-prop { background-color: var(--surface-color); }
         .dual-value-prop .container { display: grid; grid-template-columns: 1fr; gap: 3rem; }
         @media (min-width: 768px) { 
@@ -126,55 +134,6 @@
             animation: swell-animation 0.8s ease-in-out;
         }
 
-        /* Dove Animation Styles */
-        #animation-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none; /* Allows clicks to pass through */
-        }
-        #flight-path {
-            stroke: rgba(255,255,255,0.1); /* Make path visible for debugging if needed */
-            stroke-width: 1px;
-            fill: none;
-            opacity: 0;
-        }
-        #dove {
-            fill: #ffffff;
-            width: 30px;
-            height: 30px;
-            position: absolute;
-            offset-path: path("M-50,650 C150,500 250,200 550,350 C850,500 750,150 500,150 C250,150 200,300 450,450 C700,600 950,400 1150,200 S1400,100 150,50");
-            animation: fly 10s 1s linear forwards;
-            opacity: 0;
-        }
-        #dove .wing {
-            animation: flap 0.3s infinite ease-in-out;
-            transform-origin: 6px 10px;
-        }
-        .stardust {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: var(--primary-color);
-            border-radius: 50%;
-            box-shadow: 0 0 8px 2px var(--primary-color);
-            animation: fade-out 1.5s linear forwards;
-        }
-        @keyframes fly {
-            0% { motion-offset: 0%; opacity: 1; transform: scale(0.8); }
-            90% { opacity: 1; transform: scale(1.2); }
-            100% { motion-offset: 100%; opacity: 0; transform: scale(0); }
-        }
-        @keyframes flap {
-            50% { transform: rotate(-25deg); }
-        }
-        @keyframes fade-out {
-            to { transform: scale(0); opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -184,24 +143,12 @@
         <!-- Hero Section -->
         <section class="hero" id="home">
             <div class="container">
-                <!-- Dove Animation Container -->
-                <div id="animation-container">
-                    <svg width="100%" height="100%" viewBox="0 0 1440 650" preserveAspectRatio="xMidYMid slice">
-                        <path id="flight-path" d="M-50,650 C150,500 250,200 550,350 C850,500 750,150 500,150 C250,150 200,300 450,450 C700,600 950,400 1150,200 S1400,100 150,50" />
-                    </svg>
-                    <svg id="dove" viewBox="0 0 24 24">
-                        <g class="wing">
-                            <path d="M6,10 C2,8 1,12 3,14 C5,16 8,12 6,10Z" />
-                        </g>
-                        <path d="M6,10 C8,8 18,4 22,3 C18,8 14,14 10,18 C8,20 4,22 3,20 C2,18 4,12 6,10Z" />
-                    </svg>
-                </div>
                 <div class="hero-content">
-                    <h1>Buy Anything in One Chat, 3x Safer & 99% Deliverability</h1>
-                    <p class="sub-headline">AI-Powered Helpa Matching + Escrow Security. All on your WhatsApp.</p>
+                    <h1>Buy Anything on WhatsApp, 3x Safer & 99% Deliverability</h1>
+                    <p class="sub-headline">Get any product or service near you with AI-powered matching + escrow payment security.</p>
                     <div class="hero-actions">
-                        <a href="https://wa.me/2347070989034" target="_blank" class="button-primary large">Find on WhatsApp (Free)</a>
-                        <a href="register.html" class="button-secondary large">Become a Helpa</a>
+                        <a href="https://wa.me/2347070989034" target="_blank" class="button-primary large">Search on WhatsApp</a>
+                        <a href="register.html" class="button-secondary large">Sell on WhatsApp</a>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -406,67 +353,67 @@
             const activities = [
                 "Just In: A user in Lagos paid <strong>NGN 45,000</strong> for verified plumbing work.",
                 "A new request for 'Home Cleaning' was just posted in Abuja.",
-                "Success! A Helpa just completed a 'Graphic Design' task for <strong>NGN 75,000</strong>.",
+                "Success. A Helpa just completed a 'Graphic Design' task for <strong>NGN 75,000</strong>.",
                 "Just In: A customer in Port Harcourt paid <strong>NGN 20,000</strong> for a rush cake delivery.",
                 "A new request for 'Electrical Repair' was just posted in Ikeja.",
-                "Success! A Helpa just finished a 'Lawn Mowing' job for <strong>NGN 15,000</strong>.",
+                "Success. A Helpa just finished a 'Lawn Mowing' job for <strong>NGN 15,000</strong>.",
                 "Just In: A user in Lekki paid <strong>NGN 60,000</strong> for professional tutoring services.",
                 "A new request for 'Event Planning' was just posted in Ibadan.",
-                "Success! A Helpa just completed a 'Furniture Assembly' task for <strong>NGN 30,000</strong>.",
+                "Success. A Helpa just completed a 'Furniture Assembly' task for <strong>NGN 30,000</strong>.",
                 "Just In: A customer in Kano paid <strong>NGN 10,000</strong> for a quick delivery service.",
                 "A new request for 'AC Servicing' was just posted in your area.",
-                "Success! A Helpa just earned <strong>NGN 55,000</strong> for a 'Website Update' job.",
+                "Success. A Helpa just earned <strong>NGN 55,000</strong> for a 'Website Update' job.",
                 "Just In: A user in Enugu paid <strong>NGN 25,000</strong> for a 'Deep Cleaning' service.",
                 "A new request for a 'Makeup Artist' was just posted for this weekend.",
-                "Success! A Helpa just completed a 'Generator Repair' for <strong>NGN 18,000</strong>.",
+                "Success. A Helpa just completed a 'Generator Repair' for <strong>NGN 18,000</strong>.",
                 "Just In: A customer paid <strong>NGN 90,000</strong> for a small catering order.",
                 "A new request for 'Apartment Painting' was just posted in Surulere.",
-                "Success! A Helpa just completed a 'Website Development' project for <strong>NGN 250,000</strong>.",
+                "Success. A Helpa just completed a 'Website Development' project for <strong>NGN 250,000</strong>.",
                 "Just In: A user in Benin City paid <strong>NGN 35,000</strong> for 'Tiling Services'.",
                 "A new request for a 'Mobile Mechanic' was just posted in Garki, Abuja.",
-                "Success! A Helpa just earned <strong>NGN 22,000</strong> for a 'Post-Construction Cleaning' job.",
+                "Success. A Helpa just earned <strong>NGN 22,000</strong> for a 'Post-Construction Cleaning' job.",
                 "Just In: A customer in Ibadan paid <strong>NGN 12,000</strong> for 'Washing Machine Repair'.",
                 "A new request for a 'Private Chef' was just posted for an event next month.",
-                "Success! A Helpa just completed a 'Custom Wardrobe' build for <strong>NGN 180,000</strong>.",
+                "Success. A Helpa just completed a 'Custom Wardrobe' build for <strong>NGN 180,000</strong>.",
                 "Just In: A user in Kaduna paid <strong>NGN 8,000</strong> for 'Knife Sharpening'.",
                 "A new request for 'Fumigation Services' was just posted in Port Harcourt.",
-                "Success! A Helpa just finished a 'Social Media Management' gig for <strong>NGN 120,000</strong>.",
+                "Success. A Helpa just finished a 'Social Media Management' gig for <strong>NGN 120,000</strong>.",
                 "Just In: A customer in Victoria Island paid <strong>NGN 50,000</strong> for 'Event Photography'.",
                 "A new request for a 'Tailor' for custom clothing was just posted in Aba.",
-                "Success! A Helpa just earned <strong>NGN 40,000</strong> for 'Roof Leak Repair'.",
+                "Success. A Helpa just earned <strong>NGN 40,000</strong> for 'Roof Leak Repair'.",
                 "Just In: A user in Jos paid <strong>NGN 15,000</strong> for 'Garden Maintenance'.",
                 "A new request for 'Errand Runner' was just posted in Wuse, Abuja.",
-                "Success! A Helpa just completed a 'Logo Design' for <strong>NGN 65,000</strong>.",
+                "Success. A Helpa just completed a 'Logo Design' for <strong>NGN 65,000</strong>.",
                 "Just In: A customer in Abeokuta paid <strong>NGN 28,000</strong> for 'Welding Work'.",
                 "A new request for a 'Math Tutor' was just posted for a secondary school student.",
-                "Success! A Helpa just earned <strong>NGN 100,000</strong> for 'Interior Design Consultation'.",
+                "Success. A Helpa just earned <strong>NGN 100,000</strong> for 'Interior Design Consultation'.",
                 "Just In: A user in Calabar paid <strong>NGN 19,000</strong> for 'Fridge Servicing'.",
                 "A new request for 'Car Wash and Detailing' was just posted in Lekki Phase 1.",
-                "Success! A Helpa just completed a 'Content Writing' batch for <strong>NGN 85,000</strong>.",
+                "Success. A Helpa just completed a 'Content Writing' batch for <strong>NGN 85,000</strong>.",
                 "Just In: A customer in Onitsha paid <strong>NGN 32,000</strong> for 'Storefront Glass Replacement'.",
                 "A new request for a 'DJ' was just posted for a wedding in December.",
-                "Success! A Helpa just earned <strong>NGN 7,500</strong> for a quick 'Grocery Delivery'.",
+                "Success. A Helpa just earned <strong>NGN 7,500</strong> for a quick 'Grocery Delivery'.",
                 "Just In: A user in Warri paid <strong>NGN 48,000</strong> for 'CCTV Camera Installation'.",
                 "A new request for 'Moving and Relocation' services was just posted in Abuja.",
-                "Success! A Helpa just completed a 'Borehole Repair' for <strong>NGN 60,000</strong>.",
+                "Success. A Helpa just completed a 'Borehole Repair' for <strong>NGN 60,000</strong>.",
                 "Just In: A customer in Akure paid <strong>NGN 14,000</strong> for 'Barbing Services' at home.",
                 "A new request for a 'Virtual Assistant' was just posted for a 3-month contract.",
-                "Success! A Helpa just earned <strong>NGN 200,000</strong> for a 'Small Office Renovation'.",
+                "Success. A Helpa just earned <strong>NGN 200,000</strong> for a 'Small Office Renovation'.",
                 "Just In: A user in Owerri paid <strong>NGN 25,000</strong> for 'Event Usability Testing'.",
                 "A new request for 'Laptop Repair' was just posted in Ikeja GRA.",
-                "Success! A Helpa just completed a 'Custom Shoe' order for <strong>NGN 45,000</strong>.",
+                "Success. A Helpa just completed a 'Custom Shoe' order for <strong>NGN 45,000</strong>.",
                 "Just In: A customer in Uyo paid <strong>NGN 9,000</strong> for 'Document Proofreading'.",
                 "A new request for a 'Yoga Instructor' was just posted for private sessions.",
-                "Success! A Helpa just earned <strong>NGN 38,000</strong> for 'Car Battery Replacement'.",
+                "Success. A Helpa just earned <strong>NGN 38,000</strong> for 'Car Battery Replacement'.",
                 "Just In: A user in Minna paid <strong>NGN 55,000</strong> for 'Solar Panel Maintenance'.",
                 "A new request for 'Hairstylist' for home service was just posted in Festac.",
-                "Success! A Helpa just completed a 'Business Plan Writing' task for <strong>NGN 150,000</strong>.",
+                "Success. A Helpa just completed a 'Business Plan Writing' task for <strong>NGN 150,000</strong>.",
                 "Just In: A customer in Ilorin paid <strong>NGN 16,000</strong> for 'Pest Control'.",
                 "A new request for 'Voice Over Artist' was just posted for a short animation.",
-                "Success! A Helpa just earned <strong>NGN 33,000</strong> for 'Curtain and Blind Installation'.",
+                "Success. A Helpa just earned <strong>NGN 33,000</strong> for 'Curtain and Blind Installation'.",
                 "Just In: A user in Zaria paid <strong>NGN 70,000</strong> for 'Wedding Cake'.",
                 "A new request for 'Personal Shopper' was just posted in Ikoyi.",
-                "Success! A Helpa just completed a 'Mobile App UI/UX' review for <strong>NGN 95,000</strong>.",
+                "Success. A Helpa just completed a 'Mobile App UI/UX' review for <strong>NGN 95,000</strong>.",
                 "Just In: A customer in Gombe paid <strong>NGN 21,000</strong> for 'Waterproofing'.",
                 "A new request for 'Elderly Care Companion' was just posted in your area.",
             ];
@@ -540,40 +487,6 @@
             });
         });
 
-        // Dove Animation Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const dove = document.getElementById('dove');
-            const container = document.getElementById('animation-container');
-            if (!dove || !container) return;
-
-            let particleInterval;
-
-            const createStardust = () => {
-                const rect = dove.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-
-                // Only create particles if the dove is visible within the container
-                if (rect.top > 0 && rect.left > 0) {
-                    const particle = document.createElement('div');
-                    particle.className = 'stardust';
-                    // Position relative to the container, not the viewport
-                    particle.style.left = `${rect.left - containerRect.left + (rect.width / 2)}px`;
-                    particle.style.top = `${rect.top - containerRect.top + (rect.height / 2)}px`;
-                    container.appendChild(particle);
-
-                    // Clean up the DOM
-                    setTimeout(() => {
-                        particle.remove();
-                    }, 1500);
-                }
-            };
-
-            // Start creating stardust after the animation begins
-            setTimeout(() => {
-                particleInterval = setInterval(createStardust, 60);
-            }, 1100); // Start after main animation delay + a bit
-            setTimeout(() => clearInterval(particleInterval), 10000); // Stop after 9 seconds of flight
-        });
     </script>
 </body>
 </html>
