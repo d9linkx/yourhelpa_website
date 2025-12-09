@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join as a Helpa - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.5.1/styles/minimal.css">
+    <style>
+        .signup-container { max-width: 550px; margin: 4rem auto; padding: 2rem; background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 16px; }
+        .section-header { text-align: center; margin-bottom: 2rem; }
+        .form-fieldset { border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; }
+        .form-fieldset legend { font-size: 1.2rem; font-weight: 600; padding: 0 0.5rem; color: var(--primary-color); }
+        .form-group { margin-bottom: 1.5rem; }
+        .autocomplete-container { position: relative; }
+        .autocomplete-container.is-loading::after { content: ''; display: block; width: 1.25rem; height: 1.25rem; position: absolute; top: 50%; right: 0.75rem; transform: translateY(-50%); border: 2px solid var(--border-color); border-left-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
+        #error-message, #success-message { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: none; }
+        #error-message { color: #e53e3e; background-color: rgba(229, 62, 62, 0.1); }
+        #success-message { background-color: rgba(5, 170, 22, 0.1); color: var(--primary-color); }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; }
+        .radio-group { display: flex; gap: 1.5rem; margin-top: 0.5rem; }
+        .radio-label { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer; }
+        .radio-label input[type="radio"] { width: auto; }
+        .auth-footer { text-align: center; margin-top: 1.5rem; font-size: 0.9rem; }
+        /* Password toggle styles */
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: flex; /* To center the SVG icons */
+            align-items: center;
+            justify-content: center;
+        }
+        .auth-footer a { color: var(--primary-color); font-weight: 500; }
+        @keyframes spin { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="signup-container">
+            <div class="section-header">
+                <h2>Join as a Helpa</h2>
+                <p>Complete the form below to start connecting with customers.</p>
+            </div>
+            
+            <div id="error-message"></div>
+            <div id="success-message" style="display: none;"></div>
+
+            <form id="helpa-signup-form">
+                <!-- Step 1: Account Details -->
+                <fieldset class="form-fieldset" style="border: none; padding: 0; margin: 0;">
+                    <legend class="sr-only">Registration Details</legend>
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" placeholder="e.g., John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone-number">Phone Number (WhatsApp preferred)</label>
+                        <input type="tel" id="phone-number" name="phone-number" placeholder="e.g., 08012345678" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+                        <div id="email-feedback" class="form-text-feedback"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" placeholder="Create a strong password" required minlength="6" autocomplete="new-password">
+                            <span class="toggle-password" id="toggle-password">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-off-icon" style="display: none;">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Your Location (City)</label>
+                        <div id="autocomplete-container" class="autocomplete-container"></div>
+                        <input type="hidden" id="location-selected" name="location_selected" value="false">
+                    </div>
+                    <div class="form-group">
+                        <label for="service-name">Product or Service Name</label>
+                        <input type="text" id="service-name" name="service-name" placeholder="e.g., AC Technician, Fashion Designer" required>
+                    </div>
+                </fieldset>
+
+                <button type="submit" id="submit-btn" class="button-primary large" style="width: 100%;">Complete Registration</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.5.1/dist/index.min.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includes.js"></script>
+    <script src="js/signup.js"></script>
+    <script>
+        // Geoapify Places Autocomplete Logic
+        const autocompleteContainer = document.getElementById("autocomplete-container");
+        const autocompleteInput = new autocomplete.GeocoderAutocomplete(
+            autocompleteContainer, 
+            '7451bd2d38914bfd85e442634d0d1287', // Replace with your Geoapify API key if needed
+            {
+                lang: 'en',
+                filter: 'countrycode:ng',
+                placeholder: 'e.g. Allen Avenue, Ikeja, Lagos',
+                inputAttributes: { id: 'location', name: 'location', required: 'required' }
+            }
+        );
+
+        autocompleteInput.on('select', (location) => {
+            if (location && location.properties) {
+                document.getElementById('location').value = location.properties.formatted;
+                document.getElementById('location-selected').value = 'true';
+                document.getElementById('error-message').style.display = 'none';
+            }
+        });
+
+        autocompleteInput.on('ready', () => {
+            const locationInput = document.getElementById('location');
+            if (locationInput) {
+                locationInput.addEventListener('input', () => {
+                    document.getElementById('location-selected').value = 'false';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

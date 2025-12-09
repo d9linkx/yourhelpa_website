@@ -735,6 +735,20 @@ main {
     margin-bottom: 2.5rem;
 }
 
+/* Form helper text for real-time validation */
+.form-text-feedback {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    min-height: 1.2em; /* Reserve space to prevent layout shifts */
+    color: var(--text-muted-color);
+    transition: color 0.2s ease-in-out;
+}
+
+/* Specific styles for email feedback */
+#email-feedback.error {
+    color: var(--error-color);
+}
+
 /* 8. Safety & Trust Section */
 .safety-trust {
     padding: 6rem 1.5rem;

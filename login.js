@@ -1,50 +1,91 @@
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof supabase === 'undefined') {
+        console.error('Supabase client is not loaded. Ensure supabase-client.js is included before login.js.');
+        return;
+    }
+
     const loginForm = document.getElementById('login-form');
-    const submitButton = loginForm.querySelector('button[type="submit"]');
-    const errorMessage = document.getElementById('error-message');
+    if (!loginForm) return; // Exit if the form is not on this page
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+    const errorMessageDiv = document.getElementById('error-message');
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('toggle-password');
 
-            // Clear previous errors
-            errorMessage.style.display = 'none';
-            errorMessage.textContent = '';
+    // --- UI Helper Functions ---
+    const show_error = (message) => {
+        errorMessageDiv.textContent = message;
+        errorMessageDiv.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
-            const email = loginForm.email.value;
-            const password = loginForm.password.value;
+    const setLoadingState = (isLoading, message = 'Login') => {
+        submitBtn.disabled = isLoading;
+        submitBtn.textContent = message;
+    };
 
-            // Provide user feedback
-            submitButton.disabled = true;
-            submitButton.textContent = 'Logging in...';
+    // --- Password Toggle Functionality ---
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
 
-            // Use the Supabase client from supabase-client.js
+            const eyeIcon = togglePassword.querySelector('.eye-icon');
+            const eyeOffIcon = togglePassword.querySelector('.eye-off-icon');
+
+            if (eyeIcon && eyeOffIcon) {
+                eyeIcon.style.display = type === 'password' ? 'block' : 'none';
+                eyeOffIcon.style.display = type === 'text' ? 'block' : 'none';
+            }
+        });
+    }
+
+    // --- Form Submission Handler ---
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMessageDiv.style.display = 'none'; // Clear previous errors
+        setLoadingState(true, 'Logging in...');
+
+        const formData = new FormData(loginForm);
+        const email = formData.get('email');
+        const password = formData.get('password');
+
+        try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
 
             if (error) {
-                console.error('Login failed:', error.message);
-                // Check for specific auth errors
-                if (error.message.includes('Email not confirmed')) {
-                    errorMessage.textContent = 'Your email has not been confirmed. Please check your inbox for a confirmation link.';
-                } else {
-                    errorMessage.textContent = 'That email and password combination is not correct. Please check your details and try again.';
-                }
-                errorMessage.style.display = 'block';
-                // Re-enable the button
-                submitButton.disabled = false;
-                submitButton.textContent = 'Login';
-            } else if (data.user) {
-                // Login successful
-                console.log('Login successful, redirecting...');
-                
-                // Redirect to the helpa dashboard.
-                // A "successful login prompt" isn't great for user experience;
-                // a direct redirect is smoother.
-                window.location.href = '/helpa-dashboard.html'; 
+                handleAuthError(error);
+                setLoadingState(false);
+                return;
             }
-        });
+
+            if (data.user) {
+                // Redirect to dashboard or home page after successful login
+                window.location.href = '/dashboard.html'; // Adjust this path as needed
+            } else {
+                // This case might occur if signInWithPassword returns no user but also no error
+                show_error('Login failed. Please check your credentials.');
+                setLoadingState(false);
+            }
+
+        } catch (error) {
+            console.error('An unexpected error occurred during login:', error);
+            show_error(error.message || 'An unexpected error occurred. Please try again.');
+            setLoadingState(false);
+        }
+    });
+
+    // --- Helper for Auth Errors ---
+    function handleAuthError(error) {
+        if (error.message.includes("Invalid login credentials")) {
+            show_error("Invalid email or password. Please try again.");
+        } else if (error.message.includes("Email not confirmed")) {
+            show_error("Please confirm your email address before logging in.");
+        } else {
+            show_error(error.message);
+        }
     }
 });
