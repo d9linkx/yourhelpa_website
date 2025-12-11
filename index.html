@@ -39,45 +39,6 @@
         .hero-content h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); letter-spacing: -0.04em; }
         .hero-content .sub-headline { font-size: 1.25rem; color: var(--text-muted-color); max-width: 550px; margin: 1.5rem auto 2.5rem; }
         
-        /* --- Carousel Styles --- */
-        .hero-visual {
-            --img-width: 266px;
-            --img-gap: 20px; /* Was 10px margin on each side */
-            --total-imgs: 6; /* Number of ORIGINAL images */
-            width: 100%;
-            overflow: hidden;
-            margin-top: 2.5rem;
-        }
-        .carousel-track {
-            display: flex;
-            /* (Image width + gap) * total images (original + duplicate) */
-            width: calc((var(--img-width) + var(--img-gap)) * var(--total-imgs) * 2);
-            animation: scroll 50s linear infinite;
-            will-change: transform; /* Performance hint for the browser */
-        }
-        /* Pause animation on hover */
-        .hero-visual:hover .carousel-track {
-            animation-play-state: paused;
-        }
-        .carousel-track img {
-            width: var(--img-width);
-            height: auto;
-            margin-right: var(--img-gap);
-            border-radius: 24px;
-            box-shadow: 0 0 50px -10px rgba(5, 170, 22, 0.2);
-            flex-shrink: 0; /* Prevent images from shrinking */
-        }
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                /* Move by the width of the original set of images */
-                transform: translateX(calc((var(--img-width) + var(--img-gap)) * var(--total-imgs) * -1));
-            }
-        }
-        /* --- End Carousel Styles --- */
-
         .hero-actions { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
         @media (min-width: 768px) {
             .hero-actions {
@@ -87,6 +48,77 @@
             }
         }
         .trust-bar { background-color: var(--surface-color); padding: 1.5rem; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .hero-visual {
+            margin-top: 4rem; /* Add some space above the image */
+            padding-bottom: 2rem;
+        }
+        .smartphone-frame {
+            position: relative;
+            max-width: 300px; /* A bit wider than the image for the frame */
+            width: 100%;
+            margin: 0 auto;
+            background-color: #333; /* Dark grey frame */
+            padding: 12px;
+            border-radius: 40px; /* Rounded corners for the phone body */
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.1);
+        }
+        .screen-logo {
+            position: absolute;
+            top: 30px; /* Adjust vertical position */
+            left: 30px; /* Adjust horizontal position */
+            z-index: 10;
+        }
+        .screen-logo img {
+            width: 40px; /* Adjust logo size */
+            height: 40px;
+        }
+        .smartphone-screen {
+            background-color: #FFFFFF;
+            color: #0A0A0A;
+            border-radius: 28px; /* Match inner radius */
+            padding: 60px 20px 20px 20px; /* Top padding for logo, others for text margin */
+            min-height: 530px; /* Approximate height of a phone screen */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center content horizontally */
+            text-align: center;
+        }
+        .testimonial-headshot {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid #f0f0f0;
+        }
+        .screen-text {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Side buttons */
+        .smartphone-frame::before,
+        .smartphone-frame::after {
+            content: '';
+            position: absolute;
+            background-color: #444; /* Slightly lighter for buttons */
+            border-radius: 4px;
+        }
+        /* Volume buttons */
+        .smartphone-frame::before {
+            left: -4px;
+            top: 100px;
+            width: 4px;
+            height: 60px;
+        }
+        /* Power button */
+        .smartphone-frame::after {
+            right: -4px;
+            top: 120px;
+            width: 4px;
+            height: 35px;
+        }
         .trust-bar .container { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; gap: 1.5rem; }
         .trust-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--text-muted-color); }
         .trust-item {
@@ -193,24 +225,20 @@
                         <a href="https://wa.me/2347070989034" target="_blank" class="button-primary large">Search on WhatsApp</a>
                         <a href="register.html" class="button-secondary large">Sell on WhatsApp</a>
                     </div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="carousel-track">
-                    <!-- Original 6 Images -->
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Plumbing+Job" alt="Plumbing service request on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Catering+Order" alt="Catering order on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Cleaning+Service" alt="Home cleaning service request on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=iPhone+Sale" alt="Product sale on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=AC+Repair" alt="AC repair service request on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Find+a+Tutor" alt="Tutor search on YourHelpa">
-                    <!-- Duplicated 6 Images for seamless loop -->
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Plumbing+Job" alt="Plumbing service request on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Catering+Order" alt="Catering order on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Cleaning+Service" alt="Home cleaning service request on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=iPhone+Sale" alt="Product sale on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=AC+Repair" alt="AC repair service request on YourHelpa">
-                    <img src="https://placehold.co/266x532/0A0A0A/05aa16?text=Find+a+Tutor" alt="Tutor search on YourHelpa">
+                    <div class="hero-visual" role="img" aria-label="A smartphone mockup showing the YourHelpa interface on WhatsApp.">
+                        <div class="smartphone-frame">
+                            <div class="screen-logo">
+                                <!-- TODO: Replace this with a logo-only image file (without the 'YourHelpa' text) -->
+                                <img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon">
+                            </div>
+                            <div class="smartphone-screen">
+                                <!-- TODO: Replace this placeholder with an actual image of a Nigerian woman in a shop -->
+                                <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
