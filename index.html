@@ -54,13 +54,19 @@
         }
         .smartphone-frame {
             position: relative;
-            max-width: 300px; /* A bit wider than the image for the frame */
-            width: 100%;
-            margin: 0 auto;
+            width: 300px; /* A bit wider than the image for the frame */
+            flex-shrink: 0; /* Prevent frames from shrinking in the flex container */
             background-color: #333; /* Dark grey frame */
             padding: 12px;
             border-radius: 40px; /* Rounded corners for the phone body */
             box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.1);
+        }
+        .hero-visual {
+            overflow: hidden; /* Hide the overflowing carousel items */
+            padding: 0; /* Remove padding to allow frames to go edge-to-edge */
+        }
+        .smartphone-frame:hover .screens-wrapper {
+            animation-play-state: paused; /* Pause animation on hover */
         }
         .screen-logo {
             position: absolute;
@@ -76,13 +82,15 @@
             background-color: #FFFFFF;
             color: #0A0A0A;
             border-radius: 28px; /* Match inner radius */
-            padding: 60px 20px 20px 20px; /* Top padding for logo, others for text margin */
+            padding: 20px;
             min-height: 530px; /* Approximate height of a phone screen */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center; /* Center content horizontally */
             text-align: center;
+            /* Added for horizontal arrangement */
+            position: relative; /* For positioning the logo inside */
         }
         .testimonial-headshot {
             width: 80px;
@@ -208,6 +216,24 @@
         .swell-text.swelling {
             animation: swell-animation 0.8s ease-in-out;
         }
+        
+        /* Carousel Animation */
+        .screens-wrapper {
+            display: flex;
+            /* Width: (10 screens * 300px/screen) * 2 for duplication + (20 gaps * 12px/gap) */
+            width: calc(20 * 300px + 20 * 12px);
+            animation: scroll-animation 80s linear infinite;
+            gap: 12px; /* Add space between each screen */
+        }
+        @keyframes scroll-animation {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* Move by half the width: (10 screens * 300px) + (10 gaps * 12px) */
+                transform: translateX(calc(-10 * 300px - 10 * 12px));
+            }
+        }
 
     </style>
 </head>
@@ -226,16 +252,168 @@
                         <a href="register.html" class="button-secondary large">Sell on WhatsApp</a>
                     </div>
                     <div class="hero-visual" role="img" aria-label="A smartphone mockup showing the YourHelpa interface on WhatsApp.">
-                        <div class="smartphone-frame">
-                            <div class="screen-logo">
-                                <!-- TODO: Replace this with a logo-only image file (without the 'YourHelpa' text) -->
-                                <img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon">
+                        <div class="screens-wrapper">
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
                             </div>
-                            <div class="smartphone-screen">
-                                <!-- TODO: Replace this placeholder with an actual image of a Nigerian woman in a shop -->
-                                <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
-                                <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
-                                <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <!-- Duplicate the screens for seamless animation -->
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                            </div>
+                            <div class="smartphone-frame">
+                                <div class="smartphone-screen">
+                                    <div class="screen-logo"><img src="assets/yourhelpa-logo-colored.jpg" alt="YourHelpa logo icon"></div>
+                                    <img src="assets/sarah.jpg" alt="Headshot of Sarah, a happy customer" class="testimonial-headshot">
+                                    <p class="screen-text">"I ordered a last-minute gift and was worried it wouldn't arrive on time. The Helpa delivered it in just a few hours! The escrow payment made me feel so secure. Amazing service!"</p>
+                                    <p class="screen-text" style="margin-top: 1rem; font-weight: 600;">- Sarah, Ikeja</p>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
