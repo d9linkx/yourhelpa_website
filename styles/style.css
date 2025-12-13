@@ -963,19 +963,24 @@ main {
 }
 
 .step-card {
-    background-color: var(--background-color);
+    background-color: #324d35;
+    color: #f8f9fa; /* Light text for paragraphs */
     padding: 2.5rem;
     border-radius: 16px;
-    border: 1px solid var(--border-color-light);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .step-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 20px 30px -10px rgba(50, 77, 53, 0.4);
 }
 .step-card h3 {
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
+    color: #ffffff; /* White for headings */
+}
+.step-card p {
+    color: #dee2e6; /* Lighter grey for paragraphs */
 }
 
 .step-icon {
@@ -1008,7 +1013,7 @@ main {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    border: 2px solid var(--background-color);
+    border: 2px solid #324d35; /* Match new card background */
 }
 
 .categories {
