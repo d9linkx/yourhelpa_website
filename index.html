@@ -144,11 +144,16 @@
         .trust-item:hover { background-color: var(--primary-color); color: white; }
         .trust-item:hover svg { color: white; }
         .dual-value-prop { background-color: var(--surface-color); }
-        .dual-value-prop .container { display: grid; grid-template-columns: 1fr; gap: 3rem; }
-        @media (min-width: 768px) { 
-            .dual-value-prop .container { grid-template-columns: 1fr 1fr; } 
-            .dual-value-prop .section-header { grid-column: 1 / -1; }
+        .dual-value-prop .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center; /* Vertically align items */
         }
+        @media (min-width: 992px) {
+            .dual-value-prop .container { grid-template-columns: 1fr 1fr; }
+        }
+
         .value-block { background-color: var(--background-color); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
         .value-block h4 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-color); }
         .final-cta { background: linear-gradient(145deg, var(--primary-color), var(--primary-hover)); color: #0A0A0A; text-align: center; }
@@ -257,6 +262,45 @@
             animation: swell-animation 0.8s ease-in-out;
         }
         
+        /* Futuristic CTA Styles */
+        .futuristic-cta {
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 1.5rem;
+            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
+            text-align: center;
+        }
+        .futuristic-cta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(144, 85, 85, 0.2); /* Add a subtle dark overlay for depth */
+            z-index: 1;
+        }
+        .cta-glass-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1); /* Lighter glass effect */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 0 80px rgba(0,0,0,0.5);
+        }
+        .cta-glass-card h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+        .cta-glass-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 1rem auto 2rem;
+        }
         /* Carousel Animation */
         .screens-wrapper {
             display: flex;
@@ -275,6 +319,26 @@
                 transform: translateX(calc(-10 * 300px - 10 * 12px));
             }
         }
+
+        /* Keyframe Animations */
+        @keyframes move-gradient {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-25%, -10%); }
+            50% { transform: translate(-50%, 0); }
+            75% { transform: translate(-25%, 10%); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px -5px rgba(5, 170, 22, 0.3), 0 0 80px rgba(0,0,0,0.5); }
+            50% { box-shadow: 0 0 35px 0px rgba(5, 170, 22, 0.5), 0 0 80px rgba(0,0,0,0.5); }
+        }
+
+        /* Style for the first card in the carousel */
+        .screens-wrapper .smartphone-frame:first-child {
+            background-color: grey;
+        }
+
+
 
     </style>
 </head>
@@ -577,33 +641,35 @@
         <!-- Dual Value Proposition (Helpa Pitch) -->
         <section class="dual-value-prop cta-section">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header" style="text-align: left; margin-bottom: 0;">
                     <h2>Are You a Local Pro? Get <span class="swell-text">Secure</span>, Pre-Paid Leads.</h2>
                     <p>Stop wasting time on unpaid invoices and uncertain clients. Join a network that guarantees your pay.</p>
+                    <a href="register.html" class="button-secondary large" style="margin-top: 2rem; display: inline-block;">Join the Helpa Network</a>
                 </div>
-                <div class="value-block">
-                    <div class="value-block-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
+                <div>
+                    <div class="value-block" style="margin-bottom: 1.5rem;">
+                        <div class="value-block-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
+                        </div>
+                        <h4>Our Fair Partnership Model</h4>
+                        <p>We charge a transparent <strong>₦1,000/month</strong> for access to verified leads and a <strong>7% commission</strong> per job. This isn't a fee; it's your business insurance.</p>
+                        <ul class="value-list">
+                            <li><strong>7% Commission = 100% Payment Guarantee.</strong> You will always get paid for completed work.</li>
+                            <li><strong>₦1,000/month = Verified Lead Access.</strong> We connect you with serious customers who have real needs.</li>
+                        </ul>
                     </div>
-                    <h4>Our Fair Partnership Model</h4>
-                    <p>We charge a transparent <strong>₦1,000/month</strong> for access to verified leads and a <strong>7% commission</strong> per job. This isn't a fee; it's your business insurance.</p>
-                    <ul class="value-list">
-                        <li><strong>7% Commission = 100% Payment Guarantee.</strong> You will always get paid for completed work.</li>
-                        <li><strong>₦1,000/month = Verified Lead Access.</strong> We connect you with serious customers who have real needs.</li>
-                    </ul>
-                </div>
-                <div class="value-block">
-                    <div class="value-block-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <div class="value-block">
+                        <div class="value-block-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
+                        <h4>Focus On Your Work, Not Admin</h4>
+                         <ul class="value-list">
+                            <li><strong>Zero Collection Risk:</strong> We secure the customer's payment before you even start.</li>
+                            <li><strong>Steady Stream of Leads:</strong> Get matched with jobs that fit your skills and location.</li>
+                            <li><strong>Build Your Digital Reputation:</strong> Earn ratings and reviews to attract more high-paying clients.</li>
+                        </ul>
                     </div>
-                    <h4>Focus On Your Work, Not Admin</h4>
-                     <ul class="value-list">
-                        <li><strong>Zero Collection Risk:</strong> We secure the customer's payment before you even start.</li>
-                        <li><strong>Steady Stream of Leads:</strong> Get matched with jobs that fit your skills and location.</li>
-                        <li><strong>Build Your Digital Reputation:</strong> Earn ratings and reviews to attract more high-paying clients.</li>
-                    </ul>
                 </div>
-                <a href="register.html" class="button-secondary large" style="grid-column: 1 / -1; justify-self: center; margin-top: 1rem;">Join the Helpa Network</a>
             </div>
         </section>
 
@@ -631,11 +697,11 @@
         </section>
 
         <!-- Final Closer CTA -->
-        <section class="final-cta cta-section">
-            <div class="container">
+        <section class="futuristic-cta">
+            <div class="cta-glass-card">
                 <h2>Ready to Connect?</h2>
-                <p style="color: rgba(0,0,0,0.8); font-size: 1.15rem; max-width: 600px; margin: 1rem auto 2rem;">Start your secure chat on WhatsApp now. For hiring or for earning.</p>
-                <a href="https://wa.me/2347070989034" target="_blank" class="button-secondary large">Start Secure Chat on WhatsApp</a>
+                <p>Start your secure chat on WhatsApp now. For hiring or for earning.</p>
+                <a href="https://wa.me/2347070989034" target="_blank" class="button-secondary large">Chat on WhatsApp</a>
             </div>
         </section>
 
@@ -663,7 +729,7 @@
                         <p>Helpas subscribe for ₦1,000 per month to get access to verified, pre-paid job leads. We also charge a 7% commission on the final price of each completed job. This commission funds the secure Escrow system, guaranteeing you always get paid.</p>
                     </details>
                 </div>
-                <a href="/faq" class="button-secondary" style="display: block; width: fit-content; margin: 2rem auto 0;">See All FAQs</a>
+                <a href="faq.html" class="button-secondary" style="display: block; width: fit-content; margin: 2rem auto 0;">See All FAQs</a>
             </div>
         </section>
 

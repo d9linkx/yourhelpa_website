@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO and Core Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Guides - YourHelpa</title>
+    <meta name="description" content="Explore articles, guides, and tips from YourHelpa on getting services safely in Nigeria, and best practices for service professionals.">
+    <meta name="keywords" content="yourhelpa blog, nigeria service tips, home maintenance guide, freelance advice nigeria">
+    <link rel="canonical" href="https://yourhelpa.com.ng/blog">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourhelpa.com.ng/blog">
+    <meta property="og:title" content="Blog & Guides - YourHelpa">
+    <meta property="og:description" content="Explore articles, guides, and tips from YourHelpa on getting services safely in Nigeria, and best practices for service professionals.">
+    <meta property="og:image" content="https://yourhelpa.com.ng/assets/og-image.png">
+
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        :root { --primary-color: #05aa16; --primary-hover: #028a10; }
+
+        .hero {
+            padding: 4rem 1.5rem;
+            text-align: center;
+            background-color: var(--surface-color);
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted-color);
+            max-width: 650px;
+            margin: 1rem auto 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: var(--surface-color);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .blog-card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-category {
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .blog-card-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .blog-card-title:hover {
+            color: var(--primary-color);
+        }
+
+        .blog-card-excerpt {
+            color: var(--text-muted-color);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-card-meta {
+            margin-top: auto;
+            font-size: 0.9rem;
+            color: var(--text-muted-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>YourHelpa Blog & Guides</h1>
+                <p>Your go-to resource for home service tips, safety guides, and advice for growing your professional service business in Nigeria.</p>
+            </div>
+        </section>
+
+        <section class="blog-posts">
+            <div class="container">
+                <div class="blog-grid">
+                    <!-- Blog Post 1 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=setup-guide">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Setup+Guide" alt="A person setting up their profile on a phone" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Service Providers</span>
+                            <a href="blog-post.html?post=setup-guide" class="blog-card-title"><h3>A Step-by-Step Guide to Setting Up Your First Service on YourHelpa</h3></a>
+                            <p class="blog-card-excerpt">New to YourHelpa? This guide walks you through creating a compelling service listing that attracts customers and gets you verified faster.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 26, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 2 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=safer-hiring">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Safer+Hiring" alt="A shield icon overlaying a house" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Customers</span>
+                            <a href="blog-post.html?post=safer-hiring" class="blog-card-title"><h3>5 Reasons Why Hiring a Verified Helpa is Safer Than Informal Referrals</h3></a>
+                            <p class="blog-card-excerpt">From payment protection to identity verification, discover the key security advantages of using YourHelpa over taking a chance on an unknown contact.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 22, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 3 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=pricing-strategy">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Pricing+Strategy" alt="A calculator and a Naira sign" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Service Providers</span>
+                            <a href="blog-post.html?post=pricing-strategy" class="blog-card-title"><h3>Pricing Your Service: Strategies for Setting Competitive and Profitable Rates</h3></a>
+                            <p class="blog-card-excerpt">Don't undervalue your work. Learn how to research the market, calculate your costs, and set prices that attract clients and grow your business.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 20, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 4 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=understanding-escrow">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Escrow+Explained" alt="A lock and a hand shaking icon" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Customers</span>
+                            <a href="blog-post.html?post=understanding-escrow" class="blog-card-title"><h3>What if They Run with Your Money? A Guide to Never Being Cheated Again.</h3></a>
+                            <p class="blog-card-excerpt">Learn how YourHelpa's Escrow system acts as your financial bodyguard, protecting you from scams and ensuring you only pay for work you approve.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 18, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 5 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=building-loyalty">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Build+Loyalty" alt="A person receiving a 5-star review" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Service Providers</span>
+                            <a href="blog-post.html?post=building-loyalty" class="blog-card-title"><h3>The End of Hustle: How to Turn One-Off Gigs into a Predictable, High-Paying Business</h3></a>
+                            <p class="blog-card-excerpt">Stop the feast-or-famine cycle. Learn the system for turning single jobs into loyal, repeat customers who provide predictable income.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 15, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 6 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=perfect-job-request">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Perfect+Request" alt="A checklist on a clipboard" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Customers</span>
+                            <a href="blog-post.html?post=perfect-job-request" class="blog-card-title"><h3>Stop Getting Ghosted: The No-BS Guide to Writing a Job Request That Gets You the Best Help, Fast.</h3></a>
+                            <p class="blog-card-excerpt">Tired of vague quotes and unreliable artisans? Learn the formula for writing a job request that attracts top professionals and gets you accurate prices instantly.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 12, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 7 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=whatsapp-tips">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=WhatsApp+Tips" alt="A WhatsApp chat bubble" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Service Providers</span>
+                            <a href="blog-post.html?post=whatsapp-tips" class="blog-card-title"><h3>Mastering WhatsApp Communication: Tips for Quick and Professional Client Responses</h3></a>
+                            <p class="blog-card-excerpt">Your chat is your first impression. Learn the dos and don'ts of WhatsApp business communication to build trust and close deals faster.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 10, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 8 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=outsource-tasks">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Outsource+Tasks" alt="A lightbulb with a gear inside" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Customers</span>
+                            <a href="blog-post.html?post=outsource-tasks" class="blog-card-title"><h3>You're Drowning in a To-Do List You Shouldn't Be Doing. Here's How to Get Your Life Back.</h3></a>
+                            <p class="blog-card-excerpt">Stop wasting your most valuable asset—your time. Discover the tasks you can and should be outsourcing to reclaim your weekends and your sanity.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 07, 2023</div>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post 9 -->
+                    <article class="blog-card">
+                        <a href="blog-post.html?post=winning-profile">
+                            <img src="https://placehold.co/600x400/2d402f/FFFFFF?text=Winning+Profile" alt="A professional profile with a 5-star rating" class="blog-card-image">
+                        </a>
+                        <div class="blog-card-content">
+                            <span class="blog-card-category">For Helpas</span>
+                            <a href="blog-post.html?post=winning-profile" class="blog-card-title"><h3>Your Profile Is a Joke. Here’s How to Turn It into a Money-Making Machine.</h3></a>
+                            <p class="blog-card-excerpt">Stop getting ignored. This guide shows you how to transform your YourHelpa profile from a liability into your most powerful tool for attracting high-paying clients.</p>
+                            <div class="blog-card-meta">By YourHelpa Team | Oct 04, 2023</div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includes.js"></script>
+</body>
+</html>

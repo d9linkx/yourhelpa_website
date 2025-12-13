@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- SEO and Core Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title and meta tags for this page would be dynamically updated in a real application -->
+    <title>Blog Post - YourHelpa</title>
+    <meta name="description" id="meta-description" content="Read insightful articles and guides from YourHelpa on getting services safely in Nigeria and best practices for service professionals.">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        /* --- Blog Post Layout & Typography --- */
+        .post-container {
+            max-width: 750px; /* Optimal width for reading */
+            margin: 0 auto;
+        }
+
+        .post-header {
+            text-align: left;
+            margin-bottom: 2.5rem;
+        }
+
+        .post-category {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            background-color: rgba(5, 170, 22, 0.1);
+            padding: 0.4rem 0.8rem;
+            border-radius: 999px;
+        }
+
+        .post-header h1 {
+            font-size: clamp(2rem, 6vw, 3.25rem);
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .post-meta {
+            color: var(--text-muted-color);
+            font-size: 0.95rem;
+        }
+
+        .post-image {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            background-color: var(--border-color-light);
+            box-shadow: var(--shadow-md);
+        }
+
+        .post-body {
+            font-size: clamp(1rem, 1.5vw, 1.1rem);
+            line-height: 1.8;
+            color: var(--text-color);
+        }
+
+        .post-body h2, .post-body h3 {
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+        }
+
+        .post-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-body img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+            background-color: var(--border-color-light);
+        }
+
+        .post-body a {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid rgba(5, 170, 22, 0.3);
+            transition: border-color 0.2s ease;
+        }
+        .post-body a:hover {
+            border-bottom-color: var(--primary-color);
+        }
+
+        .post-body ul {
+            list-style: disc;
+            padding-left: 1.5rem; /* Standard indentation for bullets */
+            margin-bottom: 1.5rem;
+        }
+        .post-body ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        /* --- Responsive Content Elements --- */
+        .post-body blockquote {
+            margin: 2rem 0;
+            padding-left: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            font-style: italic;
+            font-size: 1.1em;
+            color: var(--text-heading-color);
+        }
+
+        .post-body pre {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color-light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto; /* Allow horizontal scrolling for code */
+            font-size: 0.9em;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-body code {
+            font-family: 'SF Mono', 'Menlo', 'Monaco', monospace;
+        }
+
+        .post-body .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color-light);
+            border-radius: 8px;
+        }
+
+        .post-body table {
+            width: 100%;
+            min-width: 600px; /* Force scroll on smaller screens */
+            border-collapse: collapse;
+        }
+
+        .post-body th, .post-body td {
+            padding: 0.6rem 0.8rem; /* Reduced padding for a more compact look */
+            border-bottom: 1px solid var(--border-color-light);
+            text-align: left;
+            font-size: 0.9rem; /* Smaller font size for table content */
+        }
+        .post-body th {
+            background-color: var(--surface-color);
+            font-weight: 600;
+        }
+
+        /* --- Post Footer Elements --- */
+        .post-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color-light);
+        }
+
+        .share-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 480px) {
+            .share-section { justify-content: center; }
+        }
+        .share-section span {
+            font-weight: 600;
+        }
+        .share-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--text-muted-color);
+            transition: all 0.2s ease;
+        }
+        .share-links a:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .back-to-blog {
+            display: inline-block;
+            font-weight: 600;
+            color: var(--text-muted-color);
+            transition: color 0.2s ease;
+        }
+        .back-to-blog:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Related Posts Section --- */
+        .related-posts-section {
+            margin-top: 4rem;
+        }
+        .related-posts-section h2 {
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 2.5rem;
+        }
+        .related-posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .related-post-card {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .related-post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .related-post-card a {
+            text-decoration: none;
+        }
+        .related-post-card h3 {
+            font-size: 1.1rem;
+            padding: 1.25rem;
+            color: var(--text-heading-color);
+        }
+
+        @media (max-width: 767px) {
+            .post-header { text-align: center; }
+            .post-header h1 { font-size: 2.25rem; }
+            .post-container {
+                /* Add more horizontal padding on mobile for better spacing */
+                padding-left: 1rem; padding-right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="blog-post-content">
+            <div class="container post-container">
+                <article>
+                    <header class="post-header" id="post-header">
+                        <span class="post-category" id="post-category"></span>
+                        <h1 id="post-title"></h1>
+                        <p class="post-meta" id="post-meta"></p>
+                    </header>
+
+                    <img src="" alt="" class="post-image" id="post-image" style="display: none;">
+
+                    <div class="post-body" id="post-body">
+                        <!-- Blog post content will be injected here -->
+                    </div>
+
+                    <div class="post-footer">
+                        <div class="share-section">
+                            <span>Share this post:</span>
+                            <div class="share-links">
+                                <a href="#" id="share-twitter" aria-label="Share on Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 1.4 3.3 4.4 3.3 4.4s-1.4 1.4-2.8 2.1c-1.2 1.1-2.2 2.3-3.8 3.9c-2.6 2.6-6.5 4.1-10.5 4.1c-1.5 0-3-.3-4.3-1c1.5.2 3-.2 4.3-1.1c-1.5-.2-2.8-1.5-3.3-2.8c.5.1 1 .2 1.5.2c-1.5-.3-2.8-1.6-2.8-3.3c.5.3 1 .4 1.5.5c-1.5-1-2.8-2.8-2.8-4.8c0-1.1.3-2.1 1-3c1.8 2.2 4.5 3.6 7.5 3.8c-.1-.3-.1-.6-.1-1c0-2.2 1.8-4 4-4c1.2 0 2.3.5 3 1.3c.9-.2 1.8-.5 2.6-1c-.3.9-1 1.7-1.8 2.2c.8-.1 1.6-.3 2.3-.6c-.5.8-1.1 1.5-1.8 2.1z"></path></svg></a>
+                                <a href="#" id="share-facebook" aria-label="Share on Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                                <a href="#" id="share-whatsapp" aria-label="Share on WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></a>
+                                <a href="#" id="share-linkedin" aria-label="Share on LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                            </div>
+                        </div>
+                        <a href="blog.html" class="back-to-blog">← Back to All Posts</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Related Posts Section -->
+        <section class="related-posts-section">
+            <div class="container">
+                <h2 id="related-posts-title" style="display: none;">You Might Also Like</h2>
+                <div class="related-posts-grid" id="related-posts-grid">
+                    <!-- Related posts will be injected here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/blog-content.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/includes.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const postKey = params.get('post');
+
+            const post = blogPosts[postKey];
+
+            const postHeader = document.getElementById('post-header');
+            const postCategory = document.getElementById('post-category');
+            const postTitle = document.getElementById('post-title');
+            const postMeta = document.getElementById('post-meta');
+            const postImage = document.getElementById('post-image');
+            const postBody = document.getElementById('post-body');
+            const metaDescription = document.getElementById('meta-description');
+
+            if (post) {
+                // Update meta tags for SEO
+                document.title = `${post.title} - YourHelpa`;
+                metaDescription.setAttribute('content', post.metaDescription);
+
+                // Populate the template
+                postCategory.textContent = post.category;
+                postTitle.textContent = post.title;
+                postMeta.textContent = `By YourHelpa Team | ${post.date}`;
+                postImage.src = post.imageSrc;
+                postImage.alt = post.imageAlt;
+                postImage.style.display = 'block';
+                postBody.innerHTML = post.content;
+            } else {
+                // Handle post not found
+                document.title = 'Post Not Found - YourHelpa';
+                if(postHeader) postHeader.style.textAlign = 'center';
+                postTitle.textContent = '404 - Post Not Found';
+                postBody.innerHTML = '<p>Sorry, the blog post you are looking for does not exist. Please return to the blog homepage to see all our articles.</p>';
+            }
+
+            // --- Social Sharing Logic ---
+            const pageUrl = encodeURIComponent(window.location.href);
+            const postTitleEncoded = encodeURIComponent(post ? post.title : 'Check out this post from YourHelpa');
+
+            const twitterShare = document.getElementById('share-twitter');
+            const facebookShare = document.getElementById('share-facebook');
+            const whatsappShare = document.getElementById('share-whatsapp');
+            const linkedinShare = document.getElementById('share-linkedin');
+
+            if(twitterShare) twitterShare.href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${postTitleEncoded}`;
+            if(facebookShare) facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+            if(whatsappShare) whatsappShare.href = `https://api.whatsapp.com/send?text=${postTitleEncoded}%20${pageUrl}`;
+            if(linkedinShare) linkedinShare.href = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${postTitleEncoded}`;
+
+            // --- Related Posts Logic ---
+            const relatedPostsGrid = document.getElementById('related-posts-grid');
+            const relatedPostsTitle = document.getElementById('related-posts-title');
+            if (post && relatedPostsGrid) {
+                const allPostKeys = Object.keys(blogPosts);
+                const relatedPostKeys = allPostKeys.filter(key => key !== postKey); // Exclude current post
+
+                // Shuffle and pick up to 2 related posts
+                const shuffledKeys = relatedPostKeys.sort(() => 0.5 - Math.random());
+                const selectedKeys = shuffledKeys.slice(0, 2);
+
+                if (selectedKeys.length > 0) {
+                    relatedPostsTitle.style.display = 'block';
+                    selectedKeys.forEach(key => {
+                        const relatedPost = blogPosts[key];
+                        const card = document.createElement('div');
+                        card.className = 'related-post-card';
+                        card.innerHTML = `
+                            <a href="blog-post.html?post=${key}">
+                                <h3>${relatedPost.title}</h3>
+                            </a>
+                        `;
+                        relatedPostsGrid.appendChild(card);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
