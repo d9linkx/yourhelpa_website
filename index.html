@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/styles/style.css">
     <style>
         /* Additional styles for the new design */
-        :root { --primary-color: #028a10; --primary-hover: #016d0c; } /* Amber/Gold Theme */
+        :root { --primary-color: #05aa16; --primary-hover: #028a10; } /* Amber/Gold Theme */
         .hero { padding: 4rem 1.5rem; }
         .hero .container { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
         @media (min-width: 992px) { 
@@ -717,25 +717,45 @@
             </div>
         </section>
 
+        <style>
+            .objection-handling .objection-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 1.5rem;
+                list-style: none;
+                padding: 0;
+            }
+            .objection-item {
+                background-color: var(--background-color);
+                padding: 1.5rem;
+                border-radius: 12px;
+                border: 1px solid var(--border-color);
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .objection-item svg {
+                color: var(--primary-color);
+                flex-shrink: 0;
+                margin-top: 3px;
+            }
+            .objection-item strong {
+                color: var(--text-heading-color);
+            }
+        </style>
         <!-- Objection Handling -->
         <section class="objection-handling why-choose-us">
             <div class="container">
                 <div class="section-header">
                     <h2>Questions? We've Already Answered Them.</h2>
                 </div>
-                <ul class="value-list value-grid">
-                    <li>
-                        <div><strong>NO external apps.</strong> Everything happens on WhatsApp, which you already use.</div>
-                    </li>
-                    <li>
-                        <div><strong>NO risk of payment default.</strong> Our Escrow system protects both customers and Helpas.</div>
-                    </li>
-                    <li>
-                        <div><strong>NO complex registration.</strong> Our verification is simple, fast, and designed for mobile.</div>
-                    </li>
-                    <li>
-                        <div><strong>NO hidden fees.</strong> Our pricing is transparent. What you see is what you get.</div>
-                    </li>
+                <ul class="objection-grid">
+                    <li class="objection-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><div><strong>NO external apps.</strong> Everything happens on WhatsApp, which you already use.</div></li>
+                    <li class="objection-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><div><strong>NO risk of payment default.</strong> Our Escrow system protects both customers and Helpas.</div></li>
+                    <li class="objection-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><div><strong>NO complex registration.</strong> Our verification is simple, fast, and designed for mobile.</div></li>
+                    <li class="objection-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><div><strong>NO hidden fees.</strong> Our pricing is transparent. What you see is what you get.</div></li>
+                    <li class="objection-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><div><strong>NO endless searching.</strong> Our AI finds the right Helpa for you in minutes.</div></li>
+                    <li class="objection-item"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><div><strong>NO chasing artisans.</strong> We only work with verified, reliable professionals.</div></li>
                 </ul>
             </div>
         </section>
