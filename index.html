@@ -58,7 +58,7 @@
             display: flex;
             flex-wrap: nowrap;
             gap: 1.5rem;
-            animation: trust-scroll 25s linear infinite;
+            animation: trust-scroll 20s linear infinite;
         }
         @keyframes trust-scroll {
             from { transform: translateX(0); }
@@ -354,7 +354,7 @@
         /* Carousel Animation */
         .screens-wrapper {
             display: flex; /* Width: (10 screens * 300px/screen) * 2 for duplication + (20 gaps * 12px/gap) */
-            width: calc(20 * 300px + 20 * 12px); animation: scroll-animation 80s linear infinite;
+            width: calc(20 * 300px + 20 * 12px); animation: scroll-animation 60s linear infinite;
             align-items: flex-end; /* Align all mockups to the bottom */ gap: 12px; /* Add space between each screen */
         }
         @keyframes scroll-animation {
@@ -385,6 +385,38 @@
             background-color: grey;
         }
 
+        /* Trusted By Section Styles */
+        .trusted-by-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 4rem;
+            text-align: center;
+        }
+        .trusted-by-heading {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted-color);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2.5rem;
+        }
+        .trusted-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem 3rem; /* row-gap column-gap */
+        }
+        .trusted-logos img {
+            height: 30px; /* Adjust height as needed */
+            width: auto;
+            max-width: 150px;
+            filter: grayscale(100%) opacity(0.6);
+            transition: filter 0.3s ease;
+        }
+        .trusted-logos img:hover {
+            filter: grayscale(0%) opacity(1);
+        }
 
 
     </style>
@@ -404,42 +436,14 @@
                         <a href="register.html" class="button-secondary large">Sell on WhatsApp</a>
                     </div>
                 </div>
-                <!-- Trust Bar -->
-                <div class="trust-bar" style="margin-top: 3rem; border: none; background: transparent; padding: 0;">
-                    <div class="trust-bar-wrapper">
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            <span>Escrow Secured</span>
-                        </div>
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span>Verified Helpas</span>
-                        </div>
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span>Nationwide Coverage</span>
-                        </div>
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
-                            <span>AI-Powered Matching</span>
-                        </div>
-                        <!-- Duplicates for seamless loop -->
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                            <span>Escrow Secured</span>
-                        </div>
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                            <span>Verified Helpas</span>
-                        </div>
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span>Nationwide Coverage</span>
-                        </div>
-                        <div class="trust-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
-                            <span>AI-Powered Matching</span>
-                        </div>
+                <!-- Trusted By Section -->
+                <div class="trusted-by-section">
+                    <h4 class="trusted-by-heading">Trusted by professionals from leading Nigerian companies</h4>
+                    <div class="trusted-logos">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Paystack_Logo.png/1280px-Paystack_Logo.png" alt="Paystack Logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Flutterwave_Logo.png" alt="Flutterwave Logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Jumia_Logo.png/1280px-Jumia_Logo.png" alt="Jumia Logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Interswitch_Logo.png/1280px-Interswitch_Logo.png" alt="Interswitch Logo">
                     </div>
                 </div>
             </div>
