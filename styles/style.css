@@ -115,6 +115,11 @@ p {
     border-radius: 6px; /* Optional: if you want slightly rounded corners on the logo */
 }
 
+/* Set the color for the text part of the logo */
+.logo span {
+    color: #324d35;
+}
+
 .header-actions {
     display: flex;
     align-items: center;

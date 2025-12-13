@@ -143,7 +143,14 @@
         .trust-item svg { width: 20px; height: 20px; color: var(--primary-color); transition: color 0.3s; }
         .trust-item:hover { background-color: var(--primary-color); color: white; }
         .trust-item:hover svg { color: white; }
-        .dual-value-prop { background-color: var(--surface-color); }
+        .dual-value-prop { 
+            background-color: #324d35; 
+            color: #f8f9fa; /* Light text color for readability on dark background */
+        }
+        .dual-value-prop h2, .dual-value-prop .value-block h4 {
+            color: #fff; /* White for main headings */
+        }
+        .dual-value-prop p { color: #dee2e6; } /* Lighter grey for paragraphs */
         .dual-value-prop .container {
             display: grid;
             grid-template-columns: 1fr;
@@ -151,16 +158,33 @@
             align-items: center; /* Vertically align items */
         }
         @media (min-width: 992px) {
-            .dual-value-prop .container { grid-template-columns: 1fr 1fr; }
+            .dual-value-prop .container {
+                grid-template-columns: 1fr 1fr 1fr; /* Create a 3-column grid on desktop */
+                gap: 2rem; /* Adjust gap for 3 columns */
+            }
         }
 
-        .value-block { background-color: var(--background-color); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        .value-block { 
+            background-color: rgba(255, 255, 255, 0.05); /* Dark, slightly transparent background for cards */
+            padding: 2rem; border-radius: 16px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
         .value-block h4 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-color); }
         .final-cta { background: linear-gradient(145deg, var(--primary-color), var(--primary-hover)); color: #0A0A0A; text-align: center; }
         .final-cta h2 { color: #0A0A0A; font-size: clamp(2rem, 5vw, 3rem); }
         .fomo-notification { position: fixed; bottom: 1.5rem; left: 1.5rem; background-color: var(--surface-color); color: var(--text-color); padding: 1rem 1.5rem; border-radius: 12px; box-shadow: var(--shadow-lg); z-index: 1001; opacity: 0; transform: translateY(20px); transition: opacity 0.5s, transform 0.5s; font-size: 0.9rem; border: 1px solid var(--border-color); }
         .fomo-notification.visible { opacity: 1; transform: translateY(0); }
         .location-reminder { text-align: center; padding: 1rem; background-color: var(--surface-color); font-weight: 600; color: var(--primary-color); }
+        @media (max-width: 767px) {
+            .fomo-notification {
+                left: 50%;
+                bottom: 1rem;
+                transform: translate(-50%, 20px); /* Adjust transform for centering */
+                width: calc(100% - 2rem); /* Full width minus side margins */
+                max-width: 400px; /* Prevent it from being too wide on larger mobile screens */
+            }
+            .fomo-notification.visible { opacity: 1; transform: translate(-50%, 0); }
+        }
         @media (min-width: 992px) {
             section { padding-top: 6rem; padding-bottom: 6rem; }
             .section-header { margin-bottom: 4rem; }
@@ -266,49 +290,43 @@
         .futuristic-cta {
             position: relative;
             overflow: hidden;
-            padding: 6rem 1.5rem;
-            background: linear-gradient(145deg, var(--primary-color), var(--primary-hover));
+            padding: 5rem 1.5rem;
+            background-color: var(--surface-color);
             text-align: center;
         }
         .futuristic-cta::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(144, 85, 85, 0.2); /* Add a subtle dark overlay for depth */
+            background: transparent; /* Removed the dark overlay */
             z-index: 1;
         }
         .cta-glass-card {
             position: relative;
             z-index: 2;
-            background: rgba(255, 255, 255, 0.1); /* Lighter glass effect */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #324d35; /* Solid brand color */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* A subtle light border */
             border-radius: 24px;
             padding: 3rem;
             max-width: 700px;
             margin: 0 auto;
-            box-shadow: 0 0 80px rgba(0,0,0,0.5);
+            box-shadow: var(--shadow-lg);
         }
         .cta-glass-card h2 {
             font-size: clamp(2rem, 5vw, 3rem);
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            color: #ffffff;
         }
         .cta-glass-card p {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             font-size: 1.15rem;
             max-width: 600px;
             margin: 1rem auto 2rem;
         }
         /* Carousel Animation */
         .screens-wrapper {
-            display: flex;
-            /* Width: (10 screens * 300px/screen) * 2 for duplication + (20 gaps * 12px/gap) */
-            width: calc(20 * 300px + 20 * 12px);
-            animation: scroll-animation 80s linear infinite;
-            align-items: flex-end; /* Align all mockups to the bottom */
-            gap: 12px; /* Add space between each screen */
+            display: flex; /* Width: (10 screens * 300px/screen) * 2 for duplication + (20 gaps * 12px/gap) */
+            width: calc(20 * 300px + 20 * 12px); animation: scroll-animation 80s linear infinite;
+            align-items: flex-end; /* Align all mockups to the bottom */ gap: 12px; /* Add space between each screen */
         }
         @keyframes scroll-animation {
             0% {
@@ -646,29 +664,27 @@
                     <p>Stop wasting time on unpaid invoices and uncertain clients. Join a network that guarantees your pay.</p>
                     <a href="register.html" class="button-secondary large" style="margin-top: 2rem; display: inline-block;">Join the Helpa Network</a>
                 </div>
-                <div>
-                    <div class="value-block" style="margin-bottom: 1.5rem;">
-                        <div class="value-block-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
-                        </div>
-                        <h4>Our Fair Partnership Model</h4>
-                        <p>We charge a transparent <strong>₦1,000/month</strong> for access to verified leads and a <strong>7% commission</strong> per job. This isn't a fee; it's your business insurance.</p>
-                        <ul class="value-list">
-                            <li><strong>7% Commission = 100% Payment Guarantee.</strong> You will always get paid for completed work.</li>
-                            <li><strong>₦1,000/month = Verified Lead Access.</strong> We connect you with serious customers who have real needs.</li>
-                        </ul>
+                <div class="value-block">
+                    <div class="value-block-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect x="4" y="12" width="8" height="8" rx="2"></rect><path d="M8 12v-2a2 2 0 0 1 2-2h2"></path></svg>
                     </div>
-                    <div class="value-block">
-                        <div class="value-block-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        </div>
-                        <h4>Focus On Your Work, Not Admin</h4>
-                         <ul class="value-list">
-                            <li><strong>Zero Collection Risk:</strong> We secure the customer's payment before you even start.</li>
-                            <li><strong>Steady Stream of Leads:</strong> Get matched with jobs that fit your skills and location.</li>
-                            <li><strong>Build Your Digital Reputation:</strong> Earn ratings and reviews to attract more high-paying clients.</li>
-                        </ul>
+                    <h4>Our Fair Partnership Model</h4>
+                    <p>We charge a transparent <strong>₦1,000/month</strong> for access to verified leads and a <strong>7% commission</strong> per job. This isn't a fee; it's your business insurance.</p>
+                    <ul class="value-list">
+                        <li><strong>7% Commission = 100% Payment Guarantee.</strong> You will always get paid for completed work.</li>
+                        <li><strong>₦1,000/month = Verified Lead Access.</strong> We connect you with serious customers who have real needs.</li>
+                    </ul>
+                </div>
+                <div class="value-block">
+                    <div class="value-block-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                     </div>
+                    <h4>Focus On Your Work, Not Admin</h4>
+                     <ul class="value-list">
+                        <li><strong>Zero Collection Risk:</strong> We secure the customer's payment before you even start.</li>
+                        <li><strong>Steady Stream of Leads:</strong> Get matched with jobs that fit your skills and location.</li>
+                        <li><strong>Build Your Digital Reputation:</strong> Earn ratings and reviews to attract more high-paying clients.</li>
+                    </ul>
                 </div>
             </div>
         </section>
