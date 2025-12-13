@@ -380,16 +380,18 @@ p {
 
 .button-secondary {
     display: inline-block;
-    background-color: var(--surface-color);
-    color: var(--text-heading-color);
+    background-color: #324d35;
+    color: #ffffff;
     padding: 0.5rem 1rem;
     border-radius: 8px;
     font-weight: 600;
-    border: 1px solid var(--border-color-light);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 .button-secondary:hover {
+    background-color: #2a402c; /* A slightly darker shade of the green */
+    color: #ffffff;
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
