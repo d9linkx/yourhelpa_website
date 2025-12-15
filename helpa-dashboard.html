@@ -253,7 +253,7 @@
             <!-- Dashboard Header -->
             <header class="dashboard-header">
                 <div>
-                    <h1>Welcome back, John!</h1>
+                    <h1 id="welcome-message">Welcome back!</h1>
                     <p>Here's what's happening with your Helpa profile today.</p>
                 </div>
                 <div class="header-actions">
@@ -395,8 +395,47 @@
     <script src="js/main.js"></script>
     <script src="js/includes.js"></script>
     <script>
-        // Future dashboard logic will go here.
-        // For example, fetching user data and leads from Supabase.
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Check user session
+            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+            if (sessionError) {
+                console.error('Error getting session:', sessionError.message);
+                return;
+            }
+
+            if (!session) {
+                // If no user is logged in, redirect to the login page
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const user = session.user;
+
+            // 2. Fetch user profile from the 'profiles' table
+            try {
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('first_name') // Assuming you have a 'first_name' column
+                    .eq('id', user.id)
+                    .single();
+
+                if (error) {
+                    throw error;
+                }
+
+                // 3. Update the UI with the user's data
+                const welcomeMessage = document.getElementById('welcome-message');
+                if (profile && profile.first_name) {
+                    welcomeMessage.textContent = `Welcome back, ${profile.first_name}!`;
+                }
+            } catch (error) {
+                console.error('Error fetching user profile:', error.message);
+                // Keep the generic welcome message if the profile can't be fetched
+            }
+
+            // TODO: Fetch and display other dynamic data like stats, jobs, etc.
+        });
     </script>
 </body>
 </html>

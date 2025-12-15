@@ -1,28 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const loadHTML = (selector, url) => {
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to load ${url}: ${response.statusText}`);
-                }
-                return response.text();
-            })
-            .then(data => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = data;
-
-                    // Move all child nodes, including script tags, to the placeholder
-                    while (tempDiv.firstChild) {
-                        element.appendChild(tempDiv.firstChild);
-                    }
-                }
-            })
-            .catch(error => console.error(error));
+    const loadHTML = async (selector, url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${url}: ${response.statusText}`);
+            }
+            const data = await response.text();
+            const element = document.querySelector(selector);
+            if (element) {
+                element.innerHTML = data;
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
-    // Load header and footer into their placeholders
-    loadHTML('#header-placeholder', '_header.html');
-    loadHTML('#footer-placeholder', '_footer.html');
+    const initializePage = async () => {
+        // Load common components
+        await Promise.all([
+            loadHTML('#header-placeholder', '_header.html'),
+            loadHTML('#footer-placeholder', '_footer.html')
+        ]);
+        
+        // After includes are loaded, initialize page-specific logic
+        if (typeof initializeMain === 'function') {
+            initializeMain();
+        }
+        if (typeof initializeLoginPage === 'function' && document.getElementById('login-form')) {
+            initializeLoginPage();
+        }
+    };
+
+    initializePage();
 });

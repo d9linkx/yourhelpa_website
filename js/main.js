@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function initializeMain() {
     // --- Mobile Navigation ---
     // This also needs to run after the header is loaded.
     const initializeMobileNav = () => {
@@ -7,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const navOverlay = document.querySelector('.nav-overlay');
 
         if (!navToggle || !mainNav || !navOverlay) {
-            // If elements aren't loaded yet, try again shortly.
-            setTimeout(initializeMobileNav, 100);
             return;
         }
 
@@ -25,17 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Set active navigation link ---
     // This needs to run after the header is loaded, so we use a small delay.
-    // A more robust solution might use MutationObserver or a callback.
-    setTimeout(() => {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const navLinks = document.querySelectorAll('#main-nav a');
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add('active');
-            }
-        });
-    }, 200);
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('#main-nav a');
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
 
     // Initialize mobile navigation logic
     initializeMobileNav();
-});
+}

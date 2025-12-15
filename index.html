@@ -904,10 +904,13 @@
 
     <!-- Supabase Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/includes.js"></script>
-    <script src="/js/supabase-client.js"></script>
-    <script src="/script.js"></script>
+    <!-- config.js must be loaded before supabase-client.js -->
+    <script src="js/config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <!-- Load logic modules first -->
+    <script src="js/main.js"></script>
+    <!-- includes.js will execute the logic after loading HTML partials -->
+    <script src="js/includes.js"></script>
     <script>
         // Logic for simulated FOMO notification
         document.addEventListener('DOMContentLoaded', () => {
