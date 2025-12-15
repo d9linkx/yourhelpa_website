@@ -98,6 +98,13 @@
             display: flex;
             gap: 1rem;
         }
+
+        @media (max-width: 600px) {
+            .dispute-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
     </style>
 </head>
 <body>
@@ -112,25 +119,25 @@
                 </a>
             </div>
 
-            <div class="job-details-card">
-                <h1>Home Cleaning for 3-Bedroom Apartment</h1>
+            <div class="job-details-card" id="job-details-card-container" style="display: none;">
+                <h1 id="job-title"></h1>
 
                 <div class="job-meta-info">
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Jane A.</span>
-                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Ikeja, Lagos</span>
-                    <span class="status-badge">Payment in Escrow</span>
+                    <span id="client-name"></span>
+                    <span id="job-location"></span>
+                    <span id="job-status" class="status-badge"></span>
                 </div>
 
                 <div class="job-actions-main">
-                    <a href="#" class="button-primary">Visit Chat</a>
+                    <a href="#" id="chat-link" class="button-primary">Visit Chat</a>
                 </div>
 
                 <div class="dispute-section">
                     <h2>Having an issue?</h2>
                     <p>If there's a problem with this job or the client, you can raise a dispute. Our support team will get in touch to help resolve it.</p>
                     <div class="dispute-actions">
-                        <a href="#" class="button-secondary">Dispute via Chat</a>
-                        <a href="mailto:support@yourhelpa.com.ng?subject=Dispute for Job: Home Cleaning" class="button-secondary">Dispute via Email</a>
+                        <a href="#" id="dispute-chat-link" class="button-secondary">Dispute via Chat</a>
+                        <a href="mailto:support@yourhelpa.com.ng" id="dispute-email-link" class="button-secondary">Dispute via Email</a>
                     </div>
                 </div>
             </div>
@@ -145,8 +152,72 @@
     <script src="js/main.js"></script>
     <script src="js/includes.js"></script>
     <script>
-        // Future logic for this page will go here.
-        // e.g., get job ID from URL and fetch details from Supabase.
+        document.addEventListener('DOMContentLoaded', async () => {
+            const detailsContainer = document.querySelector('.details-container');
+            const cardContainer = document.getElementById('job-details-card-container');
+
+            // Helper to show messages
+            const showMessage = (message, isError = false) => {
+                detailsContainer.innerHTML = `<p class="${isError ? 'error-text' : ''}" style="text-align: center; padding: 2rem;">${message}</p>`;
+            };
+
+            // 1. Check for user session
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 2. Get Job ID from URL
+            const params = new URLSearchParams(window.location.search);
+            const jobId = params.get('id');
+
+            if (!jobId) {
+                showMessage('No job ID provided. Please go back to the dashboard and select a job.', true);
+                return;
+            }
+
+            // 3. Fetch Job Details from Supabase
+            try {
+                const { data: job, error } = await supabase
+                    .from('jobs')
+                    .select(`*, client:client_id ( first_name, last_name )`)
+                    .eq('id', jobId)
+                    .eq('helpa_id', session.user.id) // Security: Ensure this job belongs to the logged-in helpa
+                    .single();
+
+                if (error) throw error;
+
+                if (!job) {
+                    showMessage("Job not found or you don't have permission to view it.", true);
+                    return;
+                }
+
+                // 4. Populate the page with data
+                document.getElementById('job-title').textContent = job.title;
+                
+                const clientName = job.client ? `${job.client.first_name} ${job.client.last_name.charAt(0)}.` : 'N/A';
+                document.getElementById('client-name').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${clientName}`;
+                
+                document.getElementById('job-location').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> ${job.location || 'N/A'}`;
+                
+                const statusText = job.payment_status || job.status;
+                const jobStatusEl = document.getElementById('job-status');
+                jobStatusEl.textContent = statusText;
+                // Optional: style status badge based on text
+
+                // Update dynamic links
+                const subject = encodeURIComponent(`Dispute for Job: ${job.title} (ID: ${job.id})`);
+                document.getElementById('dispute-email-link').href = `mailto:support@yourhelpa.com.ng?subject=${subject}`;
+                // You would set the real chat links here, e.g., document.getElementById('chat-link').href = `/chat/${job.chat_id}`;
+
+                cardContainer.style.display = 'block'; // Show the card now that it's populated
+
+            } catch (error) {
+                console.error('Error fetching job details:', error.message);
+                showMessage('Could not load job details at this time. Please try again later.', true);
+            }
+        });
     </script>
 </body>
 </html>

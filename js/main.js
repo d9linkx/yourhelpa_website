@@ -1,5 +1,4 @@
 function initializeMain() {
-    // --- Mobile Navigation ---
     // This also needs to run after the header is loaded.
     const initializeMobileNav = () => {
         const navToggle = document.getElementById('nav-toggle');
@@ -33,4 +32,11 @@ function initializeMain() {
 
     // Initialize mobile navigation logic
     initializeMobileNav();
+
+    // Add a style rule for the visible class
+    const style = document.createElement('style');
+    style.textContent = `
+        .mobile-nav-login-btn.is-visible { display: block !important; }
+    `;
+    document.head.appendChild(style);
 }

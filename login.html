@@ -99,5 +99,13 @@
     <script src="login.js"></script>
     <!-- includes.js will execute the logic after loading HTML partials -->
     <script src="js/includes.js"></script>
+    <script>
+        // This function will be called from includes.js after the header loads
+        window.updateNavBasedOnAuth = (session) => {
+            if (!session) {
+                document.querySelector('.mobile-nav-login-btn')?.classList.add('is-visible');
+            }
+        };
+    </script>
 </body>
 </html>
