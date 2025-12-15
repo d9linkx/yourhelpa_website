@@ -53,14 +53,18 @@
 
         /* Style the login button inside the mobile navigation menu */
         @media (max-width: 991px) {
-            .nav-login-link a.button {
+            .mobile-nav-login-btn {
                 background-color: var(--primary-color);
                 color: white;
                 border-radius: 8px;
                 width: 10rem;
+                margin-top: 9rem;
                 display: inline-block;
-                padding: 1.75rem 1.5rem;
                 text-align: center;
+            }
+
+            .mobile-only-actions {
+                margin-top: 2rem;
             }
         }
     </style>
@@ -80,10 +84,9 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <!-- Mobile-only Login Button -->
-            <a href="login.html" class="button-primary mobile-nav-login-btn">
-                Helpa Login
-            </a>
+            <ul class="mobile-only-actions">
+                <li><a href="login.html" class="button-primary mobile-nav-login-btn">Helpa Login</a></li>
+            </ul>
         </nav>
 
         <!-- Action buttons for desktop -->

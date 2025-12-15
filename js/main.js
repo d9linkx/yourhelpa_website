@@ -36,7 +36,7 @@ function initializeMain() {
     // Add a style rule for the visible class
     const style = document.createElement('style');
     style.textContent = `
-        .mobile-nav-login-btn.is-visible { display: block !important; }
+        .mobile-nav-login-btn.is-visible { display: inline-block !important; }
     `;
     document.head.appendChild(style);
 }

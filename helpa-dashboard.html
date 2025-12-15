@@ -243,13 +243,19 @@
                 color: var(--primary-color);
             }
 
+            .mobile-only-actions {
+                display: none; /* Hidden on desktop */
+                margin-top: 2rem;
+                padding-top: 2rem;
+                border-top: 1px solid var(--border-color);
+            }
+
             /* Style for the login button in the mobile nav */
             .mobile-nav-login-btn {
                 display: none; /* Hidden by default, shown via JS if not logged in. Also hidden on desktop. */
-                margin-top: auto; /* Pushes the button to the bottom */
-                margin-bottom: 2rem; /* Adds some space at the very bottom */
-                text-align: center;
-                width: calc(100% - 4rem); /* Match padding of the nav menu */
+                text-align: center; /* Center text inside the button */
+                padding-left: 2.5rem; /* Add wider horizontal padding */
+                padding-right: 2.5rem; /* Add wider horizontal padding */
             }
         }
     </style>
