@@ -21,6 +21,26 @@
             align-items: flex-start;
         }
 
+        /* --- Back Navigation --- */
+        .page-navigation {
+            grid-column: 1 / -1; /* Span across all grid columns */
+            margin-bottom: 0; /* Reset margin as grid gap handles spacing */
+        }
+
+        .page-navigation a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .page-navigation a:hover {
+            color: var(--primary-color);
+        }
+
         /* --- Tab Navigation Sidebar --- */
         .settings-nav {
             position: sticky;
@@ -137,6 +157,134 @@
                 padding: 1.5rem;
             }
         }
+
+        /* --- Operating Hours Styles --- */
+        .operating-hours-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .hours-details {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.5rem 1.5rem;
+        }
+        .hours-details summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            padding: 1rem 0;
+            cursor: pointer;
+            list-style: none; /* Remove default marker */
+        }
+        .hours-details summary::-webkit-details-marker { display: none; } /* Chrome/Safari */
+        .hours-details .dropdown-arrow {
+            color: var(--text-muted-color);
+            transition: transform 0.2s ease;
+        }
+        .hours-details[open] summary .dropdown-arrow {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+        .hours-details .operating-hours-list { margin-top: 1rem; }
+
+        .day-hours-group {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 1rem;
+            border-radius: 8px;
+            background-color: var(--background-color);
+        }
+        .day-label { font-weight: 500; display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+        .day-label input[type="checkbox"] { height: 1.2em; width: 1.2em; }
+        .day-hours-group .time-inputs { display: flex; gap: 1rem; }
+
+        @media (max-width: 600px) {
+            .day-hours-group {
+                gap: 0.75rem;
+            }
+            .day-label { grid-row: 1; }
+        }
+
+        /* --- Location Tag Input Styles --- */
+        .state-service-area {
+            background-color: var(--background-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .state-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .state-header h4 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+        .remove-state-btn { background: none; border: none; color: var(--error-color); cursor: pointer; font-weight: 500; }
+        .tags-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+        }
+        .tags-input-container input { border: none; outline: none; flex-grow: 1; padding: 0.5rem; font-size: 1rem; }
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            color: var(--primary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .tag .remove-tag { cursor: pointer; font-weight: bold; }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal-overlay.is-active {
+            display: flex;
+        }
+        .modal-content {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: var(--shadow-xl);
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        .modal-actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        .modal-date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 500px) {
+            .modal-date-inputs { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -144,6 +292,13 @@
 
     <main>
         <div class="settings-container">
+            <div class="page-navigation">
+                <a href="helpa-dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    Back to Dashboard
+                </a>
+            </div>
+
             <nav class="settings-nav">
                 <ul>
                     <li><a href="#profile" class="tab-link active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile Details</a></li>
@@ -238,20 +393,95 @@
                     <form id="services-form">
                         <fieldset class="form-fieldset">
                             <legend>Operating Area & Availability</legend>
-                            <div class="form-group">
-                                <label for="service-radius">Max Travel Radius</label>
-                                <input type="range" id="service-radius" name="service-radius" min="5" max="50" value="10" step="5">
-                                <small>Set your maximum travel distance from your base location. Current: <span id="radius-value">10</span>km</small>
+                             <div class="form-group">
+                                <label for="base-location">Your Base Location</label>
+                                <input type="text" id="base-location" name="base-location" placeholder="e.g., Ikeja, Lagos" required>
+                                <small>Your primary city or area. This helps customers find you.</small>
                             </div>
                             <div class="form-group">
-                                <label>Regular Operating Hours</label>
-                                <!-- Simplified for example -->
-                                <input type="text" value="Mon - Fri, 9:00 AM - 5:00 PM">
+                                <label>Service States & Locations</label>
+                                <div class="add-day-controls" style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                    <select id="state-select" style="flex-grow: 1;">
+                                        <!-- States will be populated by JS -->
+                                    </select>
+                                    <button type="button" id="add-state-btn" class="button-secondary">Add State</button>
+                                </div>
+                                <div id="states-container">
+                                    <!-- Dynamically added state sections will go here -->
+                                </div>
+                                <small>Add the states you operate in, then specify the exact locations (e.g., LGAs, neighborhoods) within each state.</small>
+                            </div>
+                            <div class="form-group">
+                                <details class="hours-details">
+                                    <summary>
+                                        <span>Regular Operating Hours</span>
+                                        <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </summary>
+                                    <div class="operating-hours-list">
+                                        <!-- Monday -->
+                                        <div class="day-hours-group">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-mon" checked> Monday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-mon" value="09:00">
+                                                <input type="time" name="hours-end-mon" value="17:00">
+                                            </div>
+                                        </div>
+                                        <!-- Tuesday -->
+                                        <div class="day-hours-group">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-tue" checked> Tuesday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-tue" value="09:00">
+                                                <input type="time" name="hours-end-tue" value="17:00">
+                                            </div>
+                                        </div>
+                                        <!-- Wednesday -->
+                                        <div class="day-hours-group">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-wed" checked> Wednesday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-wed" value="09:00">
+                                                <input type="time" name="hours-end-wed" value="17:00">
+                                            </div>
+                                        </div>
+                                        <!-- Thursday -->
+                                        <div class="day-hours-group">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-thu" checked> Thursday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-thu" value="09:00">
+                                                <input type="time" name="hours-end-thu" value="17:00">
+                                            </div>
+                                        </div>
+                                        <!-- Friday -->
+                                        <div class="day-hours-group">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-fri" checked> Friday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-fri" value="09:00">
+                                                <input type="time" name="hours-end-fri" value="17:00">
+                                            </div>
+                                        </div>
+                                        <!-- Saturday -->
+                                        <div class="day-hours-group" style="background-color: var(--background-color);">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-sat"> Saturday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-sat" value="10:00" disabled>
+                                                <input type="time" name="hours-end-sat" value="16:00" disabled>
+                                            </div>
+                                        </div>
+                                        <!-- Sunday -->
+                                        <div class="day-hours-group" style="background-color: var(--background-color);">
+                                            <label class="day-label"><input type="checkbox" name="hours-active-sun"> Sunday</label>
+                                            <div class="time-inputs">
+                                                <input type="time" name="hours-start-sun" value="10:00" disabled>
+                                                <input type="time" name="hours-end-sun" value="16:00" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <small>Uncheck a day to mark yourself as unavailable.</small>
+                                </details>
                             </div>
                             <div class="form-group">
                                 <label>Vacation Mode</label>
-                                <button type="button" class="button-secondary">Set Vacation Time</button>
-                                <small>Disable job requests for holidays or breaks.</small>
+                                <button type="button" id="vacation-mode-btn" class="button-secondary">Set Vacation Time</button>
+                                <small id="vacation-status-text">Disable job requests for holidays or breaks.</small>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
@@ -345,13 +575,36 @@
 
     <div id="footer-placeholder"></div>
 
+    <!-- Vacation Modal -->
+    <div id="vacation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Set Vacation Time</h2>
+            <p>You will not receive new job requests between these dates. Existing jobs will not be affected.</p>
+            <div class="modal-date-inputs">
+                <div class="form-group">
+                    <label for="vacation-start">Start Date</label>
+                    <input type="date" id="vacation-start" name="vacation-start">
+                </div>
+                <div class="form-group">
+                    <label for="vacation-end">End Date</label>
+                    <input type="date" id="vacation-end" name="vacation-end">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="clear-vacation-btn" class="button-danger" style="margin-right: auto;">Clear Vacation</button>
+                <button type="button" id="cancel-vacation-btn" class="button-secondary">Cancel</button>
+                <button type="button" id="save-vacation-btn" class="button-primary">Save Dates</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/main.js"></script>
     <script src="js/includes.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const tabLinks = document.querySelectorAll('.tab-link');
             const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -389,6 +642,352 @@
                 const targetId = window.location.hash.substring(1);
                 switchTab(targetId);
             }
+
+            // --- Service Radius Slider (if it exists) ---
+            const radiusSlider = document.getElementById('service-radius');
+            const radiusValue = document.getElementById('radius-value');
+            if (radiusSlider && radiusValue) {
+                radiusSlider.addEventListener('input', (e) => { radiusValue.textContent = e.target.value; });
+            }
+
+            // --- Operating Hours Logic ---
+            const hoursList = document.querySelector('.operating-hours-list');
+            if (hoursList) {
+                hoursList.addEventListener('change', (e) => {
+                    if (e.target.type === 'checkbox') {
+                        const dayGroup = e.target.closest('.day-hours-group');
+                        if (dayGroup) {
+                            const timeInputs = dayGroup.querySelectorAll('input[type="time"]');
+                            timeInputs.forEach(input => {
+                                input.disabled = !e.target.checked;
+                            });
+                            // Visually distinguish disabled days
+                            dayGroup.style.backgroundColor = e.target.checked ? 'var(--background-color)' : '';
+                        }
+                    }
+                });
+            }
+
+            // --- Location & State Picker Logic ---
+            const nigerianStates = ["Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"];
+            const stateSelect = document.getElementById('state-select');
+            const addStateBtn = document.getElementById('add-state-btn');
+            const statesContainer = document.getElementById('states-container');
+
+            // Populate state dropdown
+            nigerianStates.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state;
+                option.textContent = state;
+                stateSelect.appendChild(option);
+            });
+
+            const createTagInput = (stateName, initialTags = []) => {
+                const stateId = stateName.replace(/\s+/g, '-').toLowerCase();
+                const area = document.createElement('div');
+                area.className = 'state-service-area';
+                area.dataset.state = stateName;
+                area.innerHTML = `
+                    <div class="state-header">
+                        <h4>${stateName}</h4>
+                        <button type="button" class="remove-state-btn">Remove</button>
+                    </div>
+                    <div class="tags-input-container" id="tags-for-${stateId}">
+                        <input type="text" placeholder="Add locations (e.g., Ikeja) and press Enter..." class="locations-input">
+                    </div>
+                    <input type="hidden" name="locations-${stateId}" class="hidden-locations-input">
+                `;
+                statesContainer.appendChild(area);
+
+                const tagsContainer = area.querySelector('.tags-input-container');
+                const textInput = area.querySelector('.locations-input');
+                const hiddenInput = area.querySelector('.hidden-locations-input');
+
+                let tags = [...initialTags]; // Use the initialTags parameter
+
+                const renderTags = () => {
+                    // Clear all but the text input
+                    tagsContainer.querySelectorAll('.tag').forEach(t => t.remove());
+                    // Re-add tags
+                    tags.slice().reverse().forEach(tag => {
+                        const tagEl = document.createElement('span');
+                        tagEl.className = 'tag';
+                        tagEl.innerHTML = `${tag} <span class="remove-tag" data-tag="${tag}">&times;</span>`;
+                        tagsContainer.prepend(tagEl);
+                    });
+                    // Update hidden input for form submission
+                    hiddenInput.value = tags.join(',');
+                };
+
+                textInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && textInput.value.trim()) {
+                        e.preventDefault();
+                        const newTags = textInput.value.split(',').map(t => t.trim()).filter(Boolean);
+                        tags = [...new Set([...tags, ...newTags])]; // Add new tags, ensure uniqueness
+                        renderTags();
+                        textInput.value = '';
+                    }
+                });
+
+                tagsContainer.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-tag')) {
+                        const tagToRemove = e.target.dataset.tag;
+                        tags = tags.filter(t => t !== tagToRemove);
+                        renderTags();
+                    }
+                });
+
+                renderTags(); // Render any initial tags passed in
+            };
+
+            addStateBtn.addEventListener('click', () => {
+                const selectedState = stateSelect.value;
+                if (statesContainer.querySelector(`[data-state="${selectedState}"]`)) {
+                    alert(`${selectedState} has already been added.`);
+                    return;
+                }
+                createTagInput(selectedState);
+            });
+
+            statesContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-state-btn')) {
+                    e.target.closest('.state-service-area').remove();
+                }
+            });
+
+            // --- Profile Form Logic (Example) ---
+            // You would add loading and saving logic for the profile form here.
+
+            // --- Auth & Data Loading ---
+            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.href = 'login.html';
+                return;
+            }
+            const user = session.user;
+
+            // --- Load All Settings Data ---
+            loadAllSettings(user.id);
+
+            // --- Vacation Mode Logic ---
+            const vacationModal = document.getElementById('vacation-modal');
+            const openModalBtn = document.getElementById('vacation-mode-btn');
+            const closeModalBtn = document.getElementById('cancel-vacation-btn');
+            const saveVacationBtn = document.getElementById('save-vacation-btn');
+            const clearVacationBtn = document.getElementById('clear-vacation-btn');
+            const statusText = document.getElementById('vacation-status-text');
+            const startDateInput = document.getElementById('vacation-start');
+            const endDateInput = document.getElementById('vacation-end');
+
+            const openModal = () => vacationModal.classList.add('is-active');
+            const closeModal = () => vacationModal.classList.remove('is-active');
+
+            openModalBtn.addEventListener('click', openModal);
+            closeModalBtn.addEventListener('click', closeModal);
+            vacationModal.addEventListener('click', (e) => {
+                if (e.target === vacationModal) closeModal(); // Close if clicking on overlay
+            });
+
+            // Function to update the main button and status text
+            const updateVacationUI = (profile) => {
+                const start = profile?.vacation_start_date;
+                const end = profile?.vacation_end_date;
+
+                if (start && end) {
+                    const startDate = new Date(start);
+                    const endDate = new Date(end);
+                    const now = new Date();
+                    now.setHours(0,0,0,0); // Compare dates only
+
+                    // Check if the vacation period is current or in the future
+                    if (endDate >= now) {
+                        openModalBtn.textContent = 'Edit Vacation';
+                        statusText.innerHTML = `<strong>On Vacation:</strong> ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
+                        statusText.style.color = 'var(--primary-color)';
+                        // Pre-fill modal inputs
+                        startDateInput.value = start;
+                        endDateInput.value = end;
+                        clearVacationBtn.style.display = 'block';
+                        return;
+                    }
+                }
+                
+                // Default state
+                openModalBtn.textContent = 'Set Vacation Time';
+                statusText.innerHTML = 'Disable job requests for holidays or breaks.';
+                statusText.style.color = 'var(--text-muted-color)';
+                startDateInput.value = '';
+                endDateInput.value = '';
+                clearVacationBtn.style.display = 'none';
+            };
+
+
+            // Save vacation dates
+            saveVacationBtn.addEventListener('click', async () => {
+                const startDate = startDateInput.value;
+                const endDate = endDateInput.value;
+
+                if (!startDate || !endDate) {
+                    alert('Please select both a start and end date.');
+                    return;
+                }
+                if (new Date(endDate) < new Date(startDate)) {
+                    alert('End date cannot be before the start date.');
+                    return;
+                }
+
+                saveVacationBtn.disabled = true;
+                saveVacationBtn.textContent = 'Saving...';
+
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .update({ vacation_start_date: startDate, vacation_end_date: endDate })
+                    .eq('id', user.id)
+                    .select()
+                    .single();
+
+                if (error) {
+                    alert('Error saving vacation dates: ' + error.message);
+                } else {
+                    updateVacationUI(data);
+                    closeModal();
+                }
+                saveVacationBtn.disabled = false;
+                saveVacationBtn.textContent = 'Save Dates';
+            });
+
+            // Clear vacation dates
+            clearVacationBtn.addEventListener('click', async () => {
+                if (!confirm('Are you sure you want to clear your vacation dates and become available for jobs immediately?')) return;
+
+                const { data, error } = await supabase
+                    .from('profiles')
+                    .update({ vacation_start_date: null, vacation_end_date: null })
+                    .eq('id', user.id)
+                    .select()
+                    .single();
+                
+                if (error) alert('Error clearing dates: ' + error.message);
+                else updateVacationUI(data);
+                
+                closeModal();
+            });
+
+            // --- Main Function to Load and Populate All Forms ---
+            async function loadAllSettings(userId) {
+                const { data: profile, error } = await supabase
+                    .from('profiles')
+                    .select('base_location, service_areas, operating_hours, call_fee, hourly_rate, emergency_surcharge, vacation_start_date, vacation_end_date')
+                    .eq('id', userId)
+                    .single();
+
+                if (error) {
+                    console.error('Error loading settings:', error.message);
+                    alert('Could not load your settings. Please refresh the page.');
+                    return;
+                }
+
+                if (!profile) return;
+
+                // Populate Service & Pricing form
+                document.getElementById('base-location').value = profile.base_location || '';
+                document.getElementById('call-fee').value = profile.call_fee || '';
+                document.getElementById('hourly-rate').value = profile.hourly_rate || '';
+                document.getElementById('emergency-surcharge').value = profile.emergency_surcharge || '';
+
+                // Populate service areas
+                if (profile.service_areas) {
+                    statesContainer.innerHTML = ''; // Clear any defaults
+                    for (const state in profile.service_areas) {
+                        createTagInput(state, profile.service_areas[state]);
+                    }
+                } else {
+                    // If no areas are set, pre-populate with Lagos for convenience
+                    createTagInput('Lagos');
+                }
+
+                // Populate operating hours
+                if (profile.operating_hours) {
+                    const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+                    days.forEach(day => {
+                        const dayData = profile.operating_hours[day];
+                        const checkbox = document.querySelector(`input[name="hours-active-${day}"]`);
+                        const startInput = document.querySelector(`input[name="hours-start-${day}"]`);
+                        const endInput = document.querySelector(`input[name="hours-end-${day}"]`);
+
+                        if (dayData && checkbox && startInput && endInput) {
+                            checkbox.checked = dayData.active;
+                            startInput.value = dayData.start;
+                            endInput.value = dayData.end;
+                            startInput.disabled = !dayData.active;
+                            endInput.disabled = !dayData.active;
+                            const dayGroup = checkbox.closest('.day-hours-group');
+                            if (dayGroup) {
+                                dayGroup.style.backgroundColor = dayData.active ? 'var(--background-color)' : '';
+                            }
+                        }
+                    });
+                }
+
+                // Populate vacation UI
+                updateVacationUI(profile);
+            }
+
+            // --- Save Service & Pricing Form ---
+            const servicesForm = document.getElementById('services-form');
+            servicesForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const saveBtn = servicesForm.querySelector('button[type="submit"]');
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Saving...';
+
+                // 1. Collect Service Areas
+                const serviceAreas = {};
+                document.querySelectorAll('.state-service-area').forEach(area => {
+                    const state = area.dataset.state;
+                    const tagsValue = area.querySelector('.hidden-locations-input').value;
+                    if (state && tagsValue) {
+                        serviceAreas[state] = tagsValue.split(',').filter(Boolean);
+                    }
+                });
+
+                // 2. Collect Operating Hours
+                const operatingHours = {};
+                const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+                days.forEach(day => {
+                    const checkbox = document.querySelector(`input[name="hours-active-${day}"]`);
+                    operatingHours[day] = {
+                        active: checkbox.checked,
+                        start: document.querySelector(`input[name="hours-start-${day}"]`).value,
+                        end: document.querySelector(`input[name="hours-end-${day}"]`).value,
+                    };
+                });
+
+                // 3. Construct the update object
+                const updateData = {
+                    base_location: document.getElementById('base-location').value,
+                    call_fee: parseFloat(document.getElementById('call-fee').value) || 0,
+                    hourly_rate: parseFloat(document.getElementById('hourly-rate').value) || 0,
+                    emergency_surcharge: parseFloat(document.getElementById('emergency-surcharge').value) || 0,
+                    service_areas: serviceAreas,
+                    operating_hours: operatingHours,
+                };
+
+                // 4. Update Supabase
+                const { error } = await supabase
+                    .from('profiles')
+                    .update(updateData)
+                    .eq('id', user.id);
+
+                if (error) {
+                    alert('Error saving settings: ' + error.message);
+                    saveBtn.textContent = 'Save Pricing & Availability';
+                } else {
+                    saveBtn.textContent = 'Saved!';
+                    setTimeout(() => { saveBtn.textContent = 'Save Pricing & Availability'; }, 2000);
+                }
+                saveBtn.disabled = false;
+            });
         });
     </script>
 </body>

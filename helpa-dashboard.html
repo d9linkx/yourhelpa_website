@@ -472,16 +472,13 @@
 
             } catch (error) {
                 console.error('Error fetching stats:', error.message);
-                // You can set stat values to 'Error' or 'N/A'
+                // If fetching fails, set stat values to 0
                 ['in-escrow-value', 'profile-views-value', 'monthly-earnings-value', 'jobs-completed-value']
-                    .forEach(id => document.getElementById(id).textContent = 'N/A');
+                    .forEach(id => document.getElementById(id).textContent = (id.includes('value')) ? '0' : formatCurrency(0));
             }
         }
 
         async function fetchAndRenderJobs(userId) {
-            let allJobs = []; // Store all jobs to avoid re-fetching
-            const ongoingBtn = document.getElementById('ongoing-filter-btn');
-            const completedBtn = document.getElementById('completed-filter-btn');
             const container = document.getElementById('jobs-list-container');
             try {
                 const { data: jobs, error } = await supabase
@@ -492,9 +489,10 @@
 
                 if (error) throw error;
 
-                allJobs = jobs;
+                let allJobs = jobs;
 
                 const renderJobsByStatus = (status) => {
+                    sessionStorage.setItem('jobFilter', status); // Store active filter
                     container.innerHTML = ''; // Clear current list
                     const filteredJobs = allJobs.filter(j => j.status === status);
 
@@ -525,11 +523,25 @@
                 const ongoingJobsCount = allJobs.filter(j => j.status === 'ongoing').length;
                 const completedJobsCount = allJobs.filter(j => j.status === 'completed').length;
 
+                const ongoingBtn = document.getElementById('ongoing-filter-btn');
+                const completedBtn = document.getElementById('completed-filter-btn');
+
                 ongoingBtn.textContent = `Ongoing (${ongoingJobsCount})`;
                 completedBtn.textContent = `Completed (${completedJobsCount})`;
 
-                // Initial render (show ongoing jobs)
-                renderJobsByStatus('ongoing');
+                // Check session storage for a previously set filter
+                const activeFilter = sessionStorage.getItem('jobFilter') || 'ongoing';
+                
+                // Set initial active state and render
+                if (activeFilter === 'completed') {
+                    completedBtn.classList.add('active');
+                    ongoingBtn.classList.remove('active');
+                    renderJobsByStatus('completed');
+                } else {
+                    ongoingBtn.classList.add('active');
+                    completedBtn.classList.remove('active');
+                    renderJobsByStatus('ongoing');
+                }
 
                 // Add event listeners for filtering
                 ongoingBtn.addEventListener('click', () => {
@@ -551,9 +563,6 @@
         }
 
         async function fetchAndRenderServices(userId) {
-            let allJobs = []; // Store all jobs to avoid re-fetching
-            const ongoingBtn = document.getElementById('ongoing-filter-btn');
-            const completedBtn = document.getElementById('completed-filter-btn');
             const container = document.getElementById('services-list-container');
             try {
                 const { data: services, error } = await supabase
