@@ -1,7 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "//": "Only rewrite requests that do NOT contain a file extension. This preserves access to static assets like js/, css/, images, etc.",
+      "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
     }
   ]

@@ -65,6 +65,8 @@
       },
       "scripts": {
             "dev": "vite",
+            "generate-config": "node scripts/generate-config.js",
+            "prebuild": "node scripts/generate-config.js",
             "build": "vite build"
       }
 }
