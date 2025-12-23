@@ -268,7 +268,7 @@
             <!-- Dashboard Header -->
             <header class="dashboard-header">
                 <div>
-                    <h1 id="welcome-message">Welcome back, ...!</h1>
+                    <h1 id="welcome-message">Welcome back, ...</h1>
                     <p>Tap on any card to navigate</p>
                 </div>
             </header>
@@ -444,7 +444,7 @@
                 const welcomeMessage = document.getElementById('welcome-message');
                 if (helpa && helpa.full_name) {
                     const firstName = helpa.full_name.split(' ')[0];
-                    welcomeMessage.textContent = `Welcome back, ${firstName}!`;
+                    welcomeMessage.textContent = `Welcome back, ${firstName}`;
                 }
             } catch (error) {
                 console.error('Error fetching helpa profile:', error.message);
