@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const initializePage = async () => {
         // Load common components
         await Promise.all([
-            loadHTML('#header-placeholder', '/_header.html'),
-            loadHTML('#footer-placeholder', '/_footer.html')
+            loadHTML('#header-placeholder', '_header.html'),
+            loadHTML('#footer-placeholder', '_footer.html')
         ]);
         
         // Check auth status and update nav accordingly

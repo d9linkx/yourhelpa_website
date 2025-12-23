@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const loadAllAppTemplates = async () => {
-        await loadTemplate('/templates/app-header.html', 'app-header-placeholder');
-        await loadTemplate('/templates/app-footer.html', 'app-footer-placeholder');
+        await loadTemplate('../templates/app-header.html', 'app-header-placeholder');
+        await loadTemplate('../templates/app-footer.html', 'app-footer-placeholder');
     };
 
     loadAllAppTemplates();

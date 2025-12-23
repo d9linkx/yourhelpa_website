@@ -306,33 +306,6 @@
             if (authData.user) {
                 // --- Success ---
                 // This part only runs if both signup and profile insertion succeed.
-                // Fire-and-forget: ask the server to send a welcome email. We verify the session server-side.
-                (async () => {
-                    try {
-                        const { data: { session } } = await supabase.auth.getSession();
-                        const token = session?.access_token;
-                        if (token) {
-                            fetch('/api/send-welcome', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${token}`
-                                },
-                                body: JSON.stringify({ email, fullName })
-                            })
-                            .then(res => res.json())
-                            .then(json => {
-                                if (!json.ok) console.warn('send-welcome response:', json);
-                            })
-                            .catch(err => console.error('send-welcome failed:', err));
-                        } else {
-                            console.warn('No session token available to request welcome email.');
-                        }
-                    } catch (e) {
-                        console.error('Error while requesting welcome email:', e);
-                    }
-                })();
-
                 form.style.display = 'none';
                 successMessageDiv.innerHTML = `
                     <h4>Registration Complete. Check Your Email.</h4>
