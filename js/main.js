@@ -33,6 +33,9 @@ function initializeMain() {
     // Initialize mobile navigation logic
     initializeMobileNav();
 
+    // Optimize images for faster loading
+    optimizeImages();
+
     // Add a style rule for the visible class
     const style = document.createElement('style');
     style.textContent = `
@@ -44,6 +47,35 @@ function initializeMain() {
     initializeFomoNotification();
     initializeSwellAnimation();
     initializeScrollInAnimations();
+}
+
+// Image optimizations applied at runtime:
+// - set loading="lazy" for non-critical images
+// - set decoding="async" to avoid render-blocking
+// - respect [data-no-lazy] or .no-lazy to skip lazy-loading for critical images
+function optimizeImages() {
+    try {
+        const imgs = Array.from(document.getElementsByTagName('img'));
+        imgs.forEach(img => {
+            // Skip if explicitly marked to avoid lazy-loading
+            if (img.hasAttribute('data-no-lazy') || img.classList.contains('no-lazy')) return;
+
+            // If image already has loading attribute, don't override
+            if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+
+            // Non-blocking decoding
+            if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+
+            // If image is a logo or marked important, prioritize it
+            if (img.classList.contains('logo-img') || img.closest('.hero')) {
+                img.setAttribute('fetchpriority', 'high');
+                img.setAttribute('loading', 'eager');
+                img.removeAttribute('decoding');
+            }
+        });
+    } catch (e) {
+        console.warn('optimizeImages error', e);
+    }
 }
 
 function initializeFomoNotification() {
