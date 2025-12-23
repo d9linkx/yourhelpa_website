@@ -133,10 +133,5 @@ function initializeLoginPage() {
 }
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    if (typeof supabase === 'undefined') {
-        // Supabase client might not be initialized yet; the console message helps debug load order issues
-        console.warn('Supabase client is not available when initializing login page. Ensure js/config.js and js/supabase-client.js are loaded before login.js');
-    }
-    initializeLoginPage();
-});
+// Expose to window so includes.js can call it
+window.initializeLoginPage = initializeLoginPage;
