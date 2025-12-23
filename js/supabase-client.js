@@ -17,7 +17,18 @@ if (libAvailable) {
 	} catch (err) {
 		console.error('[supabase-client] Failed to initialize Supabase client:', err);
 		// Provide a minimal stub so consuming code fails gracefully with a clearer message
-		window.supabase = { auth: {} };
+		window.supabase = {
+			auth: {
+				async signInWithPassword() { throw new Error('Client initialization failed: ' + err.message); },
+				async signOut() { throw new Error('Client initialization failed'); },
+				async getSession() { return { data: { session: null }, error: new Error('Client initialization failed') }; }
+			},
+			from: () => ({
+				select: () => ({
+					eq: () => ({ maybeSingle: async () => ({ error: new Error('Client initialization failed') }) })
+				})
+			})
+		};
 	}
 } else {
 	console.error('[supabase-client] Supabase library not available. Did the CDN script load before this file?');

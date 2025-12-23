@@ -268,14 +268,8 @@
             <!-- Dashboard Header -->
             <header class="dashboard-header">
                 <div>
-                    <h1 id="welcome-message">Welcome back!</h1>
-                    <p>Here's what's happening with your Helpa profile today.</p>
-                </div>
-                <div class="header-actions">
-                    <a href="settings.html" class="button-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-                        Profile Settings
-                    </a>
+                    <h1 id="welcome-message">Welcome back, ...!</h1>
+                    <p>Tap on any card to navigate</p>
                 </div>
             </header>
 
@@ -374,6 +368,7 @@
     <script src="js/config.js"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/includes.js"></script>
     <script>
         // Helper to format currency
@@ -398,7 +393,21 @@
 
             const user = session.user;
 
-            // 2. Fetch all dashboard data in parallel
+            // 2. Verify Helpa profile exists
+            const { data: helpaProfile } = await supabase
+                .from('helpas')
+                .select('id')
+                .eq('id', user.id)
+                .maybeSingle();
+
+            if (!helpaProfile) {
+                await supabase.auth.signOut();
+                alert('Account not found. Please sign up to access the Helpa Dashboard.');
+                window.location.href = 'signup.html';
+                return;
+            }
+
+            // 3. Fetch all dashboard data in parallel
             loadDashboardData(user);
         });
 
@@ -424,20 +433,21 @@
 
         async function renderWelcomeMessage(userId) {
             try {
-                const { data: profile, error } = await supabase
-                    .from('profiles')
-                    .select('first_name')
+                const { data: helpa, error } = await supabase
+                    .from('helpas')
+                    .select('full_name')
                     .eq('id', userId)
                     .single();
 
                 if (error) throw error;
 
                 const welcomeMessage = document.getElementById('welcome-message');
-                if (profile && profile.first_name) {
-                    welcomeMessage.textContent = `Welcome back, ${profile.first_name}!`;
+                if (helpa && helpa.full_name) {
+                    const firstName = helpa.full_name.split(' ')[0];
+                    welcomeMessage.textContent = `Welcome back, ${firstName}!`;
                 }
             } catch (error) {
-                console.error('Error fetching user profile:', error.message);
+                console.error('Error fetching helpa profile:', error.message);
             }
         }
 

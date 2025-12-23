@@ -10,7 +10,7 @@ function initializeLoginPage() {
 
     // --- UI Helper Functions ---
     const show_error = (message) => {
-        errorMessageDiv.textContent = message;
+        errorMessageDiv.innerHTML = message;
         errorMessageDiv.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -38,6 +38,43 @@ function initializeLoginPage() {
         });
     }
 
+    // --- Logic to Verify Role and Redirect ---
+    const verifyAndRedirect = async (user) => {
+        const sb = window.supabase;
+        setLoadingState(true, 'Verifying account...');
+        try {
+            const { data: helpaProfile, error: profileError } = await sb
+                .from('helpas')
+                .select('*')
+                .eq('id', user.id)
+                .maybeSingle();
+
+            if (profileError) {
+                console.error('Error checking helpa profile:', profileError);
+                show_error('Could not verify user role. Please try again.');
+                setLoadingState(false, 'Login');
+                return;
+            }
+
+            // Success path: redirect based on whether a helpa profile exists
+            if (helpaProfile) {
+                // Optionally store minimal profile for quick access (not required)
+                try { localStorage.setItem('helpa_profile', JSON.stringify(helpaProfile)); } catch (e) { /* ignore */ }
+                setLoadingState(true, 'Redirecting to Helpa Dashboard...');
+                window.location.href = 'helpa-dashboard.html';
+            } else {
+                await sb.auth.signOut();
+                show_error('Account not found. Please <a href="signup.html" style="text-decoration: underline;">sign up</a> or check your password.');
+                setLoadingState(false, 'Login');
+            }
+
+        } catch (innerErr) {
+            console.error('Unexpected error while fetching helpa profile:', innerErr);
+            show_error('An unexpected error occurred. Please try again.');
+            setLoadingState(false, 'Login');
+        }
+    };
+
     // --- Form Submission Handler ---
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -52,7 +89,7 @@ function initializeLoginPage() {
             const sb = window.supabase;
             if (!sb || !sb.auth || typeof sb.auth.signInWithPassword !== 'function') {
                 console.error('Supabase auth is not available', sb);
-                show_error('Authentication service not available. Please try again later.');
+                show_error('Authentication service not available. Check console for initialization errors.');
                 setLoadingState(false, 'Login');
                 return;
             }
@@ -75,38 +112,8 @@ function initializeLoginPage() {
                 return;
             }
 
-            // We have a logged-in user. Check whether they have a row in 'helpas'.
-            setLoadingState(true, 'Verifying account...');
-            try {
-                const { data: helpaProfile, error: profileError } = await sb
-                    .from('helpas')
-                    .select('*')
-                    .eq('id', user.id)
-                    .maybeSingle();
-
-                if (profileError) {
-                    console.error('Error checking helpa profile:', profileError);
-                    show_error('Could not verify user role. Please try again.');
-                    setLoadingState(false, 'Login');
-                    return;
-                }
-
-                // Success path: redirect based on whether a helpa profile exists
-                if (helpaProfile) {
-                    // Optionally store minimal profile for quick access (not required)
-                    try { localStorage.setItem('helpa_profile', JSON.stringify(helpaProfile)); } catch (e) { /* ignore */ }
-                    setLoadingState(true, 'Redirecting to Helpa Dashboard...');
-                    window.location.href = 'helpa-dashboard.html';
-                } else {
-                    setLoadingState(true, 'Redirecting...');
-                    window.location.href = 'dashboard-user.html';
-                }
-
-            } catch (innerErr) {
-                console.error('Unexpected error while fetching helpa profile:', innerErr);
-                show_error('An unexpected error occurred. Please try again.');
-                setLoadingState(false, 'Login');
-            }
+            // We have a logged-in user. Verify role and redirect.
+            await verifyAndRedirect(user);
 
         } catch (error) {
             console.error('An unexpected error occurred during login:', error);
