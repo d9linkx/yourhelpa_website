@@ -1629,3 +1629,5 @@ main {
 .trusted-logos img:hover {
     filter: grayscale(0%) opacity(1);
 }
+
+/* Build marker: v1 - forces redeploy/cache-bust */
