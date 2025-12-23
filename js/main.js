@@ -1,4 +1,4 @@
-function initializeMain() {
+async function initializeMain() {
     // This also needs to run after the header is loaded.
     const initializeMobileNav = () => {
         const navToggle = document.getElementById('nav-toggle');
@@ -47,6 +47,29 @@ function initializeMain() {
     initializeFomoNotification();
     initializeSwellAnimation();
     initializeScrollInAnimations();
+
+    // --- Header Auth State Logic ---
+    const sb = window.supabase;
+    if (sb) {
+        const { data: { session } } = await sb.auth.getSession();
+        if (session) {
+            const updateAuthButton = (btnId) => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    btn.textContent = 'Helpa Logout';
+                    btn.href = '#';
+                    btn.addEventListener('click', async (e) => {
+                        e.preventDefault();
+                        btn.textContent = 'Logging out...';
+                        await sb.auth.signOut();
+                        window.location.href = 'login.html';
+                    });
+                }
+            };
+            updateAuthButton('mobile-auth-btn');
+            updateAuthButton('desktop-auth-btn');
+        }
+    }
 }
 
 // Image optimizations applied at runtime:
