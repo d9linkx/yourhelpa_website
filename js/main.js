@@ -1,4 +1,4 @@
-async function initializeMain() {
+window.initializeMain = async function() {
     // This also needs to run after the header is loaded.
     const initializeMobileNav = () => {
         const navToggle = document.getElementById('nav-toggle');
