@@ -2,7 +2,31 @@
 // which is generated during the Vercel build process.
 const { SUPABASE_URL, SUPABASE_ANON_KEY } = window;
 
-// Create a single supabase client for interacting with your database
-window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Defensive initialization: the CDN script should expose a global with a createClient function.
+const libAvailable = typeof window.supabase !== 'undefined' && typeof window.supabase.createClient === 'function';
 
-console.log('Supabase client initialized.');
+if (libAvailable) {
+	try {
+		const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+		// Replace the library namespace with the initialized client for backward compatibility
+		window.supabase = client;
+		console.log('[supabase-client] Supabase client initialized. Has auth:', !!(client && client.auth));
+		if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+			console.warn('[supabase-client] Warning: SUPABASE_URL or SUPABASE_ANON_KEY is empty. Ensure config.js is generated with correct values in your build environment.');
+		}
+	} catch (err) {
+		console.error('[supabase-client] Failed to initialize Supabase client:', err);
+		// Provide a minimal stub so consuming code fails gracefully with a clearer message
+		window.supabase = { auth: {} };
+	}
+} else {
+	console.error('[supabase-client] Supabase library not available. Did the CDN script load before this file?');
+	// Minimal stub to prevent uncaught TypeErrors in the UI — methods will throw helpful errors instead
+	window.supabase = {
+		auth: {
+			async signInWithPassword() { throw new Error('Supabase auth not available (library missing)'); },
+			async signOut() { throw new Error('Supabase auth not available (library missing)'); },
+			async getSession() { return { data: { session: null }, error: new Error('Supabase auth not available') }; }
+		}
+	};
+}

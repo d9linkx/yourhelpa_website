@@ -38,43 +38,6 @@ function initializeLoginPage() {
         });
     }
 
-    // If user already has an active session, redirect them to their dashboard
-    const checkAndRedirectIfAuthenticated = async () => {
-        try {
-            if (typeof supabase === 'undefined') return false;
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session && session.user) {
-                // Try to lookup a profile role to route user appropriately. If that fails, fall back to a default dashboard.
-                try {
-                    const { data: profile, error: profileError } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
-                    if (!profileError && profile && profile.role) {
-                        if (profile.role === 'helpa') {
-                            window.location.href = 'helpa-dashboard.html';
-                            return true;
-                        }
-                        if (profile.role === 'user') {
-                            window.location.href = 'dashboard-user.html';
-                            return true;
-                        }
-                    }
-                } catch (err) {
-                    // ignore — we'll fall back to a reasonable default
-                    console.warn('profile lookup failed', err);
-                }
-
-                // Default redirect if no role found
-                window.location.href = 'helpa-dashboard.html';
-                return true;
-            }
-        } catch (err) {
-            console.warn('session check failed', err);
-        }
-        return false;
-    };
-
-    // Run session check before allowing the user to interact with the form
-    checkAndRedirectIfAuthenticated();
-
     // --- Form Submission Handler ---
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -85,7 +48,16 @@ function initializeLoginPage() {
         const password = passwordInput.value;
 
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            // Guard: ensure the Supabase auth client is available
+            const sb = window.supabase;
+            if (!sb || !sb.auth || typeof sb.auth.signInWithPassword !== 'function') {
+                console.error('Supabase auth is not available', sb);
+                show_error('Authentication service not available. Please try again later.');
+                setLoadingState(false, 'Login');
+                return;
+            }
+
+            const { data, error } = await sb.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
@@ -96,32 +68,45 @@ function initializeLoginPage() {
                 return;
             }
 
-            // v2 returns user and session in data
             const user = data?.user;
-            const session = data?.session;
-
-            if (user && session) {
-                // On success, briefly show a success state then redirect.
-                setLoadingState(true, 'Login Successful!');
-
-                // Try to determine destination based on profile role, but don't block UX if lookup fails
-                try {
-                    const { data: profile, error: profileError } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-                    if (!profileError && profile && profile.role === 'user') {
-                        setTimeout(() => window.location.href = 'dashboard-user.html', 900);
-                        return;
-                    }
-                } catch (err) {
-                    console.warn('profile lookup after login failed', err);
-                }
-
-                // default
-                setTimeout(() => window.location.href = 'helpa-dashboard.html', 900);
+            if (!user) {
+                show_error('Login failed. Please check your credentials.');
+                setLoadingState(false, 'Login');
                 return;
             }
 
-            show_error('Login failed. Please check your credentials.');
-            setLoadingState(false, 'Login');
+            // We have a logged-in user. Check whether they have a row in 'helpas'.
+            setLoadingState(true, 'Verifying account...');
+            try {
+                const { data: helpaProfile, error: profileError } = await sb
+                    .from('helpas')
+                    .select('*')
+                    .eq('id', user.id)
+                    .maybeSingle();
+
+                if (profileError) {
+                    console.error('Error checking helpa profile:', profileError);
+                    show_error('Could not verify user role. Please try again.');
+                    setLoadingState(false, 'Login');
+                    return;
+                }
+
+                // Success path: redirect based on whether a helpa profile exists
+                if (helpaProfile) {
+                    // Optionally store minimal profile for quick access (not required)
+                    try { localStorage.setItem('helpa_profile', JSON.stringify(helpaProfile)); } catch (e) { /* ignore */ }
+                    setLoadingState(true, 'Redirecting to Helpa Dashboard...');
+                    window.location.href = 'helpa-dashboard.html';
+                } else {
+                    setLoadingState(true, 'Redirecting...');
+                    window.location.href = 'dashboard-user.html';
+                }
+
+            } catch (innerErr) {
+                console.error('Unexpected error while fetching helpa profile:', innerErr);
+                show_error('An unexpected error occurred. Please try again.');
+                setLoadingState(false, 'Login');
+            }
 
         } catch (error) {
             console.error('An unexpected error occurred during login:', error);
@@ -132,12 +117,19 @@ function initializeLoginPage() {
 
     // --- Helper for Auth Errors ---
     function handleAuthError(error) {
-        // Supabase errors can come in different shapes. Normalize for user display.
-        const msg = (error && (error.message || error.error_description || error.msg)) || String(error);
-        if (msg && msg.toLowerCase().includes('invalid')) {
-            show_error('Invalid email or password. Please try again.');
+        if (error.message.includes("Invalid login credentials")) {
+            show_error("Invalid email or password. Please try again.");
         } else {
-            show_error(msg);
+            show_error(error.message);
         }
     }
 }
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof supabase === 'undefined') {
+        // Supabase client might not be initialized yet; the console message helps debug load order issues
+        console.warn('Supabase client is not available when initializing login page. Ensure js/config.js and js/supabase-client.js are loaded before login.js');
+    }
+    initializeLoginPage();
+});
