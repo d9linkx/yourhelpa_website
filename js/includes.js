@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // After includes are loaded, initialize page-specific logic
-        if (typeof initializeMain === 'function') {
-            initializeMain();
+        if (typeof window.initializeMain === 'function') {
+            window.initializeMain();
         }
-        if (typeof initializeLoginPage === 'function' && document.getElementById('login-form')) {
-            initializeLoginPage();
+        if (typeof window.initializeLoginPage === 'function' && document.getElementById('login-form')) {
+            window.initializeLoginPage();
         }
     };
 
