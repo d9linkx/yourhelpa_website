@@ -1,4 +1,5 @@
 window.initializeMain = async function() {
+    console.log('Initializing Main Script - v' + new Date().toISOString());
     // This also needs to run after the header is loaded.
     const initializeMobileNav = () => {
         const navToggle = document.getElementById('nav-toggle');
@@ -6,6 +7,7 @@ window.initializeMain = async function() {
         const navOverlay = document.querySelector('.nav-overlay');
 
         if (!navToggle || !mainNav || !navOverlay) {
+            console.warn('Mobile nav elements not found. Check if header is loaded.');
             return;
         }
 
@@ -24,6 +26,9 @@ window.initializeMain = async function() {
     // This needs to run after the header is loaded, so we use a small delay.
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     const navLinks = document.querySelectorAll('#main-nav a');
+    if (navLinks.length === 0) {
+        console.warn('No navigation links found in #main-nav.');
+    }
     navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPage) {
             link.classList.add('active');
@@ -69,6 +74,8 @@ window.initializeMain = async function() {
             updateAuthButton('mobile-auth-btn');
             updateAuthButton('desktop-auth-btn');
         }
+    } else {
+        console.warn('Supabase client not found in initializeMain.');
     }
 }
 

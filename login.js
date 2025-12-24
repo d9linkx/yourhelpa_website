@@ -1,11 +1,16 @@
 function initializeLoginPage() {
+    console.log('Initializing Login Page - v' + new Date().toISOString());
     const loginForm = document.getElementById('login-form');
-    if (!loginForm) return; // Exit if the form is not on this page
+    if (!loginForm) {
+        console.log('Login form not found on this page. Skipping login logic.');
+        return; // Exit if the form is not on this page
+    }
 
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const errorMessageDiv = document.getElementById('error-message');
     const submitBtn = loginForm.querySelector('button[type="submit"]');
+    if (!submitBtn) console.warn('Login submit button not found inside login-form.');
     const togglePassword = document.getElementById('toggle-password');
 
     // --- UI Helper Functions ---
