@@ -220,69 +220,66 @@
 
             /* --- Mobile Navigation Grid --- */
             .mobile-nav-grid {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                margin-bottom: 1.5rem;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem;
+                    margin-bottom: 2.5rem;
             }
             .mobile-nav-card {
-                background-color: var(--surface-color);
-                border: 1.1px solid #0a8a19;
-                border-radius: 8px;
-                padding: 0.5rem 0.25rem;
+                background: linear-gradient(145deg, #ffffff, #f0fdf4);
+                border: 1px solid rgba(5, 170, 22, 0.3);
+                border-radius: 20px;
+                padding: 1.5rem 1rem;
                 text-align: center;
-                font-weight: 500;
-                font-size: 0.65rem;
-                line-height: 1.1;
+                font-weight: 700;
+                font-size: 0.9rem;
                 color: var(--text-heading-color);
                 text-decoration: none;
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start;
-                justify-content: flex-start;
-                gap: 0.4rem;
-                transition: all 0.2s ease;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                align-items: center;
+                justify-content: center;
+                gap: 0.75rem;
+                transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+                box-shadow: 0 8px 20px -5px rgba(5, 170, 22, 0.15);
                 cursor: pointer;
                 -webkit-tap-highlight-color: transparent;
                 position: relative;
-                flex-grow: 1;
-            }
-            /* Asymmetric grid layout */
-            .mobile-nav-card:nth-child(1) {
-                flex-basis: 55%;
-            }
-            .mobile-nav-card:nth-child(2) {
-                flex-basis: 30%;
-            }
-            .mobile-nav-card:nth-child(3) {
-                flex-basis: 30%;
-            }
-            .mobile-nav-card:nth-child(4) {
-                flex-basis: 55%;
+                overflow: hidden;
             }
             .mobile-nav-card:hover {
-                transform: translateY(-3px);
-                box-shadow: var(--shadow-md);
-                color: var(--primary-color);
+                transform: translateY(-5px);
+                box-shadow: 0 12px 25px -5px rgba(5, 170, 22, 0.25);
+                border-color: var(--primary-color);
             }
             .mobile-nav-card:active {
                 transform: scale(0.95);
-                border-color: var(--primary-color);
-                background-color: var(--background-color);
             }
             .mobile-nav-card svg {
-                width: 20px;
-                height: 20px;
+                width: 32px;
+                height: 32px;
                 color: var(--primary-color);
+                filter: drop-shadow(0 4px 6px rgba(5, 170, 22, 0.2));
+                transition: transform 0.3s ease;
+            }
+            .mobile-nav-card:hover svg {
+                transform: scale(1.1) rotate(5deg);
+                color: var(--primary-hover);
             }
             .mobile-nav-card svg.nav-arrow {
-                width: 12px;
-                height: 12px;
-                color: #94a3b8;
+                display: block;
                 position: absolute;
-                top: 4px;
-                right: 4px;
+                top: 12px;
+                right: 12px;
+                width: 18px;
+                height: 18px;
+                color: rgba(5, 170, 22, 0.4);
+                filter: none;
+                transform: none;
+            }
+            .mobile-nav-card:hover svg.nav-arrow {
+                transform: translateX(3px);
+                color: var(--primary-color);
             }
 
             /* --- Minimalist Stat Grid for Mobile --- */
