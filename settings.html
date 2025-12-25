@@ -118,14 +118,124 @@
         }
 
         /* Document Vetting Styles */
-        .document-list { display: flex; flex-direction: column; gap: 1.5rem; }
-        .document-item { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px; }
-        .document-item h4 { font-size: 1rem; font-weight: 600; margin: 0; }
-        .document-item p { font-size: 0.9rem; color: var(--text-muted-color); margin: 0.25rem 0 0; }
-        .status-badge { font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 99px; text-align: center; }
-        .status-pending { background-color: #fffbeb; color: #b45309; }
-        .status-verified { background-color: #f0fdf4; color: #166534; }
-        .status-rejected { background-color: #fef2f2; color: #991b1b; }
+        .document-list { display: flex; flex-direction: column; gap: 1.25rem; }
+        
+        .document-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 1.5rem; 
+            padding: 1.5rem; 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--surface-color);
+        }
+        
+        .document-info { 
+            flex: 1; 
+            min-width: 0; /* Prevents flex item from overflowing */
+        }
+        
+        .document-info summary { 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            gap: 1rem; 
+            cursor: pointer; 
+            list-style: none; 
+            width: 100%; 
+            outline: none;
+        }
+        
+        .document-info summary::-webkit-details-marker { display: none; }
+        
+        .document-info summary h4 { 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            margin: 0; 
+            color: var(--text-heading-color);
+        }
+        
+        .document-info summary .summary-arrow { 
+            transition: transform 0.3s ease; 
+            color: var(--text-muted-color); 
+            flex-shrink: 0;
+        }
+        
+        .document-info details[open] summary .summary-arrow { transform: rotate(180deg); }
+        
+        .document-info details[open] summary { 
+            margin-bottom: 1.5rem; 
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color-light);
+        }
+        
+        .document-info p { 
+            font-size: 0.95rem; 
+            color: var(--text-color); 
+            margin: 0.5rem 0; 
+            line-height: 1.6;
+        }
+        
+        .document-info ul {
+            margin: 0.5rem 0 1.5rem 1.5rem;
+            color: var(--text-muted-color);
+            font-size: 0.9rem;
+        }
+
+        .document-actions { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            flex-shrink: 0; 
+        }
+        
+        .status-badge { 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            padding: 0.4rem 0.8rem; 
+            border-radius: 6px; 
+            text-align: center; 
+            white-space: nowrap;
+        }
+        
+        .status-pending { background-color: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
+        .status-verified { background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+        .status-rejected { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        /* Vertical layout for open dropdowns */
+        .document-item:has(details[open]) {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+        }
+        .document-item:has(details[open]) .document-actions {
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color-light);
+            width: 100%;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .document-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1rem;
+            }
+            .document-actions {
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            /* When open on mobile */
+            .document-item:has(details[open]) .document-actions {
+                margin-top: 1rem;
+                padding-top: 1rem;
+            }
+        }
 
         /* Danger Zone */
         .danger-zone { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--error-color); }
@@ -303,7 +413,6 @@
                 <ul>
                     <li><a href="#profile" class="tab-link active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile Details</a></li>
                     <li><a href="#documents" class="tab-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg> Documents & Vetting</a></li>
-                    <li><a href="#services" class="tab-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg> Service & Pricing</a></li>
                     <li><a href="#billing" class="tab-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg> Payout & Billing</a></li>
                     <li><a href="#security" class="tab-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security & Access</a></li>
                 </ul>
@@ -353,159 +462,90 @@
                     
                     <div class="document-list">
                         <div class="document-item">
-                            <div>
-                                <h4>Government ID</h4>
-                                <p>National ID card or Driver's License.</p>
-                            </div>
-                            <span class="status-badge status-pending">Pending</span>
-                            <button class="button-secondary">Upload File</button>
-                        </div>
-                        <div class="document-item">
-                            <div>
-                                <h4>Trade License</h4>
-                                <p>Valid license for your trade (e.g., plumber certification).</p>
-                            </div>
-                            <span class="status-badge status-pending">Pending</span>
-                            <button class="button-secondary">Upload File</button>
-                        </div>
-                        <div class="document-item">
-                            <div>
-                                <h4>Proof of Insurance</h4>
-                                <p>Current General Liability Insurance certificate.</p>
-                            </div>
-                            <span class="status-badge status-verified">Verified</span>
-                            <button class="button-secondary" disabled>View</button>
-                        </div>
-                        <div class="document-item">
-                            <div>
-                                <h4>Background Check Consent</h4>
-                                <p>Authorize a background check by YourHelpa's partner.</p>
-                            </div>
-                            <span class="status-badge status-rejected">Rejected</span>
-                            <button class="button-primary">Authorize Now</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Service Areas & Pricing Tab -->
-                <div id="services" class="tab-pane">
-                    <h1>Service Areas & Pricing</h1>
-                    <form id="services-form">
-                        <fieldset class="form-fieldset">
-                            <legend>Operating Area & Availability</legend>
-                             <div class="form-group">
-                                <label for="base-location">Your Base Location</label>
-                                <input type="text" id="base-location" name="base-location" placeholder="e.g., Ikeja, Lagos" required>
-                                <small>Your primary city or area. This helps customers find you.</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Service States & Locations</label>
-                                <div class="add-day-controls" style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                                    <select id="state-select" style="flex-grow: 1;">
-                                        <!-- States will be populated by JS -->
-                                    </select>
-                                    <button type="button" id="add-state-btn" class="button-secondary">Add State</button>
-                                </div>
-                                <div id="states-container">
-                                    <!-- Dynamically added state sections will go here -->
-                                </div>
-                                <small>Add the states you operate in, then specify the exact locations (e.g., LGAs, neighborhoods) within each state.</small>
-                            </div>
-                            <div class="form-group">
-                                <details class="hours-details">
+                            <div class="document-info">
+                                <details>
                                     <summary>
-                                        <span>Regular Operating Hours</span>
-                                        <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                        <h4>Government ID</h4>
+                                        <svg class="summary-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                                     </summary>
-                                    <div class="operating-hours-list">
-                                        <!-- Monday -->
-                                        <div class="day-hours-group">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-mon" checked> Monday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-mon" value="09:00">
-                                                <input type="time" name="hours-end-mon" value="17:00">
-                                            </div>
-                                        </div>
-                                        <!-- Tuesday -->
-                                        <div class="day-hours-group">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-tue" checked> Tuesday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-tue" value="09:00">
-                                                <input type="time" name="hours-end-tue" value="17:00">
-                                            </div>
-                                        </div>
-                                        <!-- Wednesday -->
-                                        <div class="day-hours-group">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-wed" checked> Wednesday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-wed" value="09:00">
-                                                <input type="time" name="hours-end-wed" value="17:00">
-                                            </div>
-                                        </div>
-                                        <!-- Thursday -->
-                                        <div class="day-hours-group">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-thu" checked> Thursday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-thu" value="09:00">
-                                                <input type="time" name="hours-end-thu" value="17:00">
-                                            </div>
-                                        </div>
-                                        <!-- Friday -->
-                                        <div class="day-hours-group">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-fri" checked> Friday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-fri" value="09:00">
-                                                <input type="time" name="hours-end-fri" value="17:00">
-                                            </div>
-                                        </div>
-                                        <!-- Saturday -->
-                                        <div class="day-hours-group" style="background-color: var(--background-color);">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-sat"> Saturday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-sat" value="10:00" disabled>
-                                                <input type="time" name="hours-end-sat" value="16:00" disabled>
-                                            </div>
-                                        </div>
-                                        <!-- Sunday -->
-                                        <div class="day-hours-group" style="background-color: var(--background-color);">
-                                            <label class="day-label"><input type="checkbox" name="hours-active-sun"> Sunday</label>
-                                            <div class="time-inputs">
-                                                <input type="time" name="hours-start-sun" value="10:00" disabled>
-                                                <input type="time" name="hours-end-sun" value="16:00" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <small>Uncheck a day to mark yourself as unavailable.</small>
+                                    <p>A valid, government-issued identification document is required to verify your identity. This builds trust with customers.</p>
+                                    <p><strong>Accepted Documents:</strong></p>
+                                    <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted-color);">
+                                        <li>National ID Card (NIN Slip or Plastic Card)</li>
+                                        <li>International Passport</li>
+                                        <li>Driver's License</li>
+                                        <li>Permanent Voter's Card (PVC)</li>
+                                    </ul>
+                                    <p><strong>Note:</strong> Ensure the name on your ID matches your profile name.</p>
                                 </details>
                             </div>
-                            <div class="form-group">
-                                <label>Vacation Mode</label>
-                                <button type="button" id="vacation-mode-btn" class="button-secondary">Set Vacation Time</button>
-                                <small id="vacation-status-text">Disable job requests for holidays or breaks.</small>
+                            <div class="document-actions">
+                                <span class="status-badge status-pending" id="status-gov-id">Pending</span>
+                                <input type="file" id="input-gov-id" hidden accept="image/*,.pdf">
+                                <button class="button-secondary upload-trigger" data-input="input-gov-id">Upload File</button>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-fieldset">
-                            <legend>Pricing Structure</legend>
-                            <div class="form-group">
-                                <label for="call-fee">Standard Service Call Fee (NGN)</label>
-                                <input type="number" id="call-fee" name="call-fee" placeholder="5000">
-                                <small>Fixed fee for travel and initial diagnosis. Non-refundable.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="hourly-rate">Additional Hourly Rate (NGN/hr)</label>
-                                <input type="number" id="hourly-rate" name="hourly-rate" placeholder="8000">
-                                <small>Your rate for labor beyond the first hour. Optional, but recommended.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="emergency-surcharge">After-Hours Surcharge (%)</label>
-                                <input type="number" id="emergency-surcharge" name="emergency-surcharge" placeholder="25">
-                                <small>Percentage added to the total quote for jobs outside standard hours.</small>
-                            </div>
-                        </fieldset>
-                        <div class="form-actions">
-                            <button type="submit" class="button-primary">Save Pricing & Availability</button>
                         </div>
-                    </form>
+                        <div class="document-item">
+                            <div class="document-info">
+                                <details>
+                                    <summary>
+                                        <h4>Trade License / Certification</h4>
+                                        <svg class="summary-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                                    </summary>
+                                    <p>Proof that you are qualified to perform the services you offer. This is mandatory for specialized trades.</p>
+                                    <p><strong>Examples:</strong></p>
+                                    <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted-color);">
+                                        <li>Plumbing/Electrical Trade Test Certificate</li>
+                                        <li>Degree or Diploma in your field</li>
+                                        <li>Professional Association Membership (e.g., NSE, ICAN)</li>
+                                        <li>Vocational Training Certificate</li>
+                                    </ul>
+                                </details>
+                            </div>
+                            <div class="document-actions">
+                                <span class="status-badge status-pending" id="status-trade-license">Pending</span>
+                                <input type="file" id="input-trade-license" hidden accept="image/*,.pdf">
+                                <button class="button-secondary upload-trigger" data-input="input-trade-license">Upload File</button>
+                            </div>
+                        </div>
+                        <div class="document-item">
+                            <div class="document-info">
+                                <details>
+                                    <summary>
+                                        <h4>Proof of Insurance (Optional)</h4>
+                                        <svg class="summary-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                                    </summary>
+                                    <p>While not mandatory for all, having insurance makes you a preferred choice for high-value clients and corporate jobs.</p>
+                                    <p><strong>What to upload:</strong></p>
+                                    <ul style="margin-left: 1.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted-color);">
+                                        <li>General Liability Insurance Certificate</li>
+                                        <li>Professional Indemnity Insurance Policy</li>
+                                    </ul>
+                                </details>
+                            </div>
+                            <div class="document-actions">
+                                <span class="status-badge status-pending" id="status-insurance">Pending</span>
+                                <input type="file" id="input-insurance" hidden accept="image/*,.pdf">
+                                <button class="button-secondary upload-trigger" data-input="input-insurance">Upload File</button>
+                            </div>
+                        </div>
+                        <div class="document-item">
+                            <div class="document-info">
+                                <details>
+                                    <summary>
+                                        <h4>Background Check Consent</h4>
+                                        <svg class="summary-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                                    </summary>
+                                    <p>To ensure the safety of our community, we conduct background checks on all Helpas. This may include criminal record checks and guarantor verification.</p>
+                                    <p>By clicking "Authorize Now", you grant YourHelpa permission to process your data for this purpose. This status will appear as "Verified" on your public profile, significantly increasing your hire rate.</p>
+                                </details>
+                            </div>
+                            <div class="document-actions">
+                                <span class="status-badge status-pending" id="status-background-check">Pending</span>
+                                <button class="button-primary" id="btn-background-check">Authorize Now</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Payout & Billing Tab -->
@@ -518,10 +558,55 @@
                             <div class="form-group">
                                 <label for="bank-name">Bank Name</label>
                                 <select id="bank-name" name="bank-name" required>
-                                    <option>-- Select your bank --</option>
+                                    <option value="" disabled selected>-- Select your bank --</option>
+                                    <option value="access">Access Bank</option>
+                                    <option value="access-diamond">Access Bank (Diamond)</option>
+                                    <option value="alat">ALAT by WEMA</option>
+                                    <option value="aso">ASO Savings and Loans</option>
+                                    <option value="bowen">Bowen Microfinance Bank</option>
+                                    <option value="carbon">Carbon</option>
+                                    <option value="citibank">Citibank Nigeria</option>
+                                    <option value="coronation">Coronation Merchant Bank</option>
+                                    <option value="ecobank">Ecobank Nigeria</option>
+                                    <option value="ekondo">Ekondo Microfinance Bank</option>
+                                    <option value="eyowo">Eyowo</option>
+                                    <option value="fidelity">Fidelity Bank</option>
+                                    <option value="firstbank">First Bank of Nigeria</option>
+                                    <option value="fcmb">First City Monument Bank (FCMB)</option>
+                                    <option value="fsdh">FSDH Merchant Bank</option>
+                                    <option value="globus">Globus Bank</option>
+                                    <option value="gomoney">GoMoney</option>
+                                    <option value="gtbank">Guaranty Trust Bank (GTBank)</option>
+                                    <option value="hackman">Hackman Microfinance Bank</option>
+                                    <option value="heritage">Heritage Bank</option>
+                                    <option value="jaiz">Jaiz Bank</option>
+                                    <option value="keystone">Keystone Bank</option>
+                                    <option value="kuda">Kuda Bank</option>
+                                    <option value="lotus">Lotus Bank</option>
+                                    <option value="moniepoint">Moniepoint Microfinance Bank</option>
+                                    <option value="opay">Opay (Paycom)</option>
+                                    <option value="palmpay">PalmPay</option>
+                                    <option value="parallex">Parallex Bank</option>
+                                    <option value="parkway">Parkway - ReadyCash</option>
+                                    <option value="polaris">Polaris Bank</option>
+                                    <option value="premiumtrust">PremiumTrust Bank</option>
+                                    <option value="providus">Providus Bank</option>
+                                    <option value="rand">Rand Merchant Bank</option>
+                                    <option value="rubies">Rubies MFB</option>
+                                    <option value="sparkle">Sparkle Microfinance Bank</option>
+                                    <option value="stanbic">Stanbic IBTC Bank</option>
+                                    <option value="standard-chartered">Standard Chartered Bank</option>
+                                    <option value="sterling">Sterling Bank</option>
+                                    <option value="suntrust">Suntrust Bank</option>
+                                    <option value="taj">TAJ Bank</option>
+                                    <option value="tangerine">Tangerine Money</option>
+                                    <option value="titan">Titan Trust Bank</option>
+                                    <option value="union">Union Bank of Nigeria</option>
+                                    <option value="uba">United Bank for Africa (UBA)</option>
+                                    <option value="unity">Unity Bank</option>
+                                    <option value="vfd">VFD Microfinance Bank</option>
+                                    <option value="wema">Wema Bank</option>
                                     <option value="zenith">Zenith Bank</option>
-                                    <option value="gtbank">GTBank</option>
-                                    <option value="firstbank">First Bank</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -530,7 +615,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="account-name">Account Holder Name</label>
-                                <input type="text" id="account-name" name="account-name" placeholder="Automatically verified" readonly disabled>
+                                <input type="text" id="account-name" name="account-name" placeholder="Automatically verified" readonly>
                             </div>
                         </fieldset>
                         <div class="form-actions">
@@ -575,28 +660,6 @@
 
     <div id="footer-placeholder"></div>
 
-    <!-- Vacation Modal -->
-    <div id="vacation-modal" class="modal-overlay">
-        <div class="modal-content">
-            <h2>Set Vacation Time</h2>
-            <p>You will not receive new job requests between these dates. Existing jobs will not be affected.</p>
-            <div class="modal-date-inputs">
-                <div class="form-group">
-                    <label for="vacation-start">Start Date</label>
-                    <input type="date" id="vacation-start" name="vacation-start">
-                </div>
-                <div class="form-group">
-                    <label for="vacation-end">End Date</label>
-                    <input type="date" id="vacation-end" name="vacation-end">
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button type="button" id="clear-vacation-btn" class="button-danger" style="margin-right: auto;">Clear Vacation</button>
-                <button type="button" id="cancel-vacation-btn" class="button-secondary">Cancel</button>
-                <button type="button" id="save-vacation-btn" class="button-primary">Save Dates</button>
-            </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/config.js"></script>
@@ -643,118 +706,6 @@
                 switchTab(targetId);
             }
 
-            // --- Service Radius Slider (if it exists) ---
-            const radiusSlider = document.getElementById('service-radius');
-            const radiusValue = document.getElementById('radius-value');
-            if (radiusSlider && radiusValue) {
-                radiusSlider.addEventListener('input', (e) => { radiusValue.textContent = e.target.value; });
-            }
-
-            // --- Operating Hours Logic ---
-            const hoursList = document.querySelector('.operating-hours-list');
-            if (hoursList) {
-                hoursList.addEventListener('change', (e) => {
-                    if (e.target.type === 'checkbox') {
-                        const dayGroup = e.target.closest('.day-hours-group');
-                        if (dayGroup) {
-                            const timeInputs = dayGroup.querySelectorAll('input[type="time"]');
-                            timeInputs.forEach(input => {
-                                input.disabled = !e.target.checked;
-                            });
-                            // Visually distinguish disabled days
-                            dayGroup.style.backgroundColor = e.target.checked ? 'var(--background-color)' : '';
-                        }
-                    }
-                });
-            }
-
-            // --- Location & State Picker Logic ---
-            const nigerianStates = ["Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"];
-            const stateSelect = document.getElementById('state-select');
-            const addStateBtn = document.getElementById('add-state-btn');
-            const statesContainer = document.getElementById('states-container');
-
-            // Populate state dropdown
-            nigerianStates.forEach(state => {
-                const option = document.createElement('option');
-                option.value = state;
-                option.textContent = state;
-                stateSelect.appendChild(option);
-            });
-
-            const createTagInput = (stateName, initialTags = []) => {
-                const stateId = stateName.replace(/\s+/g, '-').toLowerCase();
-                const area = document.createElement('div');
-                area.className = 'state-service-area';
-                area.dataset.state = stateName;
-                area.innerHTML = `
-                    <div class="state-header">
-                        <h4>${stateName}</h4>
-                        <button type="button" class="remove-state-btn">Remove</button>
-                    </div>
-                    <div class="tags-input-container" id="tags-for-${stateId}">
-                        <input type="text" placeholder="Add locations (e.g., Ikeja) and press Enter..." class="locations-input">
-                    </div>
-                    <input type="hidden" name="locations-${stateId}" class="hidden-locations-input">
-                `;
-                statesContainer.appendChild(area);
-
-                const tagsContainer = area.querySelector('.tags-input-container');
-                const textInput = area.querySelector('.locations-input');
-                const hiddenInput = area.querySelector('.hidden-locations-input');
-
-                let tags = [...initialTags]; // Use the initialTags parameter
-
-                const renderTags = () => {
-                    // Clear all but the text input
-                    tagsContainer.querySelectorAll('.tag').forEach(t => t.remove());
-                    // Re-add tags
-                    tags.slice().reverse().forEach(tag => {
-                        const tagEl = document.createElement('span');
-                        tagEl.className = 'tag';
-                        tagEl.innerHTML = `${tag} <span class="remove-tag" data-tag="${tag}">&times;</span>`;
-                        tagsContainer.prepend(tagEl);
-                    });
-                    // Update hidden input for form submission
-                    hiddenInput.value = tags.join(',');
-                };
-
-                textInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && textInput.value.trim()) {
-                        e.preventDefault();
-                        const newTags = textInput.value.split(',').map(t => t.trim()).filter(Boolean);
-                        tags = [...new Set([...tags, ...newTags])]; // Add new tags, ensure uniqueness
-                        renderTags();
-                        textInput.value = '';
-                    }
-                });
-
-                tagsContainer.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('remove-tag')) {
-                        const tagToRemove = e.target.dataset.tag;
-                        tags = tags.filter(t => t !== tagToRemove);
-                        renderTags();
-                    }
-                });
-
-                renderTags(); // Render any initial tags passed in
-            };
-
-            addStateBtn.addEventListener('click', () => {
-                const selectedState = stateSelect.value;
-                if (statesContainer.querySelector(`[data-state="${selectedState}"]`)) {
-                    alert(`${selectedState} has already been added.`);
-                    return;
-                }
-                createTagInput(selectedState);
-            });
-
-            statesContainer.addEventListener('click', (e) => {
-                if (e.target.classList.contains('remove-state-btn')) {
-                    e.target.closest('.state-service-area').remove();
-                }
-            });
-
             // --- Profile Form Logic (Example) ---
             // You would add loading and saving logic for the profile form here.
 
@@ -768,110 +719,6 @@
 
             // --- Load All Settings Data ---
             loadAllSettings(user.id);
-
-            // --- Vacation Mode Logic ---
-            const vacationModal = document.getElementById('vacation-modal');
-            const openModalBtn = document.getElementById('vacation-mode-btn');
-            const closeModalBtn = document.getElementById('cancel-vacation-btn');
-            const saveVacationBtn = document.getElementById('save-vacation-btn');
-            const clearVacationBtn = document.getElementById('clear-vacation-btn');
-            const statusText = document.getElementById('vacation-status-text');
-            const startDateInput = document.getElementById('vacation-start');
-            const endDateInput = document.getElementById('vacation-end');
-
-            const openModal = () => vacationModal.classList.add('is-active');
-            const closeModal = () => vacationModal.classList.remove('is-active');
-
-            openModalBtn.addEventListener('click', openModal);
-            closeModalBtn.addEventListener('click', closeModal);
-            vacationModal.addEventListener('click', (e) => {
-                if (e.target === vacationModal) closeModal(); // Close if clicking on overlay
-            });
-
-            // Function to update the main button and status text
-            const updateVacationUI = (profile) => {
-                const start = profile?.vacation_start_date;
-                const end = profile?.vacation_end_date;
-
-                if (start && end) {
-                    const startDate = new Date(start);
-                    const endDate = new Date(end);
-                    const now = new Date();
-                    now.setHours(0,0,0,0); // Compare dates only
-
-                    // Check if the vacation period is current or in the future
-                    if (endDate >= now) {
-                        openModalBtn.textContent = 'Edit Vacation';
-                        statusText.innerHTML = `<strong>On Vacation:</strong> ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`;
-                        statusText.style.color = 'var(--primary-color)';
-                        // Pre-fill modal inputs
-                        startDateInput.value = start;
-                        endDateInput.value = end;
-                        clearVacationBtn.style.display = 'block';
-                        return;
-                    }
-                }
-                
-                // Default state
-                openModalBtn.textContent = 'Set Vacation Time';
-                statusText.innerHTML = 'Disable job requests for holidays or breaks.';
-                statusText.style.color = 'var(--text-muted-color)';
-                startDateInput.value = '';
-                endDateInput.value = '';
-                clearVacationBtn.style.display = 'none';
-            };
-
-
-            // Save vacation dates
-            saveVacationBtn.addEventListener('click', async () => {
-                const startDate = startDateInput.value;
-                const endDate = endDateInput.value;
-
-                if (!startDate || !endDate) {
-                    alert('Please select both a start and end date.');
-                    return;
-                }
-                if (new Date(endDate) < new Date(startDate)) {
-                    alert('End date cannot be before the start date.');
-                    return;
-                }
-
-                saveVacationBtn.disabled = true;
-                saveVacationBtn.textContent = 'Saving...';
-
-                const { data, error } = await supabase
-                    .from('profiles')
-                    .update({ vacation_start_date: startDate, vacation_end_date: endDate })
-                    .eq('id', user.id)
-                    .select()
-                    .single();
-
-                if (error) {
-                    alert('Error saving vacation dates: ' + error.message);
-                } else {
-                    updateVacationUI(data);
-                    closeModal();
-                }
-                saveVacationBtn.disabled = false;
-                saveVacationBtn.textContent = 'Save Dates';
-            });
-
-            // Clear vacation dates
-            clearVacationBtn.addEventListener('click', async () => {
-                if (!confirm('Are you sure you want to clear your vacation dates and become available for jobs immediately?')) return;
-
-                const { data, error } = await supabase
-                    .from('profiles')
-                    .update({ vacation_start_date: null, vacation_end_date: null })
-                    .eq('id', user.id)
-                    .select()
-                    .single();
-                
-                if (error) alert('Error clearing dates: ' + error.message);
-                else updateVacationUI(data);
-                
-                closeModal();
-            });
 
             // --- Main Function to Load and Populate All Forms ---
             async function loadAllSettings(userId) {
@@ -890,104 +737,148 @@
                 if (!profile) return;
 
                 // Populate Service & Pricing form
-                document.getElementById('base-location').value = profile.base_location || '';
-                document.getElementById('call-fee').value = profile.call_fee || '';
-                document.getElementById('hourly-rate').value = profile.hourly_rate || '';
-                document.getElementById('emergency-surcharge').value = profile.emergency_surcharge || '';
-
-                // Populate service areas
-                if (profile.service_areas) {
-                    statesContainer.innerHTML = ''; // Clear any defaults
-                    for (const state in profile.service_areas) {
-                        createTagInput(state, profile.service_areas[state]);
-                    }
-                } else {
-                    // If no areas are set, pre-populate with Lagos for convenience
-                    createTagInput('Lagos');
-                }
-
-                // Populate operating hours
-                if (profile.operating_hours) {
-                    const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-                    days.forEach(day => {
-                        const dayData = profile.operating_hours[day];
-                        const checkbox = document.querySelector(`input[name="hours-active-${day}"]`);
-                        const startInput = document.querySelector(`input[name="hours-start-${day}"]`);
-                        const endInput = document.querySelector(`input[name="hours-end-${day}"]`);
-
-                        if (dayData && checkbox && startInput && endInput) {
-                            checkbox.checked = dayData.active;
-                            startInput.value = dayData.start;
-                            endInput.value = dayData.end;
-                            startInput.disabled = !dayData.active;
-                            endInput.disabled = !dayData.active;
-                            const dayGroup = checkbox.closest('.day-hours-group');
-                            if (dayGroup) {
-                                dayGroup.style.backgroundColor = dayData.active ? 'var(--background-color)' : '';
-                            }
-                        }
-                    });
-                }
-
-                // Populate vacation UI
-                updateVacationUI(profile);
             }
 
-            // --- Save Service & Pricing Form ---
-            const servicesForm = document.getElementById('services-form');
-            servicesForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const saveBtn = servicesForm.querySelector('button[type="submit"]');
-                saveBtn.disabled = true;
-                saveBtn.textContent = 'Saving...';
+            // --- Documents & Vetting Logic ---
+            const uploadTriggers = document.querySelectorAll('.upload-trigger');
+            uploadTriggers.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const inputId = btn.dataset.input;
+                    const input = document.getElementById(inputId);
+                    if (input) input.click();
+                });
+            });
 
-                // 1. Collect Service Areas
-                const serviceAreas = {};
-                document.querySelectorAll('.state-service-area').forEach(area => {
-                    const state = area.dataset.state;
-                    const tagsValue = area.querySelector('.hidden-locations-input').value;
-                    if (state && tagsValue) {
-                        serviceAreas[state] = tagsValue.split(',').filter(Boolean);
+            const fileInputs = document.querySelectorAll('input[type="file"]');
+            fileInputs.forEach(input => {
+                input.addEventListener('change', async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+
+                    const btn = document.querySelector(`button[data-input="${input.id}"]`);
+                    const statusId = input.id.replace('input-', 'status-');
+                    const statusBadge = document.getElementById(statusId);
+                    
+                    if (!btn || !statusBadge) return;
+
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Uploading...';
+                    btn.disabled = true;
+
+                    try {
+                        // Simulate upload delay for UX
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+
+                        // In a real app, you would upload to Supabase Storage here:
+                        // const { data, error } = await supabase.storage.from('documents').upload(`${user.id}/${input.id}`, file);
+                        // if (error) throw error;
+
+                        // Success UI
+                        statusBadge.className = 'status-badge status-verified';
+                        statusBadge.textContent = 'Submitted';
+                        // Override styles to indicate "Submitted/Under Review" state distinct from "Verified" if needed
+                        statusBadge.style.backgroundColor = '#e0f2fe'; 
+                        statusBadge.style.color = '#0284c7';
+                        
+                        btn.textContent = 'Update File';
+                        alert('Document uploaded successfully! It is now under review.');
+
+                    } catch (error) {
+                        console.error('Upload error:', error);
+                        alert('Error uploading document. Please try again.');
+                        btn.textContent = originalText;
+                    } finally {
+                        btn.disabled = false;
                     }
                 });
-
-                // 2. Collect Operating Hours
-                const operatingHours = {};
-                const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-                days.forEach(day => {
-                    const checkbox = document.querySelector(`input[name="hours-active-${day}"]`);
-                    operatingHours[day] = {
-                        active: checkbox.checked,
-                        start: document.querySelector(`input[name="hours-start-${day}"]`).value,
-                        end: document.querySelector(`input[name="hours-end-${day}"]`).value,
-                    };
-                });
-
-                // 3. Construct the update object
-                const updateData = {
-                    base_location: document.getElementById('base-location').value,
-                    call_fee: parseFloat(document.getElementById('call-fee').value) || 0,
-                    hourly_rate: parseFloat(document.getElementById('hourly-rate').value) || 0,
-                    emergency_surcharge: parseFloat(document.getElementById('emergency-surcharge').value) || 0,
-                    service_areas: serviceAreas,
-                    operating_hours: operatingHours,
-                };
-
-                // 4. Update Supabase
-                const { error } = await supabase
-                    .from('profiles')
-                    .update(updateData)
-                    .eq('id', user.id);
-
-                if (error) {
-                    alert('Error saving settings: ' + error.message);
-                    saveBtn.textContent = 'Save Pricing & Availability';
-                } else {
-                    saveBtn.textContent = 'Saved!';
-                    setTimeout(() => { saveBtn.textContent = 'Save Pricing & Availability'; }, 2000);
-                }
-                saveBtn.disabled = false;
             });
+
+            // Background Check Logic
+            const bgCheckBtn = document.getElementById('btn-background-check');
+            if (bgCheckBtn) {
+                bgCheckBtn.addEventListener('click', async () => {
+                    if (confirm('Do you authorize YourHelpa to conduct a background check using the details provided in your profile?')) {
+                        bgCheckBtn.disabled = true;
+                        bgCheckBtn.textContent = 'Processing...';
+                        
+                        // Simulate API call
+                        await new Promise(r => setTimeout(r, 2000));
+                        
+                        const statusBadge = document.getElementById('status-background-check');
+                        if (statusBadge) {
+                            statusBadge.className = 'status-badge status-verified';
+                            statusBadge.textContent = 'Authorized';
+                        }
+                        bgCheckBtn.textContent = 'Authorized';
+                        bgCheckBtn.classList.remove('button-primary');
+                        bgCheckBtn.classList.add('button-secondary');
+                    }
+                });
+            }
+
+            // --- Bank Account Verification Logic ---
+            const bankSelect = document.getElementById('bank-name');
+            const accountNumberInput = document.getElementById('account-number');
+            const accountNameInput = document.getElementById('account-name');
+            const saveBillingBtn = document.querySelector('#billing-form button[type="submit"]');
+
+            // Disable save button initially until account is verified
+            if (saveBillingBtn) saveBillingBtn.disabled = true;
+
+            const verifyAccount = async () => {
+                const bankCode = bankSelect.value;
+                const accountNumber = accountNumberInput.value;
+
+                // Reset state if inputs are invalid
+                if (!bankCode || accountNumber.length !== 10) {
+                    accountNameInput.value = '';
+                    if (saveBillingBtn) saveBillingBtn.disabled = true;
+                    return;
+                }
+
+                accountNameInput.value = 'Verifying account...';
+                accountNameInput.style.color = 'var(--text-muted-color)';
+                
+                try {
+                    // ---------------------------------------------------------
+                    // REAL-LIFE DATA INTEGRATION:
+                    // To get real names, you must call a backend function (like Supabase Edge Function)
+                    // that connects to a provider like Paystack or Flutterwave.
+                    //
+                    // Example Code:
+                    // const { data, error } = await supabase.functions.invoke('resolve-bank-account', {
+                    //    body: { bank_code: bankCode, account_number: accountNumber }
+                    // });
+                    // if (error) throw error;
+                    // const accountName = data.account_name;
+                    // ---------------------------------------------------------
+
+                    // SIMULATION (Replace this with the real API call above):
+                    await new Promise(r => setTimeout(r, 1500)); 
+                    const accountName = "SAMPLE ACCOUNT NAME"; // Placeholder
+
+                    accountNameInput.value = accountName;
+                    accountNameInput.style.color = '#05aa16'; // Primary color
+                    accountNameInput.style.fontWeight = '600';
+                    if (saveBillingBtn) saveBillingBtn.disabled = false;
+
+                } catch (error) {
+                    console.error('Verification failed:', error);
+                    accountNameInput.value = 'Could not verify account';
+                    accountNameInput.style.color = 'var(--error-color)';
+                    if (saveBillingBtn) saveBillingBtn.disabled = true;
+                }
+            };
+
+            if (bankSelect && accountNumberInput) {
+                bankSelect.addEventListener('change', verifyAccount);
+                accountNumberInput.addEventListener('input', (e) => {
+                    // Allow only numbers
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                    verifyAccount();
+                });
+            }
         });
     </script>
 </body>
