@@ -198,6 +198,9 @@
         .mobile-nav-grid {
             display: none; /* Hidden on desktop by default */
         }
+        .mobile-divider-container {
+            display: none;
+        }
 
 
         @media (max-width: 768px) {
@@ -307,6 +310,17 @@
             .stat-card .label {
                 font-size: 0.8rem;
             }
+
+            .mobile-divider-container {
+                display: block;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+            .mobile-divider-container p {
+                font-size: 0.9rem;
+                color: var(--text-muted-color);
+                margin-bottom: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -345,6 +359,11 @@
                     <span>Profile & Settings</span>
                     <svg class="nav-arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
+            </div>
+
+            <div class="mobile-divider-container">
+                <p>Manage your business operations, track earnings, and update your services all from this control center.</p>
+                <hr style="border: 0; border-top: 1px solid var(--border-color);">
             </div>
 
             <!-- Stat Cards -->
