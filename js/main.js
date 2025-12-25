@@ -24,7 +24,12 @@ window.initializeMain = async function() {
 
     // --- Set active navigation link ---
     // This needs to run after the header is loaded, so we use a small delay.
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    let currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    // Handle Vercel Clean URLs (e.g., /about matches about.html)
+    if (!currentPage.endsWith('.html') && !currentPage.includes('.')) {
+        currentPage += '.html';
+    }
+
     const navLinks = document.querySelectorAll('#main-nav a');
     if (navLinks.length === 0) {
         console.warn('No navigation links found in #main-nav.');
