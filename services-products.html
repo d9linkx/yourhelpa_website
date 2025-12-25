@@ -85,10 +85,15 @@
             border-radius: 8px;
             text-align: center;
             font-weight: 600;
-            transition: background-color 0.2s;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
         .category-item:hover {
-            background-color: var(--background-color);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
 
         .final-cta { background: linear-gradient(145deg, var(--primary-color), var(--primary-hover)); color: #0A0A0A; text-align: center; }
@@ -161,6 +166,8 @@
                 <a href="/services-products" class="category-item">Creative & Design</a>
                 <a href="/services-products" class="category-item">Tech & IT</a>
                 <a href="/services-products" class="category-item">Product Sales</a>
+                <a href="/services-products" class="category-item">Fashion & Apparel</a>
+                <a href="/services-products" class="category-item">Food & Groceries</a>
             </div>
         </section>
 
