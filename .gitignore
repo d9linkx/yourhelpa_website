@@ -9,3 +9,7 @@ build/
 
 # OS-specific
 .DS_Store
+
+# FTP Configuration
+ftp-simple-temp.json
+ftp-simple.json
