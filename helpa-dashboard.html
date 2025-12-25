@@ -83,6 +83,13 @@
             font-size: 0.9rem;
         }
 
+        .stat-card .sub-value {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted-color);
+            font-weight: 500;
+        }
+
         /* --- Main Content Sections --- */
         .dashboard-section {
             background-color: var(--surface-color);
@@ -368,6 +375,7 @@
                     </div>
                     <span class="value" id="monthly-earnings-value">...</span>
                     <span class="label">Earnings this month</span>
+                    <span class="sub-value" id="all-time-earnings-value">All-time: ...</span>
                 </div>
                 <div class="stat-card">
                     <div class="icon">
@@ -526,17 +534,25 @@
                     .filter(j => j.status === 'completed' && new Date(j.created_at) >= firstDayOfMonth)
                     .reduce((sum, j) => sum + j.amount, 0);
 
+                const allTimeEarnings = jobs
+                    .filter(j => j.status === 'completed')
+                    .reduce((sum, j) => sum + j.amount, 0);
+
                 // Render stats
                 document.getElementById('in-escrow-value').textContent = formatCurrency(inEscrow);
                 document.getElementById('profile-views-value').textContent = profile?.profile_views || 0;
                 document.getElementById('monthly-earnings-value').textContent = formatCurrency(monthlyEarnings);
                 document.getElementById('jobs-completed-value').textContent = jobsCompleted;
+                document.getElementById('all-time-earnings-value').textContent = `All-time: ${formatCurrency(allTimeEarnings)}`;
 
             } catch (error) {
                 console.error('Error fetching stats:', error.message);
                 // If fetching fails, set stat values to 0
-                ['in-escrow-value', 'profile-views-value', 'monthly-earnings-value', 'jobs-completed-value']
-                    .forEach(id => document.getElementById(id).textContent = (id.includes('value')) ? '0' : formatCurrency(0));
+                document.getElementById('in-escrow-value').textContent = formatCurrency(0);
+                document.getElementById('profile-views-value').textContent = '0';
+                document.getElementById('monthly-earnings-value').textContent = formatCurrency(0);
+                document.getElementById('jobs-completed-value').textContent = '0';
+                document.getElementById('all-time-earnings-value').textContent = 'All-time: N/A';
             }
         }
 

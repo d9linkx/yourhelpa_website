@@ -1273,10 +1273,11 @@ main {
     position: relative;
     width: 300px; /* A bit wider than the image for the frame */
     flex-shrink: 0; /* Prevent frames from shrinking in the flex container */
-    background-color: #333; /* Dark grey frame */
-    padding: 12px;
-    border-radius: 40px; /* Rounded corners for the phone body */
-    box-shadow: 0 15px 30px -10px rgba(0,0,0,0.3), inset 0 2px 2px rgba(255,255,255,0.1);
+    background-color: #1c1c1e; /* Sleek dark frame */
+    padding: 8px; /* Thinner bezel */
+    border-radius: 48px; /* Modern rounded corners */
+    box-shadow: none;
+    border: 4px solid #000; /* Inner black border */
 }
 .hero-visual {
     overflow: hidden; /* Hide the overflowing carousel items */
@@ -1291,8 +1292,8 @@ main {
 }
 .screen-logo {
     position: absolute;
-    top: 30px; /* Adjust vertical position */
-    left: 30px; /* Adjust horizontal position */
+    top: 20px; /* Adjust vertical position */
+    left: 25px; /* Adjust horizontal position */
     z-index: 10;
 }
 .screen-logo img {
@@ -1302,9 +1303,9 @@ main {
 .smartphone-screen {
     background-color: #FFFFFF;
     color: #0A0A0A;
-    border-radius: 28px; /* Match inner radius */
-    padding: 20px;
-    min-height: 530px; /* Approximate height of a phone screen */
+    border-radius: 38px; /* Match outer curve */
+    padding: 45px 20px 30px; /* Top padding for notch */
+    min-height: 580px; /* Taller aspect ratio */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1312,6 +1313,8 @@ main {
     text-align: center;
     /* Added for horizontal arrangement */
     position: relative; /* For positioning the logo inside */
+    overflow: hidden; /* Clip content */
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
 }
 .testimonial-headshot {
     width: 80px;
@@ -1326,27 +1329,43 @@ main {
     line-height: 1.6;
 }
 
-/* Side buttons */
-.smartphone-frame::before,
-.smartphone-frame::after {
+/* Dynamic Island / Notch */
+.smartphone-screen::before {
     content: '';
     position: absolute;
-    background-color: #444; /* Slightly lighter for buttons */
-    border-radius: 4px;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 26px;
+    background-color: #000;
+    border-radius: 14px;
+    z-index: 20;
 }
-/* Volume buttons */
-.smartphone-frame::before {
-    left: -4px;
+
+/* Side buttons */
+.smartphone-frame::before { /* Volume */
+    content: '';
+    position: absolute;
+    left: -2px;
     top: 100px;
     width: 4px;
-    height: 60px;
+    height: 50px;
+    background: #2a2a2a;
+    border-radius: 4px 0 0 4px;
+    box-shadow: inset -1px 0 1px rgba(0,0,0,0.3);
 }
-/* Power button */
-.smartphone-frame::after {
-    right: -4px;
-    top: 120px;
+
+.smartphone-frame::after { /* Power */
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: 130px;
     width: 4px;
-    height: 35px;
+    height: 80px;
+    background: #2a2a2a;
+    border-radius: 0 4px 4px 0;
+    box-shadow: inset 1px 0 1px rgba(0,0,0,0.3);
 }
 .trust-item { display: flex; align-items: center; gap: 0.75rem; font-weight: 500; color: var(--text-muted-color); }
 .trust-item {
@@ -1590,11 +1609,6 @@ main {
 @keyframes pulse-glow {
     0%, 100% { box-shadow: 0 0 20px -5px rgba(5, 170, 22, 0.3), 0 0 80px rgba(0,0,0,0.5); }
     50% { box-shadow: 0 0 35px 0px rgba(5, 170, 22, 0.5), 0 0 80px rgba(0,0,0,0.5); }
-}
-
-/* Style for the first card in the carousel */
-.screens-wrapper .smartphone-frame:first-child {
-    background-color: grey;
 }
 
 /* Trusted By Section Styles */
