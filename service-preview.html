@@ -9,7 +9,7 @@
     <style>
         body { background-color: var(--background-color); }
         .preview-container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
-        .back-nav { margin-bottom: 1.5rem; }
+        .back-nav { margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
         .back-nav a { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-muted-color); text-decoration: none; font-weight: 500; transition: color 0.2s; }
         .back-nav a:hover { color: var(--primary-color); }
         
@@ -71,9 +71,12 @@
     <main>
         <div class="preview-container">
             <div class="back-nav">
-                <a href="helpa-dashboard.html" id="back-link">
+                <a href="#" id="back-link" onclick="window.history.back(); return false;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                    <span id="back-text">Back to Dashboard</span>
+                    <span id="back-text">Back</span>
+                </a>
+                <a href="helpa-dashboard.html" style="color: var(--text-muted-color); font-size: 0.9rem; text-decoration: none;">
+                    Return to Dashboard
                 </a>
             </div>
 
@@ -85,7 +88,7 @@
             <div id="services-list-view" style="display: none;">
                 <div class="list-header">
                     <h1>My Services & Products</h1>
-                    <a href="my-products-and-services.html" class="button-primary">Manage / Add New</a>
+                    <a href="business-setup.html" class="button-primary">Manage / Add New</a>
                 </div>
                 <div class="preview-grid" id="preview-grid">
                     <!-- Items will be injected here -->
@@ -190,7 +193,7 @@
                             `;
                         }).join('');
                     } else {
-                        document.getElementById('preview-grid').innerHTML = '<p style="grid-column: 1/-1; text-align: center;">You have no services listed. <a href="my-products-and-services.html">Add one now</a>.</p>';
+                        document.getElementById('preview-grid').innerHTML = '<p style="grid-column: 1/-1; text-align: center;">You have no services listed. <a href="business-setup.html">Add one now</a>.</p>';
                     }
                     loadingState.style.display = 'none';
                     listView.style.display = 'block';
@@ -202,6 +205,7 @@
             }
 
             // If ID exists, show detail view
+            backLink.removeAttribute('onclick'); // Remove history back behavior
             backLink.href = "service-preview.html"; // Go back to list view
             backText.textContent = "Back to All Services";
 

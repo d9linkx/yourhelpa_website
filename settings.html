@@ -25,6 +25,9 @@
         .page-navigation {
             grid-column: 1 / -1; /* Span across all grid columns */
             margin-bottom: 0; /* Reset margin as grid gap handles spacing */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .page-navigation a {
@@ -403,9 +406,12 @@
     <main>
         <div class="settings-container">
             <div class="page-navigation">
-                <a href="helpa-dashboard.html">
+                <a href="#" onclick="window.history.back(); return false;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                    Back to Dashboard
+                    Back
+                </a>
+                <a href="helpa-dashboard.html" style="color: var(--text-muted-color); font-size: 0.9rem; text-decoration: none;">
+                    Return to Dashboard
                 </a>
             </div>
 
@@ -879,6 +885,30 @@
                     verifyAccount();
                 });
             }
+
+            // Form Persistence for Profile & Billing
+            ['profile-form', 'billing-form'].forEach(formId => {
+                const form = document.getElementById(formId);
+                if (form) {
+                    const storageKey = formId + '_autosave';
+                    const savedData = sessionStorage.getItem(storageKey);
+                    
+                    if (savedData) {
+                        const data = JSON.parse(savedData);
+                        Object.keys(data).forEach(key => {
+                            const el = form.elements[key];
+                            if (el && !el.readOnly) el.value = data[key];
+                        });
+                    }
+                    form.addEventListener('input', () => {
+                        const data = {};
+                        Array.from(form.elements).forEach(el => {
+                            if ((el.name || el.id) && !el.readOnly) data[el.name || el.id] = el.value;
+                        });
+                        sessionStorage.setItem(storageKey, JSON.stringify(data));
+                    });
+                }
+            });
         });
     </script>
 </body>

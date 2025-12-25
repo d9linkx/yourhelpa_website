@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Details - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        body { background-color: var(--background-color); }
+        .page-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        
+        .back-nav { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .back-nav a { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-muted-color); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .back-nav a:hover { color: var(--primary-color); }
+
+        .business-card-large {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2.5rem;
+        }
+
+        .card-cover {
+            height: 250px;
+            background-color: #f1f5f9;
+            position: relative;
+        }
+        .card-cover img { width: 100%; height: 100%; object-fit: cover; }
+        .card-cover-placeholder { display: flex; align-items: center; justify-content: center; height: 100%; color: #94a3b8; }
+
+        .card-content { padding: 2.5rem; }
+        .card-category { 
+            display: inline-block; 
+            padding: 0.25rem 0.75rem; 
+            background-color: rgba(var(--primary-color-rgb), 0.1); 
+            color: var(--primary-color); 
+            border-radius: 99px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            margin-bottom: 1rem;
+        }
+        .card-title { font-size: 2rem; margin-bottom: 0.5rem; color: var(--text-heading-color); }
+        .card-tagline { font-size: 1.1rem; color: var(--text-muted-color); margin-bottom: 1.5rem; font-style: italic; }
+        .card-description { line-height: 1.7; margin-bottom: 2rem; }
+        
+        .card-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
+        .meta-item h4 { font-size: 0.85rem; color: var(--text-muted-color); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .meta-item p { font-weight: 600; font-size: 1rem; margin: 0; }
+
+        .next-steps-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .next-steps-box h3 { color: #166534; margin-bottom: 0.75rem; }
+        .next-steps-box p { color: #15803d; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        .action-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="page-container">
+            <div class="back-nav">
+                <a href="business-setup.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back to Business List
+                </a>
+            </div>
+
+            <div id="loading-state" style="text-align: center; padding: 4rem;">
+                <p>Loading business details...</p>
+            </div>
+
+            <div id="business-content" style="display: none;">
+                <div class="business-card-large">
+                    <div class="card-cover" id="biz-cover">
+                        <!-- Image injected here -->
+                    </div>
+                    <div class="card-content">
+                        <span class="card-category" id="biz-category">Category</span>
+                        <h1 class="card-title" id="biz-name">Business Name</h1>
+                        <p class="card-tagline" id="biz-tagline">Tagline goes here</p>
+                        <div class="card-description" id="biz-description">
+                            Description goes here...
+                        </div>
+                        <div class="card-meta">
+                            <div class="meta-item">
+                                <h4>Location</h4>
+                                <p id="biz-location">Lagos</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>State</h4>
+                                <p id="biz-state">Lagos</p>
+                            </div>
+                            <div class="meta-item">
+                                <h4>Service Radius</h4>
+                                <p id="biz-radius">10km</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps-box">
+                    <h3>Business Profile Created Successfully!</h3>
+                    <p>Your business is now live on YourHelpa. To start receiving orders, you should add specific products or services to this business, or you can refine the details you just entered.</p>
+                    <div class="action-buttons">
+                        <a href="#" id="add-products-btn" class="button-primary">Add Products & Services</a>
+                        <button id="edit-btn" class="button-secondary" style="background-color: white; color: var(--primary-color); border: 1px solid var(--primary-color);">Edit Business Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/supabase-client.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/includes.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const businessId = params.get('id');
+            
+            if (!businessId) {
+                window.location.href = 'business-setup.html';
+                return;
+            }
+
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) { window.location.href = 'login.html'; return; }
+
+            try {
+                const { data: biz, error } = await supabase
+                    .from('businesses')
+                    .select('*')
+                    .eq('id', businessId)
+                    .single();
+
+                if (error) throw error;
+
+                document.getElementById('biz-name').textContent = biz.name;
+                document.getElementById('biz-category').textContent = biz.category;
+                document.getElementById('biz-tagline').textContent = biz.tagline || '';
+                document.getElementById('biz-description').textContent = biz.description;
+                document.getElementById('biz-location').textContent = biz.location;
+                document.getElementById('biz-state').textContent = biz.state;
+                document.getElementById('biz-radius').textContent = biz.service_radius === 'state' ? 'Entire State' : (biz.service_radius === 'nationwide' ? 'Nationwide' : `${biz.service_radius}km`);
+                
+                const coverContainer = document.getElementById('biz-cover');
+                if (biz.image_url) {
+                    coverContainer.innerHTML = `<img src="${biz.image_url}" alt="${biz.name}">`;
+                } else {
+                    coverContainer.innerHTML = `<div class="card-cover-placeholder"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></div>`;
+                }
+
+                // Link the Add Products button to the new page with business ID
+                document.getElementById('add-products-btn').href = `add-product-service.html?business_id=${biz.id}`;
+
+                document.getElementById('edit-btn').onclick = () => {
+                    // Store ID in session storage to open edit mode on the setup page
+                    sessionStorage.setItem('edit_business_id', biz.id);
+                    window.location.href = 'business-setup.html';
+                };
+
+                document.getElementById('loading-state').style.display = 'none';
+                document.getElementById('business-content').style.display = 'block';
+
+            } catch (err) {
+                console.error(err);
+                alert('Error loading business details.');
+            }
+        });
+    </script>
+</body>
+</html>

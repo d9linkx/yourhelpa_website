@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Businesses - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        body {
+            background-color: var(--background-color);
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* --- Navigation --- */
+        .back-nav {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .back-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Business List View --- */
+        .header-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-action-bar h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-heading-color);
+        }
+
+        .header-action-bar p {
+            color: var(--text-muted-color);
+            margin-top: 0.5rem;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .business-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .business-card-image {
+            height: 160px;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            overflow: hidden;
+        }
+
+        .business-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .business-card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .business-category {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .business-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-heading-color);
+        }
+
+        .business-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .status-active { background-color: #dcfce7; color: #166534; }
+        .status-draft { background-color: #f1f5f9; color: #475569; }
+
+        .business-card-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .add-business-card {
+            border: 2px dashed var(--border-color);
+            background-color: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-muted-color);
+        }
+
+        .add-business-card:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background-color: rgba(var(--primary-color-rgb), 0.02);
+        }
+
+        .add-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Form View --- */
+        .form-container {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .form-header h2 { margin: 0 0 0.5rem 0; font-size: 1.75rem; }
+        .form-header p { color: var(--text-muted-color); margin: 0; }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--text-heading-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-section h3 span.step-num {
+            background-color: var(--primary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .full-width { grid-column: 1 / -1; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.95rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: var(--background-color);
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+        }
+        .form-group small { display: block; margin-top: 0.4rem; color: var(--text-muted-color); font-size: 0.85rem; }
+
+        .image-upload-box {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .image-upload-box:hover { border-color: var(--primary-color); background-color: rgba(var(--primary-color-rgb), 0.02); }
+
+        #image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: none;
+            margin: 0 auto;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-container { padding: 1.5rem; }
+            .header-action-bar { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="page-container">
+            <div class="back-nav">
+                <a href="#" onclick="window.history.back(); return false;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back
+                </a>
+                <a href="helpa-dashboard.html" style="color: var(--text-muted-color); font-size: 0.9rem; text-decoration: none;">
+                    Return to Dashboard
+                </a>
+            </div>
+
+            <!-- VIEW 1: Business List -->
+            <div id="business-list-view">
+                <div class="header-action-bar">
+                    <div>
+                        <h1>My Businesses</h1>
+                        <p>Manage your business profiles. You can have up to 3 distinct businesses or brands.</p>
+                    </div>
+                    <div id="business-count-badge" style="background: #e2e8f0; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem;">
+                        0 / 3 Used
+                    </div>
+                </div>
+
+                <div class="business-grid" id="business-grid-container">
+                    <!-- Dynamic Content will be loaded here -->
+                    
+                    <!-- Add New Card (Always last) -->
+                    <div class="add-business-card" id="btn-add-business" onclick="showBusinessForm()">
+                        <svg class="add-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                        <h3>Add New Business</h3>
+                        <p>Set up a new service or product line</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: Business Form (Hidden by default) -->
+            <div id="business-form-view" style="display: none;">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2 id="form-title">Set Up New Business</h2>
+                        <p>Provide all the details your customers need to know. Be descriptive and professional.</p>
+                    </div>
+
+                    <form id="business-form">
+                        <input type="hidden" id="business-id">
+                        
+                        <!-- Step 1: Identity -->
+                        <div class="form-section">
+                            <h3><span class="step-num">1</span> Business Identity</h3>
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label for="business-name">Business Name</label>
+                                    <input type="text" id="business-name" placeholder="e.g., Tunde's Plumbing Services" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="business-category">Category</label>
+                                    <select id="business-category" required>
+                                        <option value="">Select Category</option>
+                                        <optgroup label="Home & Maintenance">
+                                            <option value="Cleaning Services">Cleaning Services</option>
+                                            <option value="Plumbing">Plumbing</option>
+                                            <option value="Electrical">Electrical</option>
+                                            <option value="Carpentry & Woodwork">Carpentry & Woodwork</option>
+                                            <option value="Painting">Painting</option>
+                                            <option value="Pest Control">Pest Control</option>
+                                            <option value="HVAC & AC Repair">HVAC & AC Repair</option>
+                                            <option value="Gardening & Landscaping">Gardening & Landscaping</option>
+                                            <option value="Moving & Hauling">Moving & Hauling</option>
+                                            <option value="Interior Design">Interior Design</option>
+                                            <option value="Solar & Inverter Services">Solar & Inverter Services</option>
+                                            <option value="Generator Repair">Generator Repair</option>
+                                        </optgroup>
+                                        <optgroup label="Tech & Digital">
+                                            <option value="Web & App Development">Web & App Development</option>
+                                            <option value="Graphic Design">Graphic Design</option>
+                                            <option value="UI/UX Design">UI/UX Design</option>
+                                            <option value="Digital Marketing & SEO">Digital Marketing & SEO</option>
+                                            <option value="Social Media Management">Social Media Management</option>
+                                            <option value="IT Support & Repair">IT Support & Repair</option>
+                                            <option value="Video Editing & Animation">Video Editing & Animation</option>
+                                            <option value="Photography">Photography</option>
+                                            <option value="Videography">Videography</option>
+                                        </optgroup>
+                                        <optgroup label="Professional Services">
+                                            <option value="Legal Services">Legal Services</option>
+                                            <option value="Accounting & Tax">Accounting & Tax</option>
+                                            <option value="Business Consulting">Business Consulting</option>
+                                            <option value="Virtual Assistant">Virtual Assistant</option>
+                                            <option value="Writing & Translation">Writing & Translation</option>
+                                            <option value="Recruitment & HR">Recruitment & HR</option>
+                                        </optgroup>
+                                        <optgroup label="Beauty & Personal Care">
+                                            <option value="Hair Styling & Barbering">Hair Styling & Barbering</option>
+                                            <option value="Makeup Artistry">Makeup Artistry</option>
+                                            <option value="Skincare & Spa">Skincare & Spa</option>
+                                            <option value="Nail Services">Nail Services</option>
+                                            <option value="Fashion Design & Tailoring">Fashion Design & Tailoring</option>
+                                        </optgroup>
+                                        <optgroup label="Health & Wellness">
+                                            <option value="Fitness Training">Fitness Training</option>
+                                            <option value="Nursing & Caregiving">Nursing & Caregiving</option>
+                                            <option value="Physiotherapy">Physiotherapy</option>
+                                            <option value="Nutrition & Dietetics">Nutrition & Dietetics</option>
+                                            <option value="Massage Therapy">Massage Therapy</option>
+                                        </optgroup>
+                                        <optgroup label="Events & Entertainment">
+                                            <option value="Event Planning">Event Planning</option>
+                                            <option value="Catering & Baking">Catering & Baking</option>
+                                            <option value="DJ & Music">DJ & Music</option>
+                                            <option value="MC & Hosting">MC & Hosting</option>
+                                            <option value="Party Rentals & Decor">Party Rentals & Decor</option>
+                                        </optgroup>
+                                        <optgroup label="Education & Training">
+                                            <option value="Academic Tutoring">Academic Tutoring</option>
+                                            <option value="Language Lessons">Language Lessons</option>
+                                            <option value="Music & Art Lessons">Music & Art Lessons</option>
+                                            <option value="Vocational Training">Vocational Training</option>
+                                        </optgroup>
+                                        <optgroup label="Automotive & Transport">
+                                            <option value="Auto Repair & Mechanic">Auto Repair & Mechanic</option>
+                                            <option value="Car Wash & Detailing">Car Wash & Detailing</option>
+                                            <option value="Logistics & Delivery">Logistics & Delivery</option>
+                                            <option value="Driver Services">Driver Services</option>
+                                        </optgroup>
+                                        <optgroup label="Real Estate & Construction">
+                                            <option value="Building Construction">Building Construction</option>
+                                            <option value="Architecture">Architecture</option>
+                                            <option value="Real Estate Agency">Real Estate Agency</option>
+                                            <option value="Property Management">Property Management</option>
+                                        </optgroup>
+                                        <optgroup label="Product Sales">
+                                            <option value="Electronics & Gadgets">Electronics & Gadgets</option>
+                                            <option value="Fashion & Apparel">Fashion & Apparel</option>
+                                            <option value="Home & Living">Home & Living</option>
+                                            <option value="Health & Beauty Products">Health & Beauty Products</option>
+                                            <option value="Food & Groceries">Food & Groceries</option>
+                                            <option value="Automotive Parts">Automotive Parts</option>
+                                            <option value="Books & Stationery">Books & Stationery</option>
+                                            <option value="Kids & Babies">Kids & Babies</option>
+                                            <option value="Sports & Outdoors">Sports & Outdoors</option>
+                                            <option value="Construction Materials">Construction Materials</option>
+                                        </optgroup>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="business-tagline">Tagline (Optional)</label>
+                                    <input type="text" id="business-tagline" placeholder="e.g., Fast, Reliable, Affordable">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="business-description">Description</label>
+                                    <textarea id="business-description" rows="4" placeholder="Describe what you do, your experience, and why customers should choose you." required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cac-registered">CAC Registered?</label>
+                                    <select id="cac-registered">
+                                        <option value="false">No</option>
+                                        <option value="true">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="cac-number-group" style="display: none;">
+                                    <label for="cac-number">CAC Registration Number</label>
+                                    <input type="text" id="cac-number" placeholder="e.g., RC 123456">
+                                </div>
+                                <div class="form-group">
+                                    <label for="website-link">Website Link (Optional)</label>
+                                    <input type="url" id="website-link" placeholder="https://yourbusiness.com">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="social-link">Social Media Link (Optional)</label>
+                                    <input type="url" id="social-link" placeholder="e.g., Instagram, Facebook, or LinkedIn profile URL">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Location -->
+                        <div class="form-section">
+                            <h3><span class="step-num">2</span> Location</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="business-location">Primary Location / City</label>
+                                    <input type="text" id="business-location" placeholder="e.g., Lekki Phase 1, Lagos" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="business-state">State</label>
+                                    <select id="business-state" required>
+                                        <option value="">Select State</option>
+                                        <option value="Abia">Abia</option>
+                                        <option value="Adamawa">Adamawa</option>
+                                        <option value="Akwa Ibom">Akwa Ibom</option>
+                                        <option value="Anambra">Anambra</option>
+                                        <option value="Bauchi">Bauchi</option>
+                                        <option value="Bayelsa">Bayelsa</option>
+                                        <option value="Benue">Benue</option>
+                                        <option value="Borno">Borno</option>
+                                        <option value="Cross River">Cross River</option>
+                                        <option value="Delta">Delta</option>
+                                        <option value="Ebonyi">Ebonyi</option>
+                                        <option value="Edo">Edo</option>
+                                        <option value="Ekiti">Ekiti</option>
+                                        <option value="Enugu">Enugu</option>
+                                        <option value="FCT - Abuja">FCT - Abuja</option>
+                                        <option value="Gombe">Gombe</option>
+                                        <option value="Imo">Imo</option>
+                                        <option value="Jigawa">Jigawa</option>
+                                        <option value="Kaduna">Kaduna</option>
+                                        <option value="Kano">Kano</option>
+                                        <option value="Katsina">Katsina</option>
+                                        <option value="Kebbi">Kebbi</option>
+                                        <option value="Kogi">Kogi</option>
+                                        <option value="Kwara">Kwara</option>
+                                        <option value="Lagos">Lagos</option>
+                                        <option value="Nasarawa">Nasarawa</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Ogun">Ogun</option>
+                                        <option value="Ondo">Ondo</option>
+                                        <option value="Osun">Osun</option>
+                                        <option value="Oyo">Oyo</option>
+                                        <option value="Plateau">Plateau</option>
+                                        <option value="Rivers">Rivers</option>
+                                        <option value="Sokoto">Sokoto</option>
+                                        <option value="Taraba">Taraba</option>
+                                        <option value="Yobe">Yobe</option>
+                                        <option value="Zamfara">Zamfara</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="service-radius">Service Radius (km)</label>
+                                    <select id="service-radius">
+                                        <option value="5">Within 5km</option>
+                                        <option value="10" selected>Within 10km</option>
+                                        <option value="25">Within 25km</option>
+                                        <option value="state">Entire State</option>
+                                        <option value="nationwide">Nationwide (Delivery)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Visuals -->
+                        <div class="form-section">
+                            <h3><span class="step-num">3</span> Visuals</h3>
+                            <div class="form-group full-width">
+                                <label>Business Visual / Ad Image</label>
+                                <div class="image-upload-box" onclick="document.getElementById('cover-image').click()">
+                                    <div id="upload-placeholder">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color); margin-bottom: 0.5rem;"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                                        <p style="margin:0; font-weight:500;">Upload Flyer, Business Card, or Cover Photo</p>
+                                        <small>Recommended size: 800x400px. Max 2MB.</small>
+                                    </div>
+                                    <img id="image-preview" alt="Business Visual Preview">
+                                    <input type="file" id="cover-image" hidden accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="button-outline" onclick="hideBusinessForm()">Cancel</button>
+                            <button type="submit" class="button-primary">Save Business</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/supabase-client.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/includes.js"></script>
+    
+    <script>
+        // Supabase Integration
+        let businesses = [];
+        const MAX_BUSINESSES = 3;
+        let currentUser = null;
+
+        async function renderBusinessList() {
+            const grid = document.getElementById('business-grid-container');
+            const addBtn = document.getElementById('btn-add-business');
+            const countBadge = document.getElementById('business-count-badge');
+            
+            // Clear existing items except the "Add" button
+            Array.from(grid.children).forEach(child => {
+                if (!child.classList.contains('add-business-card')) {
+                    grid.removeChild(child);
+                }
+            });
+
+            // Render Cards
+            businesses.forEach((biz, index) => {
+                const card = document.createElement('div');
+                card.className = 'business-card';
+                card.onclick = (e) => {
+                    if (e.target.closest('button')) return;
+                    window.location.href = `business-view.html?id=${biz.id}`;
+                };
+                card.innerHTML = `
+                    <div class="business-card-image">
+                        ${biz.image_url ? `<img src="${biz.image_url}" alt="${biz.name}">` : `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>`}
+                    </div>
+                    <div class="business-card-body">
+                        <div class="business-category">${biz.category}</div>
+                        <div class="business-title">${biz.name}</div>
+                        <div class="business-status status-active">Active</div>
+                        <div class="business-card-actions">
+                            <button class="button-outline" style="flex:1; padding: 0.5rem;" onclick="editBusiness(${index})">Edit</button>
+                            <button class="button-outline" style="padding: 0.5rem; color: var(--error-color); border-color: var(--border-color);" onclick="deleteBusiness('${biz.id}')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.insertBefore(card, addBtn);
+            });
+
+            // Update UI State
+            countBadge.textContent = `${businesses.length} / ${MAX_BUSINESSES} Used`;
+            
+            if (businesses.length >= MAX_BUSINESSES) {
+                addBtn.style.display = 'none';
+            } else {
+                addBtn.style.display = 'flex';
+            }
+        }
+
+        function showBusinessForm(index = null) {
+            document.getElementById('business-list-view').style.display = 'none';
+            document.getElementById('business-form-view').style.display = 'block';
+            
+            const form = document.getElementById('business-form');
+            const title = document.getElementById('form-title');
+            
+            if (index !== null) {
+                // Edit Mode
+                const biz = businesses[index];
+                title.textContent = "Edit Business";
+                document.getElementById('business-id').value = index;
+                // Store actual UUID for update logic
+                document.getElementById('business-id').dataset.uuid = biz.id;
+                document.getElementById('business-name').value = biz.name;
+                document.getElementById('business-category').value = biz.category;
+                document.getElementById('business-description').value = biz.description || '';
+                document.getElementById('business-location').value = biz.location || '';
+                document.getElementById('business-state').value = biz.state || '';
+                document.getElementById('business-tagline').value = biz.tagline || '';
+                document.getElementById('service-radius').value = biz.service_radius || '10';
+                document.getElementById('cac-registered').value = biz.cac_registered ? 'true' : 'false';
+                
+                const cacGroup = document.getElementById('cac-number-group');
+                if (biz.cac_registered) {
+                    cacGroup.style.display = 'block';
+                    document.getElementById('cac-number').value = biz.cac_number || '';
+                } else {
+                    cacGroup.style.display = 'none';
+                    document.getElementById('cac-number').value = '';
+                }
+                document.getElementById('website-link').value = biz.website_url || '';
+                document.getElementById('social-link').value = biz.social_url || '';
+                
+                if (biz.image_url) {
+                    document.getElementById('image-preview').src = biz.image_url;
+                    document.getElementById('image-preview').style.display = 'block';
+                    document.getElementById('upload-placeholder').style.display = 'none';
+                } else {
+                    document.getElementById('image-preview').style.display = 'none';
+                    document.getElementById('upload-placeholder').style.display = 'block';
+                }
+                // ... populate other fields
+            } else {
+                // Add Mode
+                title.textContent = "Set Up New Business";
+                form.reset();
+                document.getElementById('business-id').value = '';
+                delete document.getElementById('business-id').dataset.uuid;
+                document.getElementById('cac-number-group').style.display = 'none';
+                
+                document.getElementById('image-preview').style.display = 'none';
+                document.getElementById('upload-placeholder').style.display = 'block';
+            }
+            
+            window.scrollTo(0, 0);
+        }
+
+        function hideBusinessForm() {
+            document.getElementById('business-form-view').style.display = 'none';
+            document.getElementById('business-list-view').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Expose functions to global scope for onclick handlers
+        window.showBusinessForm = showBusinessForm;
+        window.hideBusinessForm = hideBusinessForm;
+        window.editBusiness = (index) => showBusinessForm(index);
+        
+        window.deleteBusiness = async (id) => {
+            if(confirm('Are you sure you want to delete this business?')) {
+                try {
+                    const { error } = await supabase.from('businesses').delete().eq('id', id);
+                    if (error) throw error;
+                    // Refresh list
+                    const { data } = await supabase.from('businesses').select('*').eq('helpa_id', currentUser.id);
+                    businesses = data || [];
+                    renderBusinessList();
+                } catch (err) {
+                    alert('Error deleting business: ' + err.message);
+                }
+            }
+        };
+
+        document.getElementById('cover-image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                    document.getElementById('image-preview').style.display = 'block';
+                    document.getElementById('upload-placeholder').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('cac-registered').addEventListener('change', function() {
+            const cacGroup = document.getElementById('cac-number-group');
+            if (this.value === 'true') {
+                cacGroup.style.display = 'block';
+            } else {
+                cacGroup.style.display = 'none';
+                document.getElementById('cac-number').value = '';
+            }
+        });
+
+        document.getElementById('business-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentUser) return;
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            try {
+                const index = document.getElementById('business-id').value;
+                const uuid = document.getElementById('business-id').dataset.uuid;
+                
+                const name = document.getElementById('business-name').value;
+                const category = document.getElementById('business-category').value;
+                const tagline = document.getElementById('business-tagline').value;
+                const description = document.getElementById('business-description').value;
+                const location = document.getElementById('business-location').value;
+                const state = document.getElementById('business-state').value;
+                const radius = document.getElementById('service-radius').value;
+                const cacRegistered = document.getElementById('cac-registered').value === 'true';
+                const cacNumber = document.getElementById('cac-number').value;
+                const websiteUrl = document.getElementById('website-link').value;
+                const socialUrl = document.getElementById('social-link').value;
+                const fileInput = document.getElementById('cover-image');
+                
+                let imageUrl = null;
+                
+                // Handle Image Upload
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileExt = file.name.split('.').pop();
+                    const fileName = `${currentUser.id}/${Date.now()}.${fileExt}`;
+                    
+                    const { error: uploadError } = await supabase.storage
+                        .from('business-images')
+                        .upload(fileName, file);
+                        
+                    if (uploadError) throw uploadError;
+                    
+                    const { data: { publicUrl } } = supabase.storage
+                        .from('business-images')
+                        .getPublicUrl(fileName);
+                        
+                    imageUrl = publicUrl;
+                } else if (uuid) {
+                    // Keep existing image if editing
+                    const existingBiz = businesses.find(b => b.id === uuid);
+                    if (existingBiz) imageUrl = existingBiz.image_url;
+                }
+
+                const businessData = {
+                    helpa_id: currentUser.id,
+                    name,
+                    category,
+                    tagline,
+                    description,
+                    location,
+                    state,
+                    service_radius: radius,
+                    cac_registered: cacRegistered,
+                    cac_number: cacRegistered ? cacNumber : null,
+                    website_url: websiteUrl,
+                    social_url: socialUrl,
+                    image_url: imageUrl,
+                    updated_at: new Date()
+                };
+
+                let resultId;
+
+                if (uuid) {
+                    // Update
+                    const { data, error } = await supabase.from('businesses').update(businessData).eq('id', uuid).select().single();
+                    if (error) throw error;
+                    resultId = data.id;
+                } else {
+                    // Insert
+                    const { data, error } = await supabase.from('businesses').insert(businessData).select().single();
+                    if (error) throw error;
+                    resultId = data.id;
+                }
+
+                // Clear autosave
+                sessionStorage.removeItem('business_setup_autosave');
+                
+                // Redirect to the new view page
+                window.location.href = `business-view.html?id=${resultId}`;
+
+            } catch (error) {
+                console.error('Error saving business:', error);
+                alert('Error saving business: ' + error.message);
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) { window.location.href = 'login.html'; return; }
+            currentUser = session.user;
+
+            // Load businesses from Supabase
+            const { data, error } = await supabase
+                .from('businesses')
+                .select('*')
+                .eq('helpa_id', currentUser.id)
+                .order('created_at', { ascending: false });
+                
+            if (data) {
+                businesses = data;
+                renderBusinessList();
+            }
+
+            // Check if we need to open edit mode immediately (from business-view page)
+            const editId = sessionStorage.getItem('edit_business_id');
+            if (editId && businesses.length > 0) {
+                const index = businesses.findIndex(b => b.id === editId);
+                if (index !== -1) {
+                    showBusinessForm(index);
+                    sessionStorage.removeItem('edit_business_id');
+                }
+            }
+            
+            // Form Persistence
+            const form = document.getElementById('business-form');
+            const savedData = sessionStorage.getItem('business_setup_autosave');
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                Object.keys(data).forEach(key => {
+                    const el = form.elements[key];
+                    if (el) el.value = data[key];
+                });
+            }
+
+            form.addEventListener('input', () => {
+                const data = {};
+                Array.from(form.elements).forEach(el => {
+                    if (el.name || el.id) data[el.name || el.id] = el.value;
+                });
+                sessionStorage.setItem('business_setup_autosave', JSON.stringify(data));
+            });
+        });
+    </script>
+</body>
+</html>

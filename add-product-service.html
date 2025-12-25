@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product or Service - YourHelpa</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        body { background-color: var(--background-color); }
+        .page-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+        
+        .back-nav { margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .back-nav a { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-muted-color); font-weight: 500; text-decoration: none; transition: color 0.2s; }
+        .back-nav a:hover { color: var(--primary-color); }
+
+        .form-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-header { margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; }
+        .form-header h1 { font-size: 1.75rem; margin: 0 0 0.5rem 0; color: var(--text-heading-color); }
+        .form-header p { color: var(--text-muted-color); margin: 0; }
+        .business-badge { 
+            display: inline-flex; align-items: center; gap: 0.5rem; 
+            background-color: rgba(var(--primary-color-rgb), 0.1); 
+            color: var(--primary-color); 
+            padding: 0.25rem 0.75rem; 
+            border-radius: 99px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            margin-top: 0.5rem;
+        }
+
+        .type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .type-option {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: var(--text-muted-color);
+        }
+        .type-option:hover { border-color: var(--primary-color); }
+        .type-option.active {
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        .type-option input { display: none; }
+
+        .image-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--background-color);
+            margin-bottom: 1.5rem;
+        }
+        .image-upload-area:hover { border-color: var(--primary-color); background-color: rgba(var(--primary-color-rgb), 0.02); }
+        
+        #preview-container { margin-top: 1rem; display: none; }
+        #preview-image { max-width: 100%; max-height: 250px; border-radius: 8px; object-fit: cover; }
+
+        .currency-input { position: relative; }
+        .currency-input span { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted-color); font-weight: 600; }
+        .currency-input input { padding-left: 2.5rem; }
+
+        /* Tag input styles */
+        .tags-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: white;
+        }
+        .tags-input-container input {
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            color: var(--primary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .tag .remove-tag {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        .tag .remove-tag:hover { color: var(--error-color); }
+
+        /* Multiple image preview styles */
+        .image-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .preview-thumbnail { position: relative; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; aspect-ratio: 1 / 1; }
+        .preview-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+        .remove-image-btn {
+            position: absolute; top: 4px; right: 4px;
+            background-color: rgba(0, 0, 0, 0.6); color: white;
+            border: none; border-radius: 50%;
+            width: 24px; height: 24px; font-size: 16px;
+            line-height: 24px; text-align: center; cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .remove-image-btn:hover { background-color: var(--error-color); }
+
+        @media (max-width: 600px) {
+            .form-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <div class="page-container">
+            <div class="back-nav">
+                <a href="#" id="back-link" onclick="window.history.back(); return false;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Back
+                </a>
+                <a href="helpa-dashboard.html" style="color: var(--text-muted-color); font-size: 0.9rem; text-decoration: none;">
+                    Dashboard
+                </a>
+            </div>
+
+            <div class="form-card">
+                <div class="form-header">
+                    <h1>Add Product or Service</h1>
+                    <p>Expand your offerings for</p>
+                    <div id="business-name-badge" class="business-badge">Loading Business...</div>
+                </div>
+
+                <form id="add-item-form">
+                    <div class="form-group">
+                        <label>What are you adding?</label>
+                        <div class="type-selector">
+                            <label class="type-option active" id="opt-service">
+                                <input type="radio" name="item_type" value="service" checked>
+                                Service
+                            </label>
+                            <label class="type-option" id="opt-product">
+                                <input type="radio" name="item_type" value="product">
+                                Product
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-name">Name / Title</label>
+                        <input type="text" id="item-name" required placeholder="e.g., Deep Cleaning, iPhone 13 Pro Max">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-category">Category</label>
+                        <select id="item-category" required>
+                            <option value="">Select Category</option>
+                            <!-- Populated via JS based on type -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-price">Price</label>
+                        <div class="currency-input">
+                            <span>₦</span>
+                            <input type="number" id="item-price" required placeholder="0.00">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-description">Description</label>
+                        <textarea id="item-description" rows="4" required placeholder="Describe the features, process, or details..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact WhatsApp Number</label>
+                        <div id="whatsapp-options" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <!-- Options will be populated by JS -->
+                        </div>
+                        <input type="tel" id="custom-whatsapp" placeholder="Enter a different WhatsApp number" style="display: none; margin-top: 0.75rem;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="locations-input">Service/Delivery Locations</label>
+                        <div class="tags-input-container">
+                            <input type="text" id="locations-input" placeholder="Type a location (e.g., Ikeja, Lagos) and press Enter">
+                        </div>
+                        <div id="locations-tags" class="tags-input-container" style="padding-top: 0.5rem; border: none; padding-left: 0;">
+                            <!-- Tags will be added here -->
+                        </div>
+                        <small>Add all cities/states you cover.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Images (add up to 5)</label>
+                        <div class="image-upload-area" onclick="document.getElementById('item-image').click()">
+                            <div id="upload-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-color); margin-bottom: 0.5rem;"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                                <p style="margin:0; font-weight:500;">Click to upload images</p>
+                                <small>High quality images attract more customers.</small>
+                            </div>
+                        </div>
+                        <div id="preview-container" class="image-preview-grid">
+                            <!-- Image previews will be added here -->
+                        </div>
+                        <input type="file" id="item-image" hidden accept="image/*" multiple>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="button-primary" style="width: 100%;">Add Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/supabase-client.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/includes.js"></script>
+    <script>
+        let uploadedFiles = [];
+        let locations = [];
+        let primaryWhatsapp = '';
+        const MAX_IMAGES = 5;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const businessId = params.get('business_id');
+            
+            if (!businessId) {
+                alert('No business selected.');
+                window.location.href = 'business-setup.html';
+                return;
+            }
+
+            // Update Back Link
+            document.getElementById('back-link').href = `business-view.html?id=${businessId}`;
+            document.getElementById('back-link').removeAttribute('onclick');
+
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) { window.location.href = 'login.html'; return; }
+            const currentUser = session.user;
+
+            // Fetch Business Name and Helpa's phone number
+            try {
+                const { data: biz, error: bizError } = await supabase
+                    .from('businesses')
+                    .select('name')
+                    .eq('id', businessId)
+                    .single();
+                
+                if (bizError) throw bizError;
+                if (biz) document.getElementById('business-name-badge').textContent = biz.name;
+
+                const { data: helpa, error: helpaError } = await supabase
+                    .from('helpas')
+                    .select('phone_number')
+                    .eq('id', currentUser.id)
+                    .single();
+
+                if (helpaError) throw helpaError;
+                if (helpa && helpa.phone_number) {
+                    primaryWhatsapp = helpa.phone_number;
+                    const whatsappOptions = document.getElementById('whatsapp-options');
+                    whatsappOptions.innerHTML = `
+                        <label><input type="radio" name="whatsapp_option" value="primary" checked> Use my primary number (${primaryWhatsapp})</label>
+                        <label><input type="radio" name="whatsapp_option" value="custom"> Use a different number</label>
+                    `;
+                    document.querySelectorAll('input[name="whatsapp_option"]').forEach(radio => {
+                        radio.addEventListener('change', (e) => {
+                            document.getElementById('custom-whatsapp').style.display = e.target.value === 'custom' ? 'block' : 'none';
+                        });
+                    });
+                }
+
+            } catch (err) {
+                console.error('Error fetching business:', err);
+            }
+
+            // Type Selector Logic
+            const typeOptions = document.querySelectorAll('.type-option');
+            const categorySelect = document.getElementById('item-category');
+            
+            const categories = {
+                service: {
+                    "Home & Maintenance": ['Cleaning Services', 'Plumbing', 'Electrical', 'Carpentry & Woodwork', 'Painting', 'Pest Control', 'HVAC & AC Repair', 'Gardening & Landscaping', 'Moving & Hauling', 'Interior Design', 'Solar & Inverter Services', 'Generator Repair'],
+                    "Tech & Digital": ['Web & App Development', 'Graphic Design', 'UI/UX Design', 'Digital Marketing & SEO', 'Social Media Management', 'IT Support & Repair', 'Video Editing & Animation', 'Photography', 'Videography'],
+                    "Professional Services": ['Legal Services', 'Accounting & Tax', 'Business Consulting', 'Virtual Assistant', 'Writing & Translation', 'Recruitment & HR'],
+                    "Beauty & Personal Care": ['Hair Styling & Barbering', 'Makeup Artistry', 'Skincare & Spa', 'Nail Services', 'Fashion Design & Tailoring'],
+                    "Health & Wellness": ['Fitness Training', 'Nursing & Caregiving', 'Physiotherapy', 'Nutrition & Dietetics', 'Massage Therapy'],
+                    "Events & Entertainment": ['Event Planning', 'Catering & Baking', 'DJ & Music', 'MC & Hosting', 'Party Rentals & Decor'],
+                    "Education & Training": ['Academic Tutoring', 'Language Lessons', 'Music & Art Lessons', 'Vocational Training'],
+                    "Automotive & Transport": ['Auto Repair & Mechanic', 'Car Wash & Detailing', 'Logistics & Delivery', 'Driver Services'],
+                    "Real Estate & Construction": ['Building Construction', 'Architecture', 'Real Estate Agency', 'Property Management'],
+                    "Other": ['Other Service']
+                },
+                product: {
+                    "Product Sales": ['Electronics & Gadgets', 'Fashion & Apparel', 'Home & Living', 'Health & Beauty Products', 'Food & Groceries', 'Automotive Parts', 'Books & Stationery', 'Kids & Babies', 'Sports & Outdoors', 'Construction Materials'],
+                    "Other": ['Other Product']
+                }
+            };
+
+            function updateCategories(type) {
+                categorySelect.innerHTML = '<option value="">Select Category</option>';
+                const typeData = categories[type];
+                
+                for (const [groupLabel, items] of Object.entries(typeData)) {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = groupLabel;
+                    
+                    items.forEach(cat => {
+                        const opt = document.createElement('option');
+                        opt.value = cat;
+                        opt.textContent = cat;
+                        optgroup.appendChild(opt);
+                    });
+                    
+                    categorySelect.appendChild(optgroup);
+                }
+            }
+
+            // Initialize categories
+            updateCategories('service');
+
+            typeOptions.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    typeOptions.forEach(o => o.classList.remove('active'));
+                    opt.classList.add('active');
+                    opt.querySelector('input').checked = true;
+                    updateCategories(opt.querySelector('input').value);
+                });
+            });
+
+            // Location Tag Input Logic
+            const locationsInput = document.getElementById('locations-input');
+            const locationsTagsContainer = document.getElementById('locations-tags');
+
+            const renderLocationTags = () => {
+                locationsTagsContainer.innerHTML = '';
+                locations.forEach((loc, index) => {
+                    locationsTagsContainer.innerHTML += `<div class="tag">${loc}<span class="remove-tag" data-index="${index}">&times;</span></div>`;
+                });
+            };
+
+            locationsInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && locationsInput.value.trim() !== '') {
+                    e.preventDefault();
+                    locations.push(locationsInput.value.trim());
+                    locationsInput.value = '';
+                    renderLocationTags();
+                }
+            });
+
+            locationsTagsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-tag')) {
+                    const index = e.target.dataset.index;
+                    locations.splice(index, 1);
+                    renderLocationTags();
+                }
+            });
+
+            // Multiple Image Upload Logic
+            const imageInput = document.getElementById('item-image');
+            const previewContainer = document.getElementById('preview-container');
+
+            const renderImagePreviews = () => {
+                previewContainer.innerHTML = '';
+                uploadedFiles.forEach((file, index) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const thumb = `
+                            <div class="preview-thumbnail">
+                                <img src="${e.target.result}" alt="${file.name}">
+                                <button type="button" class="remove-image-btn" data-index="${index}">&times;</button>
+                            </div>`;
+                        previewContainer.innerHTML += thumb;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            };
+
+            imageInput.addEventListener('change', (e) => {
+                const files = Array.from(e.target.files);
+                if (files.length > 0) {
+                    const newFiles = files.slice(0, MAX_IMAGES - uploadedFiles.length);
+                    uploadedFiles.push(...newFiles);
+                    renderImagePreviews();
+                }
+            });
+
+            previewContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-image-btn')) {
+                    const index = parseInt(e.target.dataset.index, 10);
+                    if (!isNaN(index)) {
+                        uploadedFiles.splice(index, 1);
+                        renderImagePreviews(); // Re-render to update indices
+                    }
+                }
+            });
+            
+            // Form Submit
+            document.getElementById('add-item-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Adding...';
+                submitBtn.disabled = true;
+
+                try {
+                    const type = document.querySelector('input[name="item_type"]:checked').value;
+                    const name = document.getElementById('item-name').value;
+                    const category = document.getElementById('item-category').value;
+                    const price = document.getElementById('item-price').value;
+                    const description = document.getElementById('item-description').value;
+
+                    let imageUrls = [];
+                    if (uploadedFiles.length > 0) {
+                        const uploadPromises = uploadedFiles.map(file => {
+                            const fileExt = file.name.split('.').pop();
+                            const fileName = `${currentUser.id}/${Date.now()}-${Math.random()}.${fileExt}`;
+                            return supabase.storage.from('service-images').upload(fileName, file);
+                        });
+
+                        const uploadResults = await Promise.all(uploadPromises);
+                        
+                        for (const result of uploadResults) {
+                            if (result.error) throw result.error;
+                            const { data: { publicUrl } } = supabase.storage.from('service-images').getPublicUrl(result.data.path);
+                            imageUrls.push(publicUrl);
+                        }
+                    }
+
+                    const whatsappOption = document.querySelector('input[name="whatsapp_option"]:checked')?.value;
+                    const contactWhatsapp = whatsappOption === 'custom' 
+                        ? document.getElementById('custom-whatsapp').value 
+                        : primaryWhatsapp;
+
+                    if (!contactWhatsapp) {
+                        throw new Error('A contact WhatsApp number is required.');
+                    }
+
+                    if (locations.length === 0) {
+                        throw new Error('Please add at least one service or delivery location.');
+                    }
+
+                    const { error } = await supabase.from('services').insert({
+                        helpa_id: currentUser.id,
+                        business_id: businessId,
+                        name,
+                        type,
+                        category,
+                        price,
+                        description,
+                        images: imageUrls,
+                        is_active: true,
+                        locations: locations,
+                        contact_whatsapp: contactWhatsapp
+                    });
+
+                    if (error) throw error;
+
+                    if (confirm('Item added successfully! Do you want to add another?')) {
+                        // Reset form for next item
+                        document.getElementById('add-item-form').reset();
+                        uploadedFiles = [];
+                        locations = [];
+                        renderImagePreviews();
+                        renderLocationTags();
+                        // Reset type to service
+                        typeOptions.forEach(o => o.classList.remove('active'));
+                        document.getElementById('opt-service').classList.add('active');
+                        document.querySelector('input[value="service"]').checked = true;
+                        updateCategories('service');
+                    } else {
+                        window.location.href = `business-view.html?id=${businessId}`;
+                    }
+
+                } catch (err) {
+                    console.error('Error adding item:', err);
+                    alert('Error adding item: ' + err.message);
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+                            
+                        if (uploadError) throw uploadError;
+                        
+                        const { data: { publicUrl } } = supabase.storage
+                            .from('service-images')
+                            .getPublicUrl(fileName);
+                            
+                        imageUrls.push(publicUrl);
+                    }
+
+                    const { error } = await supabase.from('services').insert({
+                        helpa_id: currentUser.id,
+                        business_id: businessId,
+                        name,
+                        type,
+                        category,
+                        price,
+                        description,
+                        images: imageUrls,
+                        is_active: true
+                    });
+
+                    if (error) throw error;
+
+                    if (confirm('Item added successfully! Do you want to add another?')) {
+                        // Reset form for next item
+                        document.getElementById('add-item-form').reset();
+                        document.getElementById('preview-container').style.display = 'none';
+                        document.getElementById('upload-placeholder').style.display = 'block';
+                        // Reset type to service
+                        typeOptions.forEach(o => o.classList.remove('active'));
+                        document.getElementById('opt-service').classList.add('active');
+                        document.querySelector('input[value="service"]').checked = true;
+                        updateCategories('service');
+                    } else {
+                        window.location.href = `business-view.html?id=${businessId}`;
+                    }
+
+                } catch (err) {
+                    console.error('Error adding item:', err);
+                    alert('Error adding item: ' + err.message);
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
