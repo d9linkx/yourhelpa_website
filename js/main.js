@@ -62,23 +62,30 @@ window.initializeMain = async function() {
     const sb = window.supabase;
     if (sb) {
         const { data: { session } } = await sb.auth.getSession();
-        if (session) {
-            const updateAuthButton = (btnId) => {
-                const btn = document.getElementById(btnId);
-                if (btn) {
-                    btn.textContent = 'Helpa Logout';
-                    btn.href = '#';
-                    btn.addEventListener('click', async (e) => {
-                        e.preventDefault();
-                        btn.textContent = 'Logging out...';
-                        await sb.auth.signOut();
-                        window.location.href = 'login.html';
-                    });
-                }
+
+        const updateAuthButton = (btnId, isLoggedIn) => {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+
+            if (isLoggedIn) {
+                btn.textContent = 'Helpa Logout';
+                btn.href = '#'; // Prevent navigation on click
+                // Use onclick to easily override any previous listeners
+                btn.onclick = async (e) => {
+                    e.preventDefault();
+                    btn.textContent = 'Logging out...';
+                    await sb.auth.signOut();
+                    window.location.href = 'login.html';
+                };
+            } else {
+                // Explicitly set the logged-out state
+                btn.textContent = 'Helpa Login';
+                btn.href = 'login.html';
+                btn.onclick = null; // Remove any attached logout handlers
             };
-            updateAuthButton('mobile-auth-btn');
-            updateAuthButton('desktop-auth-btn');
-        }
+        };
+        updateAuthButton('mobile-auth-btn', !!session);
+        updateAuthButton('desktop-auth-btn', !!session);
     } else {
         console.warn('Supabase client not found in initializeMain.');
     }

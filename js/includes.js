@@ -22,12 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
             loadHTML('#footer-placeholder', '_footer.html')
         ]);
         
-        // Check auth status and update nav accordingly
-        if (typeof supabase !== 'undefined' && typeof window.updateNavBasedOnAuth === 'function') {
-            const { data: { session } } = await supabase.auth.getSession();
-            window.updateNavBasedOnAuth(session);
-        }
-
         // After includes are loaded, initialize page-specific logic
         if (typeof window.initializeMain === 'function') {
             window.initializeMain();
