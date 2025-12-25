@@ -25,9 +25,9 @@
 
         /* Mobile-specific styles */
         @media (max-width: 991px) {
-            /* Hide desktop nav links and actions on mobile */
+            /* Hide desktop nav links on mobile */
             #main-nav,
-            .header-actions {
+            .header-actions { /* Hide the original header actions on mobile */
                 display: none;
             }
 
@@ -37,39 +37,23 @@
             }
         }
 
-        /* Style the login link in the navigation */
-        .nav-login-link {
-            display: block;
-            margin-top: 10rem;
-            
-        }
-
-        /* On desktop, hide the nav login link since it's in the header actions */
+        /* Desktop-specific styles */
         @media (min-width: 992px) {
-            .nav-login-link {
+            .mobile-auth-actions { /* Hide the duplicated actions inside the nav on desktop */
                 display: none;
             }
         }
 
-        /* Style the login button inside the mobile navigation menu */
-        @media (max-width: 991px) {
-            .mobile-nav-login-btn {
-               background-color: var(--primary-color);
-                color: white;
-                border-radius: 8px;
-                width: 10rem;
-                margin-top: 9rem;
-                display: inline-block;
-                text-align: center;
-            }
+        /* Styles for the duplicated actions inside the mobile hamburger menu */
+        .mobile-auth-actions {
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-color);
         }
-        @media (min-width: 992px) {
-            .mobile-nav-login-btn { display: none; }
-            }
-
-            .mobile-only-actions {
-                margin-top: 2rem;
-            }
+        .mobile-auth-actions .dropdown-toggle {
+            width: 100%;
+            justify-content: space-between;
+        }
 
         /* Style for the new outline button */
         .button-outline {
@@ -85,6 +69,102 @@
         /* Set menu text color to grey */
         #main-nav ul li a {
             color: var(--text-muted-color);
+        }
+
+        /* Enhanced Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-right: 1rem;
+            cursor: pointer;
+        }
+
+        .dropdown-toggle svg {
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown:hover .dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown.is-active .dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            display: block;
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 10px);
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            min-width: 220px;
+            z-index: 1000;
+            padding: 0.5rem;
+            transform: translateY(-10px);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Bridge to prevent closing when moving mouse from button to menu */
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 10px;
+        }
+
+        .dropdown:hover .dropdown-menu, 
+        .dropdown-toggle:focus + .dropdown-menu,
+        .dropdown-menu:hover,
+        .dropdown.is-active .dropdown-menu {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            transform: translateX(4px);
+        }
+
+        .dropdown-item svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2px;
+            opacity: 0.8;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 0.5rem 0;
+            opacity: 0.5;
         }
     </style>
     <div class="container">
@@ -103,16 +183,100 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <ul class="mobile-only-actions">
-                <li><a href="login.html" class="button-primary mobile-nav-login-btn" id="mobile-auth-btn">Helpa Login</a></li>
-            </ul>
+
+            <!-- Mobile-specific Auth Actions (Duplicated for mobile nav layout) -->
+            <div class="mobile-auth-actions">
+                <!-- Guest View -->
+                <div id="mobile-guest-actions" style="display: block;">
+                    <div class="dropdown">
+                        <button class="button-outline dropdown-toggle">
+                            <span>Helpa Account</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="login.html" class="dropdown-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                                Login
+                            </a>
+                            <a href="register.html" class="dropdown-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" x2="20" y1="8" y2="14"/><line x1="23" x2="17" y1="11" y2="11"/></svg>
+                                Sign Up
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Logged-in Helpa View (initially hidden) -->
+                <div id="mobile-helpa-actions" style="display: none;">
+                    <div class="dropdown">
+                        <button class="button-outline dropdown-toggle">
+                            <span>Helpa Account</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="helpa-dashboard.html" class="dropdown-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y1="12" rx="1"/><rect width="7" height="5" x="3" y1="16" rx="1"/></svg>
+                                Dashboard
+                            </a>
+                            <a href="settings.html" class="dropdown-item">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                                Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" id="mobile-logout-btn" class="dropdown-item" style="color: #ef4444;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
 
         <!-- Action buttons for desktop -->
         <div class="header-actions">
-            <div id="desktop-guest-actions" class="desktop-actions">
-                <a href="https://wa.me/2347070989034" target="_blank" class="button-primary">Buy</a>
-                <a href="login.html" class="button-outline" id="desktop-auth-btn">Helpa Login</a>
+            <!-- Guest View -->
+            <div id="desktop-guest-actions" class="desktop-actions" style="display: flex;">
+                <a href="https://wa.me/2347070989034" target="_blank" class="button-primary mobile-hidden">Buy</a>
+                <div class="dropdown">
+                    <button class="button-outline dropdown-toggle">
+                        <span>Helpa Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="login.html" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                            Login
+                        </a>
+                        <a href="register.html" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" x2="20" y1="8" y2="14"/><line x1="23" x2="17" y1="11" y2="11"/></svg>
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Logged-in Helpa View (initially hidden) -->
+            <div id="desktop-helpa-actions" class="desktop-actions" style="display: none;">
+                <div class="dropdown">
+                    <button class="button-outline dropdown-toggle">
+                        <span>Helpa Account</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="helpa-dashboard.html" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                            Dashboard
+                        </a>
+                        <a href="settings.html" class="dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                            Settings
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" id="desktop-logout-btn" class="dropdown-item" style="color: #ef4444;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                            Logout
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 

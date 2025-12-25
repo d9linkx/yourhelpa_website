@@ -242,21 +242,6 @@
             .mobile-nav-card svg {
                 color: var(--primary-color);
             }
-
-            .mobile-only-actions {
-                display: none; /* Hidden on desktop */
-                margin-top: 2rem;
-                padding-top: 2rem;
-                border-top: 1px solid var(--border-color);
-            }
-
-            /* Style for the login button in the mobile nav */
-            .mobile-nav-login-btn {
-                display: none; /* Hidden by default, shown via JS if not logged in. Also hidden on desktop. */
-                text-align: center; /* Center text inside the button */
-                padding-left: 2.5rem; /* Add wider horizontal padding */
-                padding-right: 2.5rem; /* Add wider horizontal padding */
-            }
         }
     </style>
 </head>
@@ -410,10 +395,6 @@
             // 3. Fetch all dashboard data in parallel
             loadDashboardData(user);
         });
-
-        // This function will be called from includes.js after the header loads
-        // It ensures the login button in the nav is correctly shown/hidden
-        window.updateNavBasedOnAuth = (session) => {}; // On dashboard, we do nothing as user is logged in.
 
         async function loadDashboardData(user) {
             // --- Render Welcome Message ---

@@ -43,15 +43,35 @@ window.initializeMain = async function() {
     // Initialize mobile navigation logic
     initializeMobileNav();
 
+    // --- Dropdown Toggle Logic (Mobile/Touch Support) ---
+    // This ensures dropdowns work on touch devices where hover isn't reliable
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent click from bubbling to document
+                
+                // Close other dropdowns
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('is-active');
+                });
+                
+                dropdown.classList.toggle('is-active');
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(d => d.classList.remove('is-active'));
+        }
+    });
+
     // Optimize images for faster loading
     optimizeImages();
-
-    // Add a style rule for the visible class
-    const style = document.createElement('style');
-    style.textContent = `
-        .mobile-nav-login-btn.is-visible { display: inline-block !important; }
-    `;
-    document.head.appendChild(style);
 
     // --- Initialize Animations and Notifications ---
     initializeFomoNotification();
@@ -61,31 +81,59 @@ window.initializeMain = async function() {
     // --- Header Auth State Logic ---
     const sb = window.supabase;
     if (sb) {
-        const { data: { session } } = await sb.auth.getSession();
+        // This function updates the UI based on login state.
+        const updateHeaderUI = (session) => {
+            const isLoggedIn = !!session;
 
-        const updateAuthButton = (btnId, isLoggedIn) => {
-            const btn = document.getElementById(btnId);
-            if (!btn) return;
+            // Get all relevant elements for auth state
+            const guestActions = document.getElementById('desktop-guest-actions');
+            const helpaActions = document.getElementById('desktop-helpa-actions');
+            const desktopLogoutBtn = document.getElementById('desktop-logout-btn');
+
+            const mobileGuestActions = document.getElementById('mobile-guest-actions');
+            const mobileHelpaActions = document.getElementById('mobile-helpa-actions');
+            const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+
+            // Centralized logout handler
+            const handleLogout = async (e) => {
+                e.preventDefault();
+                e.target.textContent = 'Logging out...';
+                await sb.auth.signOut();
+                window.location.href = 'login.html';
+            };
 
             if (isLoggedIn) {
-                btn.textContent = 'Helpa Logout';
-                btn.href = '#'; // Prevent navigation on click
-                // Use onclick to easily override any previous listeners
-                btn.onclick = async (e) => {
-                    e.preventDefault();
-                    btn.textContent = 'Logging out...';
-                    await sb.auth.signOut();
-                    window.location.href = 'login.html';
-                };
+                // Show Helpa menu, hide guest buttons
+                if (guestActions) guestActions.style.display = 'none';
+                if (helpaActions) helpaActions.style.display = 'flex';
+                if (mobileGuestActions) mobileGuestActions.style.display = 'none';
+                if (mobileHelpaActions) mobileHelpaActions.style.display = 'block';
+
+                // Configure desktop dropdown logout button
+                if (desktopLogoutBtn) {
+                    desktopLogoutBtn.onclick = handleLogout;
+                }
+                // Configure mobile dropdown logout button
+                if (mobileLogoutBtn) {
+                    mobileLogoutBtn.onclick = handleLogout;
+                }
             } else {
-                // Explicitly set the logged-out state
-                btn.textContent = 'Helpa Login';
-                btn.href = 'login.html';
-                btn.onclick = null; // Remove any attached logout handlers
-            };
+                // Show guest buttons, hide Helpa menu
+                if (guestActions) guestActions.style.display = 'flex';
+                if (helpaActions) helpaActions.style.display = 'none';
+                if (mobileGuestActions) mobileGuestActions.style.display = 'block';
+                if (mobileHelpaActions) mobileHelpaActions.style.display = 'none';
+            }
         };
-        updateAuthButton('mobile-auth-btn', !!session);
-        updateAuthButton('desktop-auth-btn', !!session);
+
+        // 1. Update UI on initial page load
+        const { data: { session } } = await sb.auth.getSession();
+        updateHeaderUI(session);
+
+        // 2. Listen for future auth changes (e.g., login/logout in other tabs)
+        sb.auth.onAuthStateChange((_event, session) => {
+            updateHeaderUI(session);
+        });
     } else {
         console.warn('Supabase client not found in initializeMain.');
     }
